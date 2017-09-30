@@ -190,8 +190,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 493155520}
-  m_LocalRotation: {x: -0.25814497, y: 0.7169866, z: -0.33344638, w: -0.555072}
-  m_LocalPosition: {x: 19.72153, y: 19.834114, z: 13.85541}
+  m_LocalRotation: {x: -0.3288951, y: 0.6710327, z: -0.46383414, w: -0.47581613}
+  m_LocalPosition: {x: 16.204012, y: 39.389397, z: 37.58694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -341,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 1603842883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -401,6 +401,14 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ef1733a97fc75d94e81cb46be6c72013, type: 2}
+    - target: {fileID: 13700000, guid: 0585ff0c372ac754bbbd4961ab7c65d3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b102b6c984621de4a85845ed73565b98, type: 2}
+    - target: {fileID: 100000, guid: 0585ff0c372ac754bbbd4961ab7c65d3, type: 3}
+      propertyPath: m_Name
+      value: Red Character
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0585ff0c372ac754bbbd4961ab7c65d3, type: 3}
   m_IsPrefabParent: 0
@@ -419,5 +427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4563093231e3a4ba2ee472b4f841cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  rotationSpeed: 75
+  walkSpeed: 10
+  rotationSpeed: 200
+  strafeSpeed: 7.5
