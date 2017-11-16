@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterLoadoutController : MonoBehaviour
 {
@@ -8,8 +9,13 @@ public class CharacterLoadoutController : MonoBehaviour
         None, Longsword, Battleaxe, Greataxe, Spear, Longbow
     }
 
+    public CanvasRenderer LoadoutPanel;
+
     private WeaponEnum  _mainWeapon;
     private WeaponEnum  _offhandWeapon;
+
+    private Dropdown _mainWeaponDropdown;
+    private Dropdown _offhandWeaponDropdown;
 
     private GameObject _mainWeaponGameObject;
     private GameObject _offhandWeaponGameObject;
@@ -53,9 +59,9 @@ public class CharacterLoadoutController : MonoBehaviour
 
         Transform handTransform = !offhand ? _characterRightHandTransform : _characterLeftHandTransform;
 
-        // Remove old game object for old weapon
+        // Remove game object for old weapon
         if (handTransform.childCount > 0)
-            Destroy(handTransform.GetChild(0));
+            Destroy(handTransform.GetChild(0).gameObject);
 
         if (weapon == WeaponEnum.None) return;
         
@@ -97,10 +103,37 @@ public class CharacterLoadoutController : MonoBehaviour
             _offhandWeaponGameObject = weaponGameObject;
     }
 
+    private void OnWeaponDropdownValueChanged(Dropdown dropdown)
+    {
+        WeaponEnum weapon = (WeaponEnum) dropdown.value;
+        if (dropdown.gameObject.name.Contains("Main"))
+            MainWeapon = weapon;
+        else
+            OffhandWeapon = weapon;
+    }
+
     void Start()
     {
         _characterRightHandTransform = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:RightShoulder").Find("mixamorig:RightArm").Find("mixamorig:RightForeArm").Find("mixamorig:RightHand");
         _characterLeftHandTransform = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:LeftShoulder").Find("mixamorig:LeftArm").Find("mixamorig:LeftForeArm").Find("mixamorig:LeftHand");
+
+        _mainWeaponDropdown = LoadoutPanel.transform.Find("Main Weapon Dropdown").GetComponent<Dropdown>();
+        _offhandWeaponDropdown = LoadoutPanel.transform.Find("Offhand Weapon Dropdown").GetComponent<Dropdown>();
+
+        _mainWeaponDropdown.onValueChanged.AddListener(delegate
+        {
+            OnWeaponDropdownValueChanged(_mainWeaponDropdown);
+        });
+        _offhandWeaponDropdown.onValueChanged.AddListener(delegate
+        {
+            OnWeaponDropdownValueChanged(_offhandWeaponDropdown);
+        });
+    }
+
+    void OnDestroy()
+    {
+        _mainWeaponDropdown.onValueChanged.RemoveAllListeners();
+        _offhandWeaponDropdown.onValueChanged.RemoveAllListeners();
     }
 
     void Update()
