@@ -200,6 +200,41 @@ Prefab:
       propertyPath: animator
       value: 
       objectReference: {fileID: 1815809325}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: WalkKey
+      value: 264
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: WalkBackKey
+      value: 261
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: TurnLeftKey
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: TurnRightKey
+      value: 262
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: StrafeLeftKey
+      value: 263
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: StrafeRightKey
+      value: 265
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: RunKey
+      value: 256
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc1230d0132ef3b43b02c71ec57a2da2, type: 2}
   m_IsPrefabParent: 0
