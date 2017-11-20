@@ -4,15 +4,17 @@ using UnityEngine.UI;
 
 public class CharacterLoadoutController : MonoBehaviour
 {
+    public static Weapon[] Weapons;
+
     public enum WeaponEnum
     {
-        None, Longsword, Battleaxe, Greataxe, Spear, Longbow
+        None, Battleaxe, Greataxe, Longbow, Longsword, Spear
     }
 
     public CanvasRenderer LoadoutPanel;
 
-    private WeaponEnum  _mainWeapon;
-    private WeaponEnum  _offhandWeapon;
+    private WeaponEnum _mainWeapon;
+    private WeaponEnum _offhandWeapon;
 
     private Dropdown _mainWeaponDropdown;
     private Dropdown _offhandWeaponDropdown;
@@ -70,19 +72,19 @@ public class CharacterLoadoutController : MonoBehaviour
         switch (weapon)
         {
             case WeaponEnum.Longsword:
-                weaponGameObject = (GameObject) Instantiate(Resources.Load("Longsword"));
+                weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Longsword"));
                 break;
             case WeaponEnum.Battleaxe:
-                weaponGameObject = (GameObject) Instantiate(Resources.Load("Battleaxe"));
+                weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Battleaxe"));
                 break;
             case WeaponEnum.Greataxe:
-                weaponGameObject = (GameObject) Instantiate(Resources.Load("Greataxe"));
+                weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Greataxe"));
                 break;
             case WeaponEnum.Spear:
-                weaponGameObject = (GameObject) Instantiate(Resources.Load("Spear"));
+                weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Spear"));
                 break;
             case WeaponEnum.Longbow:
-                weaponGameObject = (GameObject) Instantiate(Resources.Load("Longbow"));
+                weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Longbow"));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -103,11 +105,23 @@ public class CharacterLoadoutController : MonoBehaviour
             _offhandWeaponGameObject = weaponGameObject;
     }
 
+    // DEVNOTE: Consider moving this into OnValueChanged in inspector for dropdown
     private void OnWeaponDropdownValueChanged(Dropdown dropdown)
     {
         WeaponEnum weapon = (WeaponEnum) dropdown.value;
         if (dropdown.gameObject.name.Contains("Main"))
+        {
             MainWeapon = weapon;
+            if (dropdown.value != 0 && Weapons[dropdown.value - 1].TwoHanded)
+            {
+                _offhandWeaponDropdown.enabled = false;
+                _offhandWeaponDropdown.value = 0;
+            }
+            else
+            {
+                _offhandWeaponDropdown.enabled = true;
+            }
+        }
         else
             OffhandWeapon = weapon;
     }
@@ -128,6 +142,9 @@ public class CharacterLoadoutController : MonoBehaviour
         {
             OnWeaponDropdownValueChanged(_offhandWeaponDropdown);
         });
+        
+        Weapons = Resources.LoadAll<Weapon>("Weapons");
+        int test = Weapons.Length;
     }
 
     void OnDestroy()

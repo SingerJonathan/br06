@@ -94,8 +94,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Spear
   TwoHanded: 0
-  DamageMin: 0
-  DamageMax: 0
+  DamageMin: 2
+  DamageMax: 8
   AttackSpeed: 7
   CriticalHitRate: 10
   CriticalHitMultiplier: 2
