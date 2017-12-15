@@ -4,120 +4,57 @@ public class CharacterAnimationController : MonoBehaviour
 {
     private Animator _animator;
     private bool _running;
+    private CharacterController _characterController;
 
     // Speed variables
+    public int PlayerNumber = 1;
     public float WalkSpeed = 7.5f;
     public float RunSpeed = 17.5f;
     public float TurnSpeed = 200.0f;
     public float StrafeSpeed = 5.0f;
-
-    // Key bindings
-    public KeyCode WalkKey = KeyCode.W;
-    public KeyCode WalkBackKey = KeyCode.S;
-    public KeyCode TurnLeftKey = KeyCode.A;
-    public KeyCode TurnRightKey = KeyCode.D;
-    public KeyCode StrafeLeftKey = KeyCode.Q;
-    public KeyCode StrafeRightKey = KeyCode.E;
-    public KeyCode RunKey = KeyCode.LeftShift;
+    public float Gravity = 20.0f;
 
     void Start()
     {
-        _animator = gameObject.GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        /*if (Input.GetKey(runKey) && Input.GetAxis("Vertical") >= 0)
-            running = true;
-        else
-            running = false;
-
-        float translation;
-        float rotation = Input.GetAxis("Horizontal") * turnSpeed;
-        float strafeTranslation = 0;
-        if (running)
-            translation = Input.GetAxis("Vertical") * runSpeed;
-        else
-            translation = Input.GetAxis("Vertical") * walkSpeed;
-        translation *= Time.deltaTime;
-        rotation *= Time.deltaTime;
-
-        transform.Translate(0, 0, translation);
-        transform.Rotate(0, rotation, 0);*/
-
         // Handle input and movement
-        float translation = 0.0f;
-        float rotation = 0.0f;
-        float strafeTranslation = 0.0f;
-
-        if (Input.GetKey(WalkKey))
+        Vector3 moveDirection = Vector3.zero;
+        if (_characterController.isGrounded)
         {
-            if (Input.GetKey(RunKey))
-                translation = RunSpeed * Time.deltaTime;
+            moveDirection = new Vector3(-Input.GetAxis("Vertical"+PlayerNumber), 0, Input.GetAxis("Horizontal"+PlayerNumber));
+            if (Input.GetButton("Run"+PlayerNumber))
+                moveDirection *= RunSpeed;
             else
-                translation = WalkSpeed * Time.deltaTime;
-            transform.Translate(0, 0, translation);
-        }
-        else if (Input.GetKey(WalkBackKey))
-        {
-            translation = -WalkSpeed * Time.deltaTime;
-            transform.Translate(0, 0, translation);
-        }
+                moveDirection *= WalkSpeed;
+            // DEVNOTE: Uncomment the following if jumping is added to the game
+            /*if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;*/
+            float step = RunSpeed * Time.deltaTime;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, moveDirection, step, 0.0F);
+            transform.rotation = Quaternion.LookRotation(newDir);
 
-        if (Input.GetKey(TurnLeftKey))
-        {
-            rotation = -TurnSpeed * Time.deltaTime;
-            transform.Rotate(0, rotation, 0);
         }
-        else if (Input.GetKey(TurnRightKey))
-        {
-            rotation = TurnSpeed * Time.deltaTime;
-            transform.Rotate(0, rotation, 0);
-        }
-
-        if (!Input.GetKey(RunKey))
-            if (Input.GetKey(StrafeLeftKey))
-            {
-                strafeTranslation = -StrafeSpeed * Time.deltaTime;
-                transform.Translate(strafeTranslation, 0, 0);
-            }
-            else if (Input.GetKey(StrafeRightKey)) {
-                strafeTranslation = StrafeSpeed * Time.deltaTime;
-                transform.Translate(strafeTranslation, 0, 0);
-            }
-
+        moveDirection.y -= Gravity * Time.deltaTime;
+        _characterController.Move(moveDirection * Time.deltaTime);
+        
         // Handle animations
-        if (translation > 0)
+        if (moveDirection.x != 0 || moveDirection.z != 0)
         {
             _animator.SetInteger("walking", 1);
-            if (Input.GetKey(RunKey))
+            if (Input.GetButton("Run" + PlayerNumber))
                 _animator.SetBool("running", true);
             else
                 _animator.SetBool("running", false);
-        }
-        else if (translation < 0)
-        {
-            _animator.SetInteger("walking", 2);
-            _animator.SetBool("running", false);
         }
         else
         {
             _animator.SetInteger("walking", 0);
             _animator.SetBool("running", false);
         }
-
-        if (rotation > 0)
-            _animator.SetInteger("turning", 1);
-        else if (rotation < 0)
-            _animator.SetInteger("turning", 2);
-        else
-            _animator.SetInteger("turning", 0);
-
-        if (strafeTranslation > 0)
-            _animator.SetInteger("strafing", 1);
-        else if (strafeTranslation < 0)
-            _animator.SetInteger("strafing", 2);
-        else
-            _animator.SetInteger("strafing", 0);
     }
 }
