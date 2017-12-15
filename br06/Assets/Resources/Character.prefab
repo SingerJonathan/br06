@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 4512752018242858}
   - component: {fileID: 95619273156526110}
   - component: {fileID: 114243106556387398}
+  - component: {fileID: 143682397043595904}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -826,17 +827,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4563093231e3a4ba2ee472b4f841cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 7.5
-  runSpeed: 17.5
-  turnSpeed: 200
-  strafeSpeed: 5
-  walkKey: 119
-  walkBackKey: 115
-  turnLeftKey: 97
-  turnRightKey: 100
-  strafeLeftKey: 113
-  strafeRightKey: 101
-  runKey: 304
+  PlayerNumber: 1
+  WalkSpeed: 7.5
+  RunSpeed: 17.5
+  TurnSpeed: 200
+  StrafeSpeed: 5
+  Gravity: 20
 --- !u!137 &137568778062201266
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -902,3 +898,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000008456409, y: -0.0065951794, z: -0.00015220093}
     m_Extent: {x: 0.035976574, y: 0.03820516, z: 0.0040077255}
   m_DirtyAABB: 0
+--- !u!143 &143682397043595904
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346865161118238}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 0.08
+  m_Radius: 0.015
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.002
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.04, z: 0}
