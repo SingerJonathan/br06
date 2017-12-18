@@ -794,20 +794,20 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 857549948}
   m_ItemImage: {fileID: 0}
-  m_Value: 4
+  m_Value: 1
   m_Options:
     m_Options:
     - m_Text: None
       m_Image: {fileID: 0}
+    - m_Text: Longsword
+      m_Image: {fileID: 0}
     - m_Text: Battleaxe
+      m_Image: {fileID: 0}
+    - m_Text: Spear
       m_Image: {fileID: 0}
     - m_Text: Greataxe
       m_Image: {fileID: 0}
     - m_Text: Longbow
-      m_Image: {fileID: 0}
-    - m_Text: Longsword
-      m_Image: {fileID: 0}
-    - m_Text: Spear
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1741,15 +1741,9 @@ MonoBehaviour:
     m_Options:
     - m_Text: None
       m_Image: {fileID: 0}
-    - m_Text: Battleaxe
-      m_Image: {fileID: 0}
-    - m_Text: Greataxe
-      m_Image: {fileID: 0}
     - m_Text: Longsword
       m_Image: {fileID: 0}
-    - m_Text: Longbow
-      m_Image: {fileID: 0}
-    - m_Text: Spear
+    - m_Text: Battleaxe
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3012,20 +3006,20 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 1811988505}
   m_ItemImage: {fileID: 0}
-  m_Value: 4
+  m_Value: 1
   m_Options:
     m_Options:
     - m_Text: None
       m_Image: {fileID: 0}
+    - m_Text: Longsword
+      m_Image: {fileID: 0}
     - m_Text: Battleaxe
+      m_Image: {fileID: 0}
+    - m_Text: Spear
       m_Image: {fileID: 0}
     - m_Text: Greataxe
       m_Image: {fileID: 0}
     - m_Text: Longbow
-      m_Image: {fileID: 0}
-    - m_Text: Longsword
-      m_Image: {fileID: 0}
-    - m_Text: Spear
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4235,15 +4229,9 @@ MonoBehaviour:
     m_Options:
     - m_Text: None
       m_Image: {fileID: 0}
-    - m_Text: Battleaxe
-      m_Image: {fileID: 0}
-    - m_Text: Greataxe
-      m_Image: {fileID: 0}
-    - m_Text: Longbow
-      m_Image: {fileID: 0}
     - m_Text: Longsword
       m_Image: {fileID: 0}
-    - m_Text: Spear
+    - m_Text: Battleaxe
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

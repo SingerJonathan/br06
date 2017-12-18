@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -108,11 +109,16 @@ public class CharacterLoadoutController : MonoBehaviour
     // DEVNOTE: Consider moving this into OnValueChanged in inspector for dropdown
     private void OnWeaponDropdownValueChanged(Dropdown dropdown)
     {
-        WeaponEnum weapon = (WeaponEnum) dropdown.value;
+        int weapon = -1;
+        if (dropdown.options[dropdown.value].text != "None")
+            for (int i = 0; i < Weapons.Length && weapon == -1; i++)
+                if (dropdown.options[dropdown.value].text == Weapons[i].name)
+                    weapon = i;
+
         if (dropdown.gameObject.name.Contains("Main"))
         {
-            MainWeapon = weapon;
-            if (dropdown.value != 0 && Weapons[dropdown.value - 1].TwoHanded)
+            MainWeapon = (WeaponEnum)weapon+1;
+            if (weapon != -1 && Weapons[weapon].TwoHanded)
             {
                 _offhandWeaponDropdown.enabled = false;
                 _offhandWeaponDropdown.value = 0;
@@ -123,7 +129,7 @@ public class CharacterLoadoutController : MonoBehaviour
             }
         }
         else
-            OffhandWeapon = weapon;
+            OffhandWeapon = (WeaponEnum)weapon+1;
     }
 
     void Start()
