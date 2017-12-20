@@ -76,10 +76,26 @@ public class GameLoopController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Main Menu") && _round > 0)
-            if (!MainMenuCanvasGameObject.activeInHierarchy)
-                MainMenuCanvasGameObject.SetActive(true);
-            else
-                MainMenuCanvasGameObject.SetActive(false);
+        // Game is in progress
+        if (_round > 0)
+        {
+            // In Loadout menu
+            if (LoadoutCanvasGameObject.activeInHierarchy)
+            {
+                if (RedCharacter.GetComponent<CharacterLoadoutController>().Ready && BlueCharacter.GetComponent<CharacterLoadoutController>().Ready)
+                {
+                    LoadoutCanvasGameObject.SetActive(false);
+                    RedCharacter.GetComponent<CharacterAnimationController>().enabled = true;
+                    BlueCharacter.GetComponent<CharacterAnimationController>().enabled = true;
+                }
+            }
+            if (Input.GetButtonDown("Main Menu"))
+            {
+                if (!MainMenuCanvasGameObject.activeInHierarchy)
+                    MainMenuCanvasGameObject.SetActive(true);
+                else
+                    MainMenuCanvasGameObject.SetActive(false);
+            }
+        }
     }
 }
