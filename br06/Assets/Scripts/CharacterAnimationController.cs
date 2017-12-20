@@ -43,6 +43,7 @@ public class CharacterAnimationController : MonoBehaviour
         _characterController.Move(moveDirection * Time.deltaTime);
         
         // Handle animations
+        // DEVNOTE: Rework Animator component due to movement system rework
         if (moveDirection.x != 0 || moveDirection.z != 0)
         {
             _animator.SetInteger("walking", 1);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +12,9 @@ public class CharacterLoadoutController : MonoBehaviour
     }
 
     public CanvasRenderer LoadoutPanel;
+
+    private Image _readyToggleBackgroundImage;
+    private bool _ready;
 
     private WeaponEnum _mainWeapon;
     private WeaponEnum _offhandWeapon;
@@ -51,6 +53,23 @@ public class CharacterLoadoutController : MonoBehaviour
         {
             _offhandWeapon = value;
             ChangeWeapon(value, true);
+        }
+    }
+
+    public bool Ready
+    {
+        get
+        {
+            return _ready;
+        }
+
+        set
+        {
+            _ready = value;
+            if (_ready)
+                _readyToggleBackgroundImage.color = Color.green;
+            else
+                _readyToggleBackgroundImage.color = Color.white;
         }
     }
 
@@ -148,9 +167,10 @@ public class CharacterLoadoutController : MonoBehaviour
         {
             OnWeaponDropdownValueChanged(_offhandWeaponDropdown);
         });
-        
+
+        _readyToggleBackgroundImage = LoadoutPanel.transform.Find("Ready Toggle").Find("Background").GetComponent<Image>();
+
         Weapons = Resources.LoadAll<Weapon>("Weapons");
-        int test = Weapons.Length;
     }
 
     void OnDestroy()
