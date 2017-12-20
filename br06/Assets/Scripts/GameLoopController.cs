@@ -27,6 +27,7 @@ public class GameLoopController : MonoBehaviour
         BlueCharacter.GetComponent<CharacterLoadoutController>().Ready = false;
         RedCharacter.GetComponent<CharacterAnimationController>().enabled = false;
         BlueCharacter.GetComponent<CharacterAnimationController>().enabled = false;
+        _confirmPanelGameObject.SetActive(false);
     }
 
     public void QuitToMainMenu()
@@ -35,6 +36,9 @@ public class GameLoopController : MonoBehaviour
         _quitButton.interactable = false;
         RedCharacter.GetComponent<CharacterAnimationController>().enabled = false;
         BlueCharacter.GetComponent<CharacterAnimationController>().enabled = false;
+        MainMenuCanvasGameObject.SetActive(true);
+        LoadoutCanvasGameObject.SetActive(false);
+        _confirmPanelGameObject.SetActive(false);
     }
 
     public void ExitGame()
@@ -46,10 +50,12 @@ public class GameLoopController : MonoBehaviour
     {
         _confirmPanelGameObject.SetActive(true);
         UnityAction call;
-        if (context == "Exit")
-            call = ExitGame;
-        else if (context == "New")
+        if (context == "New")
             call = NewGame;
+        else if (context == "Quit")
+            call = QuitToMainMenu;
+        else if (context == "Exit")
+            call = ExitGame;
         else
             call = delegate { };
         _confirmPanelYesButton.onClick.AddListener(call);
@@ -70,6 +76,10 @@ public class GameLoopController : MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetButtonDown("Main Menu") && _round > 0)
+            if (!MainMenuCanvasGameObject.activeInHierarchy)
+                MainMenuCanvasGameObject.SetActive(true);
+            else
+                MainMenuCanvasGameObject.SetActive(false);
     }
 }
