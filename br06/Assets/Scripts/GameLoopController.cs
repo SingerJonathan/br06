@@ -7,6 +7,8 @@ public class GameLoopController : MonoBehaviour
     public GameObject MainMenuCanvasGameObject;
     public GameObject LoadoutCanvasGameObject;
 
+    public Text CountdownText;
+
     public CharacterLoadoutController RedCharacterLoadoutController;
     public CharacterAnimationController RedCharacterAnimationController;
     public CharacterLoadoutController BlueCharacterLoadoutController;
@@ -23,6 +25,8 @@ public class GameLoopController : MonoBehaviour
     private Dropdown _roundsDropdown;
     private int _round;
     private int _maxRounds;
+
+    private float _countdown;
 
     public void NewGame()
     {
@@ -100,7 +104,20 @@ public class GameLoopController : MonoBehaviour
             {
                 if (RedCharacterLoadoutController.Ready && BlueCharacterLoadoutController.Ready)
                 {
+                    CountdownText.gameObject.SetActive(true);
+                    _countdown = 3;
+                    CountdownText.text = ""+3;
                     LoadoutCanvasGameObject.SetActive(false);
+                }
+            }
+            // Start countdown after both players are ready
+            else if (_countdown > 0.0f)
+            {
+                _countdown -= Time.deltaTime;
+                CountdownText.text = ""+(int)(_countdown+1);
+                if (_countdown <= 0.0f)
+                {
+                    CountdownText.gameObject.SetActive(false);
                     RedCharacterAnimationController.enabled = true;
                     BlueCharacterAnimationController.enabled = true;
                 }
@@ -112,6 +129,7 @@ public class GameLoopController : MonoBehaviour
                     MainMenuCanvasGameObject.SetActive(true);
                     RedCharacterAnimationController.enabled = false;
                     BlueCharacterAnimationController.enabled = false;
+                    // Stop character animations when menu is open
                     RedCharacterAnimationController._animator.SetInteger("walking", 0);
                     RedCharacterAnimationController._animator.SetBool("running", false);
                     BlueCharacterAnimationController._animator.SetInteger("walking", 0);
