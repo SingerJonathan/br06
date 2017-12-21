@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -6,8 +7,11 @@ public class GameLoopController : MonoBehaviour
 {
     public GameObject MainMenuCanvasGameObject;
     public GameObject LoadoutCanvasGameObject;
+    public GameObject HUDCanvasGameObject;
 
-    public Text CountdownText;
+    public Text RoundCounterText;
+    public Text RoundTimeText;
+    public Text RoundCountdownText;
 
     public CharacterLoadoutController RedCharacterLoadoutController;
     public CharacterAnimationController RedCharacterAnimationController;
@@ -23,17 +27,39 @@ public class GameLoopController : MonoBehaviour
     private Button _confirmPanelYesButton;
     private Button _quitButton;
     private Dropdown _roundsDropdown;
-    private int _round;
+    private Dropdown _roundDurationDropdown;
     private int _maxRounds;
-
+    private float _roundDuration;
+    private int _currentRound;
+    private float _currentRoundTime;
     private float _countdown;
 
-    public void NewGame()
+    private static string _timeFormat = "{0:D1}:{1:D2}";
+
+    private void DisableCharacterAnimations()
     {
-        _round = 1;
-        _maxRounds = _roundsDropdown.value + 1;
+        if (RedCharacterAnimationController.enabled)
+        {
+            RedCharacterAnimationController._animator.SetInteger("walking", 0);
+            RedCharacterAnimationController._animator.SetBool("running", false);
+            BlueCharacterAnimationController._animator.SetInteger("walking", 0);
+            BlueCharacterAnimationController._animator.SetBool("running", false);
+            RedCharacterAnimationController.enabled = false;
+            BlueCharacterAnimationController.enabled = false;
+        }
+    }
+
+    private void NewGame()
+    {
+        _currentRound = 1;
+        _maxRounds = Int32.Parse(_roundsDropdown.options[_roundsDropdown.value].text);
+        _roundDuration = 60*(_roundDurationDropdown.value + 1);
         MainMenuCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(true);
+        HUDCanvasGameObject.SetActive(true);
+        RoundCounterText.text = "" + _currentRound;
+        TimeSpan time = TimeSpan.FromSeconds(_roundDuration);
+        RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
         _quitButton.interactable = true;
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
@@ -41,23 +67,27 @@ public class GameLoopController : MonoBehaviour
         BlueCharacterLoadoutController.ReadyToggle.isOn = false;
         RedCharacterAnimationController.enabled = false;
         BlueCharacterAnimationController.enabled = false;
+        _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
     }
 
-    public void QuitToMainMenu()
+    private void QuitToMainMenu()
     {
-        _round = 0;
+        _currentRound = 0;
         _quitButton.interactable = false;
         RedCharacterAnimationController.enabled = false;
         BlueCharacterAnimationController.enabled = false;
         MainMenuCanvasGameObject.SetActive(true);
         LoadoutCanvasGameObject.SetActive(false);
+        HUDCanvasGameObject.SetActive(false);
+        _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+        DisableCharacterAnimations();
     }
 
-    public void ExitGame()
+    private void ExitGame()
     {
         Application.Quit();
     }
@@ -66,14 +96,21 @@ public class GameLoopController : MonoBehaviour
     {
         _confirmPanelGameObject.SetActive(true);
         UnityAction call;
-        if (context == "New")
-            call = NewGame;
-        else if (context == "Quit")
-            call = QuitToMainMenu;
-        else if (context == "Exit")
-            call = ExitGame;
-        else
-            call = delegate { };
+        switch (context)
+        {
+            case "New":
+                call = NewGame;
+                break;
+            case "Quit":
+                call = QuitToMainMenu;
+                break;
+            case "Exit":
+                call = ExitGame;
+                break;
+            default:
+                call = delegate { };
+                break;
+        }
         _confirmPanelYesButton.onClick.AddListener(call);
     }
 
@@ -86,6 +123,7 @@ public class GameLoopController : MonoBehaviour
     {
         _quitButton = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Quit Button").GetComponent<Button>();
         _roundsDropdown = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Rounds Dropdown").GetComponent<Dropdown>();
+        _roundDurationDropdown = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Minutes Dropdown").GetComponent<Dropdown>();
         _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Confirm Panel").gameObject;
         _confirmPanelYesButton = _confirmPanelGameObject.transform.Find("Yes Button").GetComponent<Button>();
         _initialRedCharacterPosition = RedCharacterLoadoutController.transform.position;
@@ -97,29 +135,55 @@ public class GameLoopController : MonoBehaviour
     void Update()
     {
         // Game is in progress
-        if (_round > 0)
+        if (_currentRound > 0)
         {
             // In Loadout menu
             if (LoadoutCanvasGameObject.activeInHierarchy)
             {
                 if (RedCharacterLoadoutController.Ready && BlueCharacterLoadoutController.Ready)
                 {
-                    CountdownText.gameObject.SetActive(true);
+                    RoundCountdownText.gameObject.SetActive(true);
                     _countdown = 3;
-                    CountdownText.text = ""+3;
+                    RoundCountdownText.text = "" + 3;
                     LoadoutCanvasGameObject.SetActive(false);
                 }
             }
             // Start countdown after both players are ready
-            else if (_countdown > 0.0f)
+            else if (_countdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
             {
                 _countdown -= Time.deltaTime;
-                CountdownText.text = ""+(int)(_countdown+1);
+                RoundCountdownText.text = "" + (int)(_countdown + 1);
                 if (_countdown <= 0.0f)
                 {
-                    CountdownText.gameObject.SetActive(false);
+                    RoundCountdownText.gameObject.SetActive(false);
                     RedCharacterAnimationController.enabled = true;
                     BlueCharacterAnimationController.enabled = true;
+                    _currentRoundTime = _roundDuration;
+                }
+            }
+            // Countdown finished, round started
+            else if (_currentRoundTime >= 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
+            {
+                _currentRoundTime -= Time.deltaTime;
+                TimeSpan time = TimeSpan.FromSeconds(_currentRoundTime);
+                RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
+                if (_currentRoundTime <= 0.0f)
+                {
+                    if (_currentRound == _maxRounds)
+                        QuitToMainMenu();
+                    else
+                    {
+                        _currentRound++;
+                        RoundCounterText.text = "" + _currentRound;
+                        TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);
+                        RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
+                        LoadoutCanvasGameObject.SetActive(true);
+                        RedCharacterLoadoutController.ReadyToggle.isOn = false;
+                        BlueCharacterLoadoutController.ReadyToggle.isOn = false;
+                        RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+                        BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                        DisableCharacterAnimations();
+                    }
                 }
             }
             if (Input.GetButtonDown("Main Menu"))
@@ -127,13 +191,7 @@ public class GameLoopController : MonoBehaviour
                 if (!MainMenuCanvasGameObject.activeInHierarchy)
                 {
                     MainMenuCanvasGameObject.SetActive(true);
-                    RedCharacterAnimationController.enabled = false;
-                    BlueCharacterAnimationController.enabled = false;
-                    // Stop character animations when menu is open
-                    RedCharacterAnimationController._animator.SetInteger("walking", 0);
-                    RedCharacterAnimationController._animator.SetBool("running", false);
-                    BlueCharacterAnimationController._animator.SetInteger("walking", 0);
-                    BlueCharacterAnimationController._animator.SetBool("running", false);
+                    DisableCharacterAnimations();
                 }
                 else
                 {
