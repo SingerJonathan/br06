@@ -13,7 +13,8 @@ public class CharacterLoadoutController : MonoBehaviour
 
     public CanvasRenderer LoadoutPanel;
 
-    private Image _readyToggleBackgroundImage;
+    [HideInInspector]
+    public Toggle ReadyToggle;
     private bool _ready;
 
     private WeaponEnum _mainWeapon;
@@ -67,9 +68,9 @@ public class CharacterLoadoutController : MonoBehaviour
         {
             _ready = value;
             if (_ready)
-                _readyToggleBackgroundImage.color = Color.green;
+                ReadyToggle.transform.Find("Background").GetComponent<Image>().color = Color.green;
             else
-                _readyToggleBackgroundImage.color = Color.white;
+                ReadyToggle.transform.Find("Background").GetComponent<Image>().color = Color.white;
         }
     }
 
@@ -168,7 +169,7 @@ public class CharacterLoadoutController : MonoBehaviour
             OnWeaponDropdownValueChanged(_offhandWeaponDropdown);
         });
 
-        _readyToggleBackgroundImage = LoadoutPanel.transform.Find("Ready Toggle").Find("Background").GetComponent<Image>();
+        ReadyToggle = LoadoutPanel.transform.Find("Ready Toggle").GetComponent<Toggle>();
 
         Weapons = Resources.LoadAll<Weapon>("Weapons");
     }

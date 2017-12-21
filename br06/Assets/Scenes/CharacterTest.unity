@@ -3372,13 +3372,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainMenuCanvasGameObject: {fileID: 20302091}
   LoadoutCanvasGameObject: {fileID: 849336857}
-  RedCharacter: {fileID: 792606074}
-  BlueCharacter: {fileID: 882110993}
+  RedCharacterLoadoutController: {fileID: 792606075}
+  RedCharacterAnimationController: {fileID: 792606073}
+  BlueCharacterLoadoutController: {fileID: 882110994}
+  BlueCharacterAnimationController: {fileID: 882110992}
 --- !u!1 &792606072 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1346865161118238, guid: dc1230d0132ef3b43b02c71ec57a2da2,
     type: 2}
   m_PrefabInternal: {fileID: 1580746083}
+--- !u!114 &792606073 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1580746083}
+  m_Script: {fileID: 11500000, guid: 9c4563093231e3a4ba2ee472b4f841cb, type: 3}
 --- !u!143 &792606074
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3408,6 +3416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadoutPanel: {fileID: 941702761}
+  ReadyToggle: {fileID: 0}
 --- !u!1 &809981587
 GameObject:
   m_ObjectHideFlags: 0
@@ -3882,6 +3891,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1346865161118238, guid: dc1230d0132ef3b43b02c71ec57a2da2,
     type: 2}
   m_PrefabInternal: {fileID: 94332063}
+--- !u!114 &882110992 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+    type: 2}
+  m_PrefabInternal: {fileID: 94332063}
+  m_Script: {fileID: 11500000, guid: 9c4563093231e3a4ba2ee472b4f841cb, type: 3}
 --- !u!143 &882110993
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3911,6 +3926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadoutPanel: {fileID: 324094361}
+  ReadyToggle: {fileID: 0}
 --- !u!1 &905870256
 GameObject:
   m_ObjectHideFlags: 0

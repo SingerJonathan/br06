@@ -6,8 +6,16 @@ public class GameLoopController : MonoBehaviour
 {
     public GameObject MainMenuCanvasGameObject;
     public GameObject LoadoutCanvasGameObject;
-    public CharacterController RedCharacter;
-    public CharacterController BlueCharacter;
+
+    public CharacterLoadoutController RedCharacterLoadoutController;
+    public CharacterAnimationController RedCharacterAnimationController;
+    public CharacterLoadoutController BlueCharacterLoadoutController;
+    public CharacterAnimationController BlueCharacterAnimationController;
+
+    private Vector3 _initialRedCharacterPosition;
+    private Vector3 _initialBlueCharacterPosition;
+    private Quaternion _initialRedCharacterRotation;
+    private Quaternion _initialBlueCharacterRotation;
 
     private GameObject _confirmPanelGameObject;
     private Button _confirmPanelYesButton;
@@ -23,10 +31,12 @@ public class GameLoopController : MonoBehaviour
         MainMenuCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(true);
         _quitButton.interactable = true;
-        RedCharacter.GetComponent<CharacterLoadoutController>().Ready = false;
-        BlueCharacter.GetComponent<CharacterLoadoutController>().Ready = false;
-        RedCharacter.GetComponent<CharacterAnimationController>().enabled = false;
-        BlueCharacter.GetComponent<CharacterAnimationController>().enabled = false;
+        RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+        BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+        RedCharacterLoadoutController.ReadyToggle.isOn = false;
+        BlueCharacterLoadoutController.ReadyToggle.isOn = false;
+        RedCharacterAnimationController.enabled = false;
+        BlueCharacterAnimationController.enabled = false;
         _confirmPanelGameObject.SetActive(false);
     }
 
@@ -34,11 +44,13 @@ public class GameLoopController : MonoBehaviour
     {
         _round = 0;
         _quitButton.interactable = false;
-        RedCharacter.GetComponent<CharacterAnimationController>().enabled = false;
-        BlueCharacter.GetComponent<CharacterAnimationController>().enabled = false;
+        RedCharacterAnimationController.enabled = false;
+        BlueCharacterAnimationController.enabled = false;
         MainMenuCanvasGameObject.SetActive(true);
         LoadoutCanvasGameObject.SetActive(false);
         _confirmPanelGameObject.SetActive(false);
+        RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+        BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
     }
 
     public void ExitGame()
@@ -72,6 +84,10 @@ public class GameLoopController : MonoBehaviour
         _roundsDropdown = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Rounds Dropdown").GetComponent<Dropdown>();
         _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Confirm Panel").gameObject;
         _confirmPanelYesButton = _confirmPanelGameObject.transform.Find("Yes Button").GetComponent<Button>();
+        _initialRedCharacterPosition = RedCharacterLoadoutController.transform.position;
+        _initialBlueCharacterPosition = BlueCharacterLoadoutController.transform.position;
+        _initialRedCharacterRotation = RedCharacterLoadoutController.transform.rotation;
+        _initialBlueCharacterRotation = BlueCharacterLoadoutController.transform.rotation;
     }
 
     void Update()
@@ -82,19 +98,31 @@ public class GameLoopController : MonoBehaviour
             // In Loadout menu
             if (LoadoutCanvasGameObject.activeInHierarchy)
             {
-                if (RedCharacter.GetComponent<CharacterLoadoutController>().Ready && BlueCharacter.GetComponent<CharacterLoadoutController>().Ready)
+                if (RedCharacterLoadoutController.Ready && BlueCharacterLoadoutController.Ready)
                 {
                     LoadoutCanvasGameObject.SetActive(false);
-                    RedCharacter.GetComponent<CharacterAnimationController>().enabled = true;
-                    BlueCharacter.GetComponent<CharacterAnimationController>().enabled = true;
+                    RedCharacterAnimationController.enabled = true;
+                    BlueCharacterAnimationController.enabled = true;
                 }
             }
             if (Input.GetButtonDown("Main Menu"))
             {
                 if (!MainMenuCanvasGameObject.activeInHierarchy)
+                {
                     MainMenuCanvasGameObject.SetActive(true);
+                    RedCharacterAnimationController.enabled = false;
+                    BlueCharacterAnimationController.enabled = false;
+                    RedCharacterAnimationController._animator.SetInteger("walking", 0);
+                    RedCharacterAnimationController._animator.SetBool("running", false);
+                    BlueCharacterAnimationController._animator.SetInteger("walking", 0);
+                    BlueCharacterAnimationController._animator.SetBool("running", false);
+                }
                 else
+                {
                     MainMenuCanvasGameObject.SetActive(false);
+                    RedCharacterAnimationController.enabled = true;
+                    BlueCharacterAnimationController.enabled = true;
+                }
             }
         }
     }

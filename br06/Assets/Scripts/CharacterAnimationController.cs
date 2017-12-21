@@ -2,7 +2,8 @@
 
 public class CharacterAnimationController : MonoBehaviour
 {
-    private Animator _animator;
+    [HideInInspector]
+    public Animator _animator;
     private bool _running;
     private CharacterController _characterController;
 
