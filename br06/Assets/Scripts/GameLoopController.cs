@@ -9,10 +9,15 @@ public class GameLoopController : MonoBehaviour
     public GameObject LoadoutCanvasGameObject;
     public GameObject HUDCanvasGameObject;
 
-    public Text RoundCounterText;
+    public Text RedWinsText;
+    public Text BlueWinsText;
+    public Text RedHPText;
+    public Text BlueHPText;
     public Text RoundTimeText;
-    public Text RoundCountdownText;
+    public Text NotificationText;
 
+    public CharacterStatsController RedCharacterStatsController;
+    public CharacterStatsController BlueCharacterStatsController;
     public CharacterLoadoutController RedCharacterLoadoutController;
     public CharacterAnimationController RedCharacterAnimationController;
     public CharacterLoadoutController BlueCharacterLoadoutController;
@@ -22,6 +27,8 @@ public class GameLoopController : MonoBehaviour
     private Vector3 _initialBlueCharacterPosition;
     private Quaternion _initialRedCharacterRotation;
     private Quaternion _initialBlueCharacterRotation;
+    private int _initialRedCharacterHitPoints;
+    private int _initialBlueCharacterHitPoints;
 
     private GameObject _confirmPanelGameObject;
     private Button _confirmPanelYesButton;
@@ -31,8 +38,11 @@ public class GameLoopController : MonoBehaviour
     private int _maxRounds;
     private float _roundDuration;
     private int _currentRound;
+    private int _redWins;
+    private int _blueWins;
     private float _currentRoundTime;
     private float _countdown;
+    private float _winCountdown;
 
     private static string _timeFormat = "{0:D1}:{1:D2}";
 
@@ -52,15 +62,23 @@ public class GameLoopController : MonoBehaviour
     private void NewGame()
     {
         _currentRound = 1;
+        _redWins = 0;
+        _blueWins = 0;
         _maxRounds = Int32.Parse(_roundsDropdown.options[_roundsDropdown.value].text);
         _roundDuration = 60*(_roundDurationDropdown.value + 1);
         MainMenuCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(true);
         HUDCanvasGameObject.SetActive(true);
-        RoundCounterText.text = "" + _currentRound;
+        NotificationText.gameObject.SetActive(false);
+        RedWinsText.text = "" + _redWins;
+        BlueWinsText.text = "" + _blueWins;
         TimeSpan time = TimeSpan.FromSeconds(_roundDuration);
         RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
         _quitButton.interactable = true;
+        RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
+        BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+        RedHPText.text = "" + RedCharacterStatsController.HitPoints;
+        BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         RedCharacterLoadoutController.ReadyToggle.isOn = false;
@@ -130,6 +148,8 @@ public class GameLoopController : MonoBehaviour
         _initialBlueCharacterPosition = BlueCharacterLoadoutController.transform.position;
         _initialRedCharacterRotation = RedCharacterLoadoutController.transform.rotation;
         _initialBlueCharacterRotation = BlueCharacterLoadoutController.transform.rotation;
+        _initialRedCharacterHitPoints = RedCharacterStatsController.HitPoints;
+        _initialBlueCharacterHitPoints = BlueCharacterStatsController.HitPoints;
     }
 
     void Update()
@@ -142,9 +162,9 @@ public class GameLoopController : MonoBehaviour
             {
                 if (RedCharacterLoadoutController.Ready && BlueCharacterLoadoutController.Ready)
                 {
-                    RoundCountdownText.gameObject.SetActive(true);
+                    NotificationText.gameObject.SetActive(true);
                     _countdown = 3;
-                    RoundCountdownText.text = "" + 3;
+                    NotificationText.text = "" + 3;
                     LoadoutCanvasGameObject.SetActive(false);
                 }
             }
@@ -152,29 +172,65 @@ public class GameLoopController : MonoBehaviour
             else if (_countdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
             {
                 _countdown -= Time.deltaTime;
-                RoundCountdownText.text = "" + (int)(_countdown + 1);
+                NotificationText.text = "" + (int)(_countdown + 1);
                 if (_countdown <= 0.0f)
                 {
-                    RoundCountdownText.gameObject.SetActive(false);
+                    NotificationText.gameObject.SetActive(false);
                     RedCharacterAnimationController.enabled = true;
                     BlueCharacterAnimationController.enabled = true;
                     _currentRoundTime = _roundDuration;
                 }
             }
             // Countdown finished, round started
-            else if (_currentRoundTime >= 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
+            else if (_currentRoundTime > 0.0f && !NotificationText.gameObject.activeInHierarchy && !MainMenuCanvasGameObject.activeInHierarchy)
             {
+                RedHPText.text = "" + RedCharacterStatsController.HitPoints;
+                BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
                 _currentRoundTime -= Time.deltaTime;
                 TimeSpan time = TimeSpan.FromSeconds(_currentRoundTime);
                 RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
-                if (_currentRoundTime <= 0.0f)
+                // Round end conditions
+                if (_currentRoundTime <= 0.0f || RedCharacterStatsController.HitPoints == 0 || BlueCharacterStatsController.HitPoints == 0)
                 {
-                    if (_currentRound == _maxRounds)
-                        QuitToMainMenu();
+                    DisableCharacterAnimations();
+                    if (RedCharacterStatsController.HitPoints > BlueCharacterStatsController.HitPoints)
+                    {
+                        _redWins++;
+                        RedWinsText.text = "" + _redWins;
+                        NotificationText.text = string.Format("ROUND {0}\nRED WINS", _currentRound);
+                    }
+                    else if (BlueCharacterStatsController.HitPoints > RedCharacterStatsController.HitPoints)
+                    {
+                        _blueWins++;
+                        BlueWinsText.text = "" + _blueWins;
+                        NotificationText.text = string.Format("ROUND {0}\nBLUE WINS", _currentRound);
+                    }
                     else
                     {
+                        NotificationText.text = string.Format("ROUND {0}\nDRAW", _currentRound);
+                    }
+                    _winCountdown = 5;
+                    NotificationText.gameObject.SetActive(true);
+                }
+            }
+            // Message after round or game
+            else if (_winCountdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
+            {
+                _winCountdown -= Time.deltaTime;
+                if (_winCountdown <= 0.0f)
+                {
+                    NotificationText.gameObject.SetActive(false);
+                    // After message after game
+                    if (NotificationText.text.Contains("GAME OVER"))
+                    {
+                        QuitToMainMenu();
+                    }
+                    // After message after round
+                    else if (!(_currentRound == _maxRounds || _redWins > _maxRounds / 2 || _blueWins > _maxRounds / 2))
+                    {
+                        RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
+                        BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
                         _currentRound++;
-                        RoundCounterText.text = "" + _currentRound;
                         TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);
                         RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
                         LoadoutCanvasGameObject.SetActive(true);
@@ -182,7 +238,18 @@ public class GameLoopController : MonoBehaviour
                         BlueCharacterLoadoutController.ReadyToggle.isOn = false;
                         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
                         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
-                        DisableCharacterAnimations();
+                    }
+                    // Game end conditions
+                    else
+                    {
+                        if (_redWins > _maxRounds / 2 || _currentRound == _maxRounds && _redWins > _blueWins)
+                            NotificationText.text = "GAME OVER\nRED WINS";
+                        else if (_blueWins > _maxRounds / 2 || _currentRound == _maxRounds && _blueWins > _redWins)
+                            NotificationText.text = "GAME OVER\nBLUE WINS";
+                        else
+                            NotificationText.text = "GAME OVER\nDRAW";
+                        _winCountdown = 5;
+                        NotificationText.gameObject.SetActive(true);
                     }
                 }
             }
