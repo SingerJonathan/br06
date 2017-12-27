@@ -18,8 +18,13 @@ public class GameLoopController : MonoBehaviour
     public Text BlueWinsText;
     public Text RedHPText;
     public Text BlueHPText;
+    public Text RedScoreText;
+    public Text BlueScoreText;
     public Text RoundTimeText;
     public Text NotificationText;
+
+    public GameObject KingOfTheHillObjects;
+    public KingOfTheHillCollisionController HillCollisionController;
 
     public CharacterStatsController RedCharacterStatsController;
     public CharacterStatsController BlueCharacterStatsController;
@@ -49,9 +54,51 @@ public class GameLoopController : MonoBehaviour
     private float _countdown;
     private float _winCountdown;
 
-    private GameMode _currentGameMode;
+    // DEVNOTE: Remove hard-coded value when changing game modes is implemented
+    private GameMode _currentGameMode = GameMode.KingOfTheHill;
+    private float _redScore;
+    private float _blueScore;
 
     private static string _timeFormat = "{0:D1}:{1:D2}";
+
+    public GameMode CurrentGameMode
+    {
+        get
+        {
+            return _currentGameMode;
+        }
+
+        set
+        {
+            _currentGameMode = value;
+        }
+    }
+
+    public float RedScore
+    {
+        get
+        {
+            return _redScore;
+        }
+
+        set
+        {
+            _redScore = value;
+        }
+    }
+
+    public float BlueScore
+    {
+        get
+        {
+            return _blueScore;
+        }
+
+        set
+        {
+            _blueScore = value;
+        }
+    }
 
     private void DisableCharacterAnimations()
     {
@@ -84,6 +131,8 @@ public class GameLoopController : MonoBehaviour
         _quitButton.interactable = true;
         RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
         BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+        RedScore = 0;
+        BlueScore = 0;
         RedHPText.text = "" + RedCharacterStatsController.HitPoints;
         BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
@@ -195,18 +244,34 @@ public class GameLoopController : MonoBehaviour
                 BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
                 _currentRoundTime -= Time.deltaTime;
                 TimeSpan time = TimeSpan.FromSeconds(_currentRoundTime);
+                if (_currentGameMode == GameMode.Standard)
+                {
+                    _redScore = RedCharacterStatsController.HitPoints;
+                    _blueScore = BlueCharacterStatsController.HitPoints;
+                }
+                else if (_currentGameMode == GameMode.KingOfTheHill)
+                {
+                    if (HillCollisionController.RedColliding && HillCollisionController.BlueColliding)
+                    { }
+                    else if (HillCollisionController.RedColliding)
+                        _redScore += Time.deltaTime;
+                    else if (HillCollisionController.BlueColliding)
+                        _blueScore += Time.deltaTime;
+                }
                 RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
+                RedScoreText.text = "" + (int)_redScore;
+                BlueScoreText.text = "" + (int)_blueScore;
                 // Round end conditions
                 if (_currentRoundTime <= 0.0f || RedCharacterStatsController.HitPoints == 0 || BlueCharacterStatsController.HitPoints == 0)
                 {
                     DisableCharacterAnimations();
-                    if (RedCharacterStatsController.HitPoints > BlueCharacterStatsController.HitPoints)
+                    if ((int)_redScore > (int)_blueScore)
                     {
                         _redWins++;
                         RedWinsText.text = "" + _redWins;
                         NotificationText.text = string.Format("ROUND {0}\nRED WINS", _currentRound);
                     }
-                    else if (BlueCharacterStatsController.HitPoints > RedCharacterStatsController.HitPoints)
+                    else if ((int)_blueScore > (int)_redScore)
                     {
                         _blueWins++;
                         BlueWinsText.text = "" + _blueWins;
@@ -237,6 +302,8 @@ public class GameLoopController : MonoBehaviour
                     {
                         RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
                         BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+                        RedScore = 0;
+                        BlueScore = 0;
                         _currentRound++;
                         TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);
                         RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
