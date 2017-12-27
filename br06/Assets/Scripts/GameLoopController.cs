@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class GameLoopController : MonoBehaviour
 {
+    public enum GameMode
+    {
+        Standard, KingOfTheHill, CaptureTheFlag
+    }
+
     public GameObject MainMenuCanvasGameObject;
     public GameObject LoadoutCanvasGameObject;
     public GameObject HUDCanvasGameObject;
@@ -43,6 +48,8 @@ public class GameLoopController : MonoBehaviour
     private float _currentRoundTime;
     private float _countdown;
     private float _winCountdown;
+
+    private GameMode _currentGameMode;
 
     private static string _timeFormat = "{0:D1}:{1:D2}";
 

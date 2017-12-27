@@ -13,7 +13,7 @@ public class CharacterAnimationController : MonoBehaviour
     public float RunSpeed = 17.5f;
     public float TurnSpeed = 200.0f;
     public float StrafeSpeed = 5.0f;
-    public float Gravity = 20.0f;
+    public float Gravity = 1000.0f;
 
     void Start()
     {
