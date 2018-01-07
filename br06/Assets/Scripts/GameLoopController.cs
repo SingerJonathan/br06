@@ -25,6 +25,7 @@ public class GameLoopController : MonoBehaviour
     public Text BlueScoreText;
     public Text RoundTimeText;
     public Text NotificationText;
+    public Text GameModeText;
 
     public GameObject KingOfTheHillObjects;
     public KingOfTheHillCollisionController HillCollisionController;
@@ -116,7 +117,15 @@ public class GameLoopController : MonoBehaviour
         {
             _currentRound = value;
             if (CurrentRound > 0)
+            {
                 CurrentGameMode = _rounds[_currentRound - 1].GameMode;
+                GameModeText.text = _rounds[0].RoundModeDropdown.options[(int)CurrentGameMode].text;
+            }
+            else
+            {
+                CurrentGameMode = GameMode.Standard;
+                GameModeText.text = "Standard";
+            }
             SwitchGameModeObjects(_currentGameMode);
         }
     }
