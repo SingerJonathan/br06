@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,8 +12,10 @@ public class GameLoopController : MonoBehaviour
     }
 
     public GameObject MainMenuCanvasGameObject;
+    public GameObject GameSetupCanvasGameObject;
     public GameObject LoadoutCanvasGameObject;
     public GameObject HUDCanvasGameObject;
+    public GameObject RoundList;
 
     public Text RedWinsText;
     public Text BlueWinsText;
@@ -25,6 +28,7 @@ public class GameLoopController : MonoBehaviour
 
     public GameObject KingOfTheHillObjects;
     public KingOfTheHillCollisionController HillCollisionController;
+    public GameObject CaptureTheFlagObjects;
 
     public CharacterStatsController RedCharacterStatsController;
     public CharacterStatsController BlueCharacterStatsController;
@@ -55,6 +59,7 @@ public class GameLoopController : MonoBehaviour
     private float _winCountdown;
 
     // DEVNOTE: Remove hard-coded value when changing game modes is implemented
+    private List<Round> _rounds;
     private GameMode _currentGameMode = GameMode.KingOfTheHill;
     private float _redScore;
     private float _blueScore;
@@ -100,6 +105,22 @@ public class GameLoopController : MonoBehaviour
         }
     }
 
+    public int CurrentRound
+    {
+        get
+        {
+            return _currentRound;
+        }
+
+        set
+        {
+            _currentRound = value;
+            if (CurrentRound > 0)
+                CurrentGameMode = _rounds[_currentRound - 1].GameMode;
+            SwitchGameModeObjects(_currentGameMode);
+        }
+    }
+
     private void DisableCharacterAnimations()
     {
         if (RedCharacterAnimationController.enabled)
@@ -113,14 +134,34 @@ public class GameLoopController : MonoBehaviour
         }
     }
 
-    private void NewGame()
+    private void SetupGame()
     {
-        _currentRound = 1;
+        _confirmPanelGameObject.SetActive(false);
+        MainMenuCanvasGameObject.SetActive(false);
+        GameSetupCanvasGameObject.SetActive(true);
+        LoadoutCanvasGameObject.SetActive(false);
+        HUDCanvasGameObject.SetActive(false);
+        NotificationText.gameObject.SetActive(false);
+    }
+
+    public void CancelNewGame()
+    {
+        MainMenuCanvasGameObject.SetActive(true);
+        GameSetupCanvasGameObject.SetActive(false);
+        LoadoutCanvasGameObject.SetActive(false);
+        HUDCanvasGameObject.SetActive(false);
+        NotificationText.gameObject.SetActive(false);
+    }
+
+    public void NewGame()
+    {
+        CurrentRound = 1;
         _redWins = 0;
         _blueWins = 0;
         _maxRounds = Int32.Parse(_roundsDropdown.options[_roundsDropdown.value].text);
         _roundDuration = 60*(_roundDurationDropdown.value + 1);
         MainMenuCanvasGameObject.SetActive(false);
+        GameSetupCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(true);
         HUDCanvasGameObject.SetActive(true);
         NotificationText.gameObject.SetActive(false);
@@ -147,11 +188,13 @@ public class GameLoopController : MonoBehaviour
 
     private void QuitToMainMenu()
     {
-        _currentRound = 0;
+        _confirmPanelGameObject.SetActive(false); 
+        CurrentRound = 0;
         _quitButton.interactable = false;
         RedCharacterAnimationController.enabled = false;
         BlueCharacterAnimationController.enabled = false;
         MainMenuCanvasGameObject.SetActive(true);
+        GameSetupCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(false);
         HUDCanvasGameObject.SetActive(false);
         _confirmPanelYesButton.onClick.RemoveAllListeners();
@@ -166,6 +209,25 @@ public class GameLoopController : MonoBehaviour
         Application.Quit();
     }
 
+    private void SwitchGameModeObjects(GameMode gameMode)
+    {
+        switch (gameMode)
+        {
+            case GameMode.Standard:
+                KingOfTheHillObjects.SetActive(false);
+                CaptureTheFlagObjects.SetActive(false);
+                break;
+            case GameMode.KingOfTheHill:
+                KingOfTheHillObjects.SetActive(true);
+                CaptureTheFlagObjects.SetActive(false);
+                break;
+            case GameMode.CaptureTheFlag:
+                KingOfTheHillObjects.SetActive(false);
+                CaptureTheFlagObjects.SetActive(true);
+                break;
+        }
+    }
+
     public void OpenConfirmDialogue(string context)
     {
         _confirmPanelGameObject.SetActive(true);
@@ -173,7 +235,7 @@ public class GameLoopController : MonoBehaviour
         switch (context)
         {
             case "New":
-                call = NewGame;
+                call = SetupGame;
                 break;
             case "Quit":
                 call = QuitToMainMenu;
@@ -193,11 +255,31 @@ public class GameLoopController : MonoBehaviour
         _confirmPanelGameObject.SetActive(false);
     }
 
+    public void RefreshRoundList()
+    {
+        _maxRounds = Int32.Parse(_roundsDropdown.options[_roundsDropdown.value].text);
+        int roundGameObjects = RoundList.transform.childCount;
+        while (roundGameObjects < _maxRounds)
+        {
+            GameObject roundGameObject = (GameObject)Instantiate(Resources.Load("Round"));
+            roundGameObject.transform.SetParent(RoundList.transform);
+            _rounds.Add(roundGameObject.GetComponent<Round>());
+            roundGameObjects = RoundList.transform.childCount;
+        }
+        while (_maxRounds < roundGameObjects)
+        {
+            GameObject roundGameObject = RoundList.transform.GetChild(roundGameObjects - 1).gameObject;
+            _rounds.RemoveAt(roundGameObjects - 1);
+            Destroy(roundGameObject);
+            roundGameObjects--;
+        }
+    }
+
     void Start()
     {
         _quitButton = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Quit Button").GetComponent<Button>();
-        _roundsDropdown = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Rounds Dropdown").GetComponent<Dropdown>();
-        _roundDurationDropdown = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Minutes Dropdown").GetComponent<Dropdown>();
+        _roundsDropdown = GameSetupCanvasGameObject.transform.Find("Panel").Find("Rounds Dropdown").GetComponent<Dropdown>();
+        _roundDurationDropdown = GameSetupCanvasGameObject.transform.Find("Panel").Find("Minutes Dropdown").GetComponent<Dropdown>();
         _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Confirm Panel").gameObject;
         _confirmPanelYesButton = _confirmPanelGameObject.transform.Find("Yes Button").GetComponent<Button>();
         _initialRedCharacterPosition = RedCharacterLoadoutController.transform.position;
@@ -206,12 +288,16 @@ public class GameLoopController : MonoBehaviour
         _initialBlueCharacterRotation = BlueCharacterLoadoutController.transform.rotation;
         _initialRedCharacterHitPoints = RedCharacterStatsController.HitPoints;
         _initialBlueCharacterHitPoints = BlueCharacterStatsController.HitPoints;
+        _rounds = new List<Round>
+        {
+            RoundList.transform.GetChild(0).GetComponent<Round>()
+        };
     }
 
     void Update()
     {
         // Game is in progress
-        if (_currentRound > 0)
+        if (CurrentRound > 0)
         {
             // In Loadout menu
             if (LoadoutCanvasGameObject.activeInHierarchy)
@@ -244,19 +330,22 @@ public class GameLoopController : MonoBehaviour
                 BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
                 _currentRoundTime -= Time.deltaTime;
                 TimeSpan time = TimeSpan.FromSeconds(_currentRoundTime);
-                if (_currentGameMode == GameMode.Standard)
+                switch (_currentGameMode)
                 {
-                    _redScore = RedCharacterStatsController.HitPoints;
-                    _blueScore = BlueCharacterStatsController.HitPoints;
-                }
-                else if (_currentGameMode == GameMode.KingOfTheHill)
-                {
-                    if (HillCollisionController.RedColliding && HillCollisionController.BlueColliding)
-                    { }
-                    else if (HillCollisionController.RedColliding)
-                        _redScore += Time.deltaTime;
-                    else if (HillCollisionController.BlueColliding)
-                        _blueScore += Time.deltaTime;
+                    case GameMode.Standard:
+                        _redScore = RedCharacterStatsController.HitPoints;
+                        _blueScore = BlueCharacterStatsController.HitPoints;
+                        break;
+                    case GameMode.KingOfTheHill:
+                        if (HillCollisionController.RedColliding && HillCollisionController.BlueColliding)
+                        { }
+                        else if (HillCollisionController.RedColliding)
+                            _redScore += Time.deltaTime;
+                        else if (HillCollisionController.BlueColliding)
+                            _blueScore += Time.deltaTime;
+                        break;
+                    case GameMode.CaptureTheFlag:
+                        break;
                 }
                 RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
                 RedScoreText.text = "" + (int)_redScore;
@@ -269,17 +358,17 @@ public class GameLoopController : MonoBehaviour
                     {
                         _redWins++;
                         RedWinsText.text = "" + _redWins;
-                        NotificationText.text = string.Format("ROUND {0}\nRED WINS", _currentRound);
+                        NotificationText.text = string.Format("ROUND {0}\nRED WINS", CurrentRound);
                     }
                     else if ((int)_blueScore > (int)_redScore)
                     {
                         _blueWins++;
                         BlueWinsText.text = "" + _blueWins;
-                        NotificationText.text = string.Format("ROUND {0}\nBLUE WINS", _currentRound);
+                        NotificationText.text = string.Format("ROUND {0}\nBLUE WINS", CurrentRound);
                     }
                     else
                     {
-                        NotificationText.text = string.Format("ROUND {0}\nDRAW", _currentRound);
+                        NotificationText.text = string.Format("ROUND {0}\nDRAW", CurrentRound);
                     }
                     _winCountdown = 5;
                     NotificationText.gameObject.SetActive(true);
@@ -298,13 +387,13 @@ public class GameLoopController : MonoBehaviour
                         QuitToMainMenu();
                     }
                     // After message after round
-                    else if (!(_currentRound == _maxRounds || _redWins > _maxRounds / 2 || _blueWins > _maxRounds / 2))
+                    else if (!(CurrentRound == _maxRounds || _redWins > _maxRounds / 2 || _blueWins > _maxRounds / 2))
                     {
                         RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
                         BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
                         RedScore = 0;
                         BlueScore = 0;
-                        _currentRound++;
+                        CurrentRound++;
                         TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);
                         RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
                         LoadoutCanvasGameObject.SetActive(true);
@@ -316,9 +405,9 @@ public class GameLoopController : MonoBehaviour
                     // Game end conditions
                     else
                     {
-                        if (_redWins > _maxRounds / 2 || _currentRound == _maxRounds && _redWins > _blueWins)
+                        if (_redWins > _maxRounds / 2 || CurrentRound == _maxRounds && _redWins > _blueWins)
                             NotificationText.text = "GAME OVER\nRED WINS";
-                        else if (_blueWins > _maxRounds / 2 || _currentRound == _maxRounds && _blueWins > _redWins)
+                        else if (_blueWins > _maxRounds / 2 || CurrentRound == _maxRounds && _blueWins > _redWins)
                             NotificationText.text = "GAME OVER\nBLUE WINS";
                         else
                             NotificationText.text = "GAME OVER\nDRAW";
