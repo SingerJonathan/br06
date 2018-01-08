@@ -25,6 +25,8 @@ public class GameLoopController : MonoBehaviour
     public Text BlueScoreText;
     public Text RoundTimeText;
     public Text NotificationText;
+    public Text RedNotificationText;
+    public Text BlueNotificationText;
     public Text GameModeText;
 
     public GameObject KingOfTheHillObjects;
@@ -41,11 +43,8 @@ public class GameLoopController : MonoBehaviour
     public CharacterLoadoutController BlueCharacterLoadoutController;
     public CharacterAnimationController BlueCharacterAnimationController;
 
-    [HideInInspector]
-    public Vector3 InitialFlagPosition;
-    [HideInInspector]
-    public Quaternion InitialFlagRotation;
-
+    private Vector3 _initialFlagPosition;
+    private Quaternion _initialFlagRotation;
     private Vector3 _initialRedCharacterPosition;
     private Vector3 _initialBlueCharacterPosition;
     private Quaternion _initialRedCharacterRotation;
@@ -66,14 +65,17 @@ public class GameLoopController : MonoBehaviour
     private float _currentRoundTime;
     private float _countdown;
     private float _winCountdown;
-
-    // DEVNOTE: Remove hard-coded value when changing game modes is implemented
+    private float _redCountdown;
+    private float _blueCountdown;
+    
     private List<Round> _rounds;
-    private GameMode _currentGameMode = GameMode.KingOfTheHill;
+    private GameMode _currentGameMode = GameMode.Standard;
     private float _redScore;
     private float _blueScore;
 
     private static string _timeFormat = "{0:D1}:{1:D2}";
+
+    private static float _respawnTime = 3;
 
     public GameMode CurrentGameMode
     {
@@ -135,6 +137,32 @@ public class GameLoopController : MonoBehaviour
                 GameModeText.text = "Standard";
             }
             SwitchGameModeObjects(_currentGameMode);
+        }
+    }
+
+    public Vector3 InitialFlagPosition
+    {
+        get
+        {
+            return _initialFlagPosition;
+        }
+
+        set
+        {
+            _initialFlagPosition = value;
+        }
+    }
+
+    public Quaternion InitialFlagRotation
+    {
+        get
+        {
+            return _initialFlagRotation;
+        }
+
+        set
+        {
+            _initialFlagRotation = value;
         }
     }
 
@@ -302,10 +330,10 @@ public class GameLoopController : MonoBehaviour
 
     void Start()
     {
-        _quitButton = MainMenuCanvasGameObject.transform.Find("Main Panel").Find("Quit Button").GetComponent<Button>();
-        _roundsDropdown = GameSetupCanvasGameObject.transform.Find("Panel").Find("Rounds Dropdown").GetComponent<Dropdown>();
-        _roundDurationDropdown = GameSetupCanvasGameObject.transform.Find("Panel").Find("Minutes Dropdown").GetComponent<Dropdown>();
-        _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Confirm Panel").gameObject;
+        _quitButton = MainMenuCanvasGameObject.transform.Find("Main Panel/Quit Button").GetComponent<Button>();
+        _roundsDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Rounds Dropdown").GetComponent<Dropdown>();
+        _roundDurationDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Minutes Dropdown").GetComponent<Dropdown>();
+        _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Main Panel/Confirm Panel").gameObject;
         _confirmPanelYesButton = _confirmPanelGameObject.transform.Find("Yes Button").GetComponent<Button>();
         _initialRedCharacterPosition = RedCharacterLoadoutController.transform.position;
         _initialBlueCharacterPosition = BlueCharacterLoadoutController.transform.position;
@@ -377,8 +405,76 @@ public class GameLoopController : MonoBehaviour
                 RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
                 RedScoreText.text = "" + (int)_redScore;
                 BlueScoreText.text = "" + (int)_blueScore;
+                // Red Respawning
+                if (RedCharacterStatsController.HitPoints == 0 && CurrentGameMode != GameMode.Standard)
+                {
+                    if (_redCountdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
+                    {
+                        _redCountdown -= Time.deltaTime;
+                        RedNotificationText.text = "" + (int)(_redCountdown + 1);
+                        if (_redCountdown <= 0.0f)
+                        {
+                            RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+                            RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
+                            RedCharacterStatsController.gameObject.SetActive(true);
+                            RedNotificationText.gameObject.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        if (CurrentGameMode == GameMode.CaptureTheFlag && RedCharacterStatsController.transform.Find("mixamorig:Hips/mixamorig:Spine/Flagpole") != null)
+                        {
+                            FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
+                            FlagController.transform.rotation = InitialFlagRotation;
+                            FlagController.transform.Translate(0, -3.2f, 0);
+                            FlagController.ResetMaterial();
+                            FlagController.GetComponent<CapsuleCollider>().enabled = true;
+                        }
+                        else if (CurrentGameMode == GameMode.KingOfTheHill)
+                        {
+                            HillCollisionController.RedColliding = false;
+                        }
+                        RedCharacterStatsController.gameObject.SetActive(false);
+                        _redCountdown = _respawnTime;
+                        RedNotificationText.gameObject.SetActive(true);
+                    }
+                }
+                // Blue Respawning
+                if (BlueCharacterStatsController.HitPoints == 0 && CurrentGameMode != GameMode.Standard)
+                {
+                    if (_blueCountdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
+                    {
+                        _blueCountdown -= Time.deltaTime;
+                        BlueNotificationText.text = "" + (int)(_blueCountdown + 1);
+                        if (_blueCountdown <= 0.0f)
+                        {
+                            BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                            BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+                            BlueCharacterStatsController.gameObject.SetActive(true);
+                            BlueNotificationText.gameObject.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        if (CurrentGameMode == GameMode.CaptureTheFlag && BlueCharacterStatsController.transform.Find("mixamorig:Hips/mixamorig:Spine/Flagpole") != null)
+                        {
+                            FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
+                            FlagController.transform.rotation = InitialFlagRotation;
+                            FlagController.transform.Translate(0, -3.2f, 0);
+                            FlagController.ResetMaterial();
+                            FlagController.GetComponent<CapsuleCollider>().enabled = true;
+                        }
+                        else if (CurrentGameMode == GameMode.KingOfTheHill)
+                        {
+                            HillCollisionController.BlueColliding = false;
+                        }
+                        BlueCharacterStatsController.gameObject.SetActive(false);
+                        _blueCountdown = _respawnTime;
+                        BlueNotificationText.gameObject.SetActive(true);
+                    }
+                }
                 // Round end conditions
-                if (_currentRoundTime <= 0.0f || RedCharacterStatsController.HitPoints == 0 || BlueCharacterStatsController.HitPoints == 0)
+                if (_currentRoundTime <= 0.0f || (CurrentGameMode == GameMode.Standard && (RedCharacterStatsController.HitPoints == 0 || BlueCharacterStatsController.HitPoints == 0)))
                 {
                     DisableCharacterAnimations();
                     if ((int)_redScore > (int)_blueScore)
@@ -420,7 +516,6 @@ public class GameLoopController : MonoBehaviour
                         BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
                         RedScore = 0;
                         BlueScore = 0;
-                        CurrentRound++;
                         TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);
                         RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
                         LoadoutCanvasGameObject.SetActive(true);
@@ -435,6 +530,7 @@ public class GameLoopController : MonoBehaviour
                             FlagController.ResetMaterial();
                             FlagController.GetComponent<CapsuleCollider>().enabled = true;
                         }
+                        CurrentRound++;
                     }
                     // Game end conditions
                     else
