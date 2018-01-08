@@ -30,6 +30,9 @@ public class GameLoopController : MonoBehaviour
     public GameObject KingOfTheHillObjects;
     public KingOfTheHillCollisionController HillCollisionController;
     public GameObject CaptureTheFlagObjects;
+    public CaptureTheFlagTriggerController RedCaptureTheFlagTriggerController;
+    public CaptureTheFlagTriggerController BlueCaptureTheFlagTriggerController;
+    public FlagController FlagController;
 
     public CharacterStatsController RedCharacterStatsController;
     public CharacterStatsController BlueCharacterStatsController;
@@ -37,6 +40,11 @@ public class GameLoopController : MonoBehaviour
     public CharacterAnimationController RedCharacterAnimationController;
     public CharacterLoadoutController BlueCharacterLoadoutController;
     public CharacterAnimationController BlueCharacterAnimationController;
+
+    [HideInInspector]
+    public Vector3 InitialFlagPosition;
+    [HideInInspector]
+    public Quaternion InitialFlagRotation;
 
     private Vector3 _initialRedCharacterPosition;
     private Vector3 _initialBlueCharacterPosition;
@@ -187,6 +195,10 @@ public class GameLoopController : MonoBehaviour
         BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+        FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
+        FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
+        FlagController.ResetMaterial();
+        FlagController.GetComponent<CapsuleCollider>().enabled = true;
         RedCharacterLoadoutController.ReadyToggle.isOn = false;
         BlueCharacterLoadoutController.ReadyToggle.isOn = false;
         RedCharacterAnimationController.enabled = false;
@@ -210,6 +222,10 @@ public class GameLoopController : MonoBehaviour
         _confirmPanelGameObject.SetActive(false);
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+        FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
+        FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
+        FlagController.ResetMaterial();
+        FlagController.GetComponent<CapsuleCollider>().enabled = true;
         DisableCharacterAnimations();
     }
 
@@ -297,6 +313,8 @@ public class GameLoopController : MonoBehaviour
         _initialBlueCharacterRotation = BlueCharacterLoadoutController.transform.rotation;
         _initialRedCharacterHitPoints = RedCharacterStatsController.HitPoints;
         _initialBlueCharacterHitPoints = BlueCharacterStatsController.HitPoints;
+        InitialFlagPosition = FlagController.transform.position;
+        InitialFlagRotation = FlagController.transform.rotation;
         _rounds = new List<Round>
         {
             RoundList.transform.GetChild(0).GetComponent<Round>()
@@ -410,6 +428,13 @@ public class GameLoopController : MonoBehaviour
                         BlueCharacterLoadoutController.ReadyToggle.isOn = false;
                         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
                         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                        if (CurrentGameMode == GameMode.CaptureTheFlag)
+                        {
+                            FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
+                            FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
+                            FlagController.ResetMaterial();
+                            FlagController.GetComponent<CapsuleCollider>().enabled = true;
+                        }
                     }
                     // Game end conditions
                     else

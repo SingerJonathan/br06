@@ -2,8 +2,8 @@
 
 public class KingOfTheHillCollisionController : MonoBehaviour
 {
-    public bool _redColliding;
-    public bool _blueColliding;
+    private bool _redColliding;
+    private bool _blueColliding;
 
     public bool RedColliding
     {
