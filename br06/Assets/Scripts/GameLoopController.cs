@@ -24,9 +24,11 @@ public class GameLoopController : MonoBehaviour
     public Text RedScoreText;
     public Text BlueScoreText;
     public Text RoundTimeText;
-    public Text NotificationText;
+    public Text RedDodgeCooldownText;
+    public Text BlueDodgeCooldownText;
     public Text RedNotificationText;
     public Text BlueNotificationText;
+    public Text NotificationText;
     public Text GameModeText;
 
     public GameObject KingOfTheHillObjects;
@@ -170,9 +172,7 @@ public class GameLoopController : MonoBehaviour
     {
         if (RedCharacterAnimationController.enabled)
         {
-            RedCharacterAnimationController._animator.SetInteger("walking", 0);
             RedCharacterAnimationController._animator.SetBool("running", false);
-            BlueCharacterAnimationController._animator.SetInteger("walking", 0);
             BlueCharacterAnimationController._animator.SetBool("running", false);
             RedCharacterAnimationController.enabled = false;
             BlueCharacterAnimationController.enabled = false;
@@ -217,6 +217,10 @@ public class GameLoopController : MonoBehaviour
         _quitButton.interactable = true;
         RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
         BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+        RedCharacterAnimationController.DodgeCountdown = 0;
+        BlueCharacterAnimationController.DodgeCountdown = 0;
+        RedDodgeCooldownText.gameObject.SetActive(false);
+        BlueDodgeCooldownText.gameObject.SetActive(false);
         RedScore = 0;
         BlueScore = 0;
         RedHPText.text = "" + RedCharacterStatsController.HitPoints;
@@ -405,6 +409,21 @@ public class GameLoopController : MonoBehaviour
                 RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
                 RedScoreText.text = "" + (int)_redScore;
                 BlueScoreText.text = "" + (int)_blueScore;
+                // Dodge Cooldown HUD updating
+                if (RedCharacterAnimationController.DodgeCountdown > 0.0f)
+                {
+                    RedDodgeCooldownText.gameObject.SetActive(true);
+                    RedDodgeCooldownText.text = "" + (int)(RedCharacterAnimationController.DodgeCountdown + 1);
+                    if (RedCharacterAnimationController.DodgeCountdown <= 0.05f)
+                        RedDodgeCooldownText.gameObject.SetActive(false);
+                }
+                if (BlueCharacterAnimationController.DodgeCountdown > 0.0f)
+                {
+                    BlueDodgeCooldownText.gameObject.SetActive(true);
+                    BlueDodgeCooldownText.text = "" + (int)(BlueCharacterAnimationController.DodgeCountdown + 1);
+                    if (BlueCharacterAnimationController.DodgeCountdown <= 0.05f)
+                        BlueDodgeCooldownText.gameObject.SetActive(false);
+                }
                 // Red Respawning
                 if (RedCharacterStatsController.HitPoints == 0 && CurrentGameMode != GameMode.Standard)
                 {
@@ -514,6 +533,10 @@ public class GameLoopController : MonoBehaviour
                     {
                         RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
                         BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+                        RedCharacterAnimationController.DodgeCountdown = 0;
+                        BlueCharacterAnimationController.DodgeCountdown = 0;
+                        RedDodgeCooldownText.gameObject.SetActive(false);
+                        BlueDodgeCooldownText.gameObject.SetActive(false);
                         RedScore = 0;
                         BlueScore = 0;
                         TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);

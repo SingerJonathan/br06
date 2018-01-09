@@ -1073,6 +1073,11 @@ Prefab:
       propertyPath: Gravity
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: DodgeSpeed
+      value: 35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc1230d0132ef3b43b02c71ec57a2da2, type: 2}
   m_IsPrefabParent: 0
@@ -4616,6 +4621,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 691631665}
+--- !u!1 &714966397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 714966398}
+  - component: {fileID: 714966400}
+  - component: {fileID: 714966399}
+  m_Layer: 5
+  m_Name: Dodge Cooldown Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &714966398
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 714966397}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1040470599}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 1, y: -100}
+  m_SizeDelta: {x: 150, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &714966399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 714966397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 7
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &714966400
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 714966397}
 --- !u!1 &738001772
 GameObject:
   m_ObjectHideFlags: 0
@@ -5098,9 +5177,11 @@ MonoBehaviour:
   RedScoreText: {fileID: 1139503661}
   BlueScoreText: {fileID: 1746568520}
   RoundTimeText: {fileID: 541788576}
-  NotificationText: {fileID: 1797636108}
+  RedDodgeCooldownText: {fileID: 1531789454}
+  BlueDodgeCooldownText: {fileID: 714966399}
   RedNotificationText: {fileID: 1065482638}
   BlueNotificationText: {fileID: 569551144}
+  NotificationText: {fileID: 1797636108}
   GameModeText: {fileID: 1367890219}
   KingOfTheHillObjects: {fileID: 1586095204}
   HillCollisionController: {fileID: 454941217}
@@ -5114,8 +5195,6 @@ MonoBehaviour:
   RedCharacterAnimationController: {fileID: 792606073}
   BlueCharacterLoadoutController: {fileID: 882110994}
   BlueCharacterAnimationController: {fileID: 882110992}
-  InitialFlagPosition: {x: 0, y: 0, z: 0}
-  InitialFlagRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &790729982
 GameObject:
   m_ObjectHideFlags: 0
@@ -5243,6 +5322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoints: 100
+  DodgeCooldown: 5
 --- !u!1 &809981587
 GameObject:
   m_ObjectHideFlags: 0
@@ -5984,6 +6064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoints: 100
+  DodgeCooldown: 5
 --- !u!1 &905870256
 GameObject:
   m_ObjectHideFlags: 0
@@ -6716,6 +6797,7 @@ RectTransform:
   m_Children:
   - {fileID: 790729983}
   - {fileID: 1746568519}
+  - {fileID: 714966398}
   m_Father: {fileID: 382898442}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9505,6 +9587,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1527295465}
+--- !u!1 &1531789452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1531789453}
+  - component: {fileID: 1531789455}
+  - component: {fileID: 1531789454}
+  m_Layer: 5
+  m_Name: Dodge Cooldown Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1531789453
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1531789452}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2140446945}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 1, y: -100}
+  m_SizeDelta: {x: 150, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1531789454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1531789452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 7
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &1531789455
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1531789452}
 --- !u!1 &1573553554
 GameObject:
   m_ObjectHideFlags: 0
@@ -9678,6 +9834,11 @@ Prefab:
         type: 2}
       propertyPath: Gravity
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: DodgeSpeed
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc1230d0132ef3b43b02c71ec57a2da2, type: 2}
@@ -12409,6 +12570,7 @@ RectTransform:
   m_Children:
   - {fileID: 327750202}
   - {fileID: 1139503660}
+  - {fileID: 1531789453}
   m_Father: {fileID: 382898442}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

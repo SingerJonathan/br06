@@ -1,19 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CharacterAnimationController : MonoBehaviour
 {
     [HideInInspector]
     public Animator _animator;
-    private bool _running;
     private CharacterController _characterController;
+    private Vector3 _moveDirection;
+    private float _dodgeCountdown;
 
     // Speed variables
     public int PlayerNumber = 1;
-    //public float WalkSpeed = 7.5f;
     public float RunSpeed = 12f;
-    //public float TurnSpeed = 200.0f;
-    //public float StrafeSpeed = 5.0f;
+    public float DodgeSpeed = 35f;
     public float Gravity = 1000.0f;
+
+    public float DodgeCountdown
+    {
+        get
+        {
+            return _dodgeCountdown;
+        }
+
+        set
+        {
+            _dodgeCountdown = value;
+        }
+    }
 
     void Start()
     {
@@ -24,38 +37,38 @@ public class CharacterAnimationController : MonoBehaviour
     void Update()
     {
         // Handle input and movement
-        Vector3 moveDirection = Vector3.zero;
-        if (_characterController.isGrounded)
+        if (_dodgeCountdown > 0.0f)
+            _dodgeCountdown -= Time.deltaTime;
+        else if (_dodgeCountdown <= 0.0f)
+            _moveDirection = Vector3.zero;
+        if (_characterController.isGrounded && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Dodge"))
         {
-            moveDirection = new Vector3(-Input.GetAxis("Vertical"+PlayerNumber), 0, Input.GetAxis("Horizontal"+PlayerNumber));
-            //if (Input.GetButton("Run"+PlayerNumber))
-                moveDirection *= RunSpeed;
-            //else
-            //    moveDirection *= WalkSpeed;
-            // DEVNOTE: Uncomment the following if jumping is added to the game
-            /*if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;*/
+            _moveDirection = new Vector3(-Input.GetAxis("Vertical" + PlayerNumber), 0, Input.GetAxis("Horizontal" + PlayerNumber));
+            if (_animator.GetNextAnimatorStateInfo(0).IsName("Dodge"))
+            {
+                _moveDirection = transform.forward.normalized * DodgeSpeed;
+                _dodgeCountdown = GetComponent<CharacterStatsController>().DodgeCooldown;
+            }
+            else
+                _moveDirection *= RunSpeed;
             float step = RunSpeed * Time.deltaTime;
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, moveDirection, step, 0.0F);
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, _moveDirection, step, 0.0F);
             transform.rotation = Quaternion.LookRotation(newDir);
-
         }
-        moveDirection.y -= Gravity * Time.deltaTime;
-        _characterController.Move(moveDirection * Time.deltaTime);
+        _moveDirection.y -= Gravity * Time.deltaTime;
+        _characterController.Move(_moveDirection * Time.deltaTime);
         
         // Handle animations
-        // DEVNOTE: Rework Animator component due to movement system rework
-        if (moveDirection.x != 0 || moveDirection.z != 0)
+        if (Input.GetButton("Dodge" + PlayerNumber) && _dodgeCountdown <= 0.0f)
         {
-            //_animator.SetInteger("walking", 1);
-            //if (Input.GetButton("Run" + PlayerNumber))
-                _animator.SetBool("running", true);
-            //else
-            //    _animator.SetBool("running", false);
+            _animator.SetTrigger("dodge");
+        }
+        if (_moveDirection.x != 0 || _moveDirection.z != 0)
+        {
+            _animator.SetBool("running", true);
         }
         else
         {
-            //_animator.SetInteger("walking", 0);
             _animator.SetBool("running", false);
         }
     }
