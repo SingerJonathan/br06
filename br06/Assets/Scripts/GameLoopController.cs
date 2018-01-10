@@ -53,8 +53,6 @@ public class GameLoopController : MonoBehaviour
     private Vector3 _initialBlueCharacterPosition;
     private Quaternion _initialRedCharacterRotation;
     private Quaternion _initialBlueCharacterRotation;
-    private int _initialRedCharacterHitPoints;
-    private int _initialBlueCharacterHitPoints;
 
     private GameObject _confirmPanelGameObject;
     private Button _confirmPanelYesButton;
@@ -217,8 +215,10 @@ public class GameLoopController : MonoBehaviour
         TimeSpan time = TimeSpan.FromSeconds(_roundDuration);
         RoundTimeText.text = string.Format(_timeFormat, time.Minutes, time.Seconds);
         _quitButton.interactable = true;
-        RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
-        BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+        RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
+        BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
+        RedCharacterStatsController.Potions = CharacterStatsController.InitialPotions;
+        BlueCharacterStatsController.Potions = CharacterStatsController.InitialPotions;
         RedCharacterAnimationController.DodgeCountdown = 0;
         BlueCharacterAnimationController.DodgeCountdown = 0;
         RedDodgeCooldownText.gameObject.SetActive(false);
@@ -227,8 +227,8 @@ public class GameLoopController : MonoBehaviour
         BlueScore = 0;
         RedHPText.text = "" + RedCharacterStatsController.HitPoints;
         BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
-        RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / _initialRedCharacterHitPoints) * 100;
-        BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / _initialBlueCharacterHitPoints) * 100;
+        RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / RedCharacterStatsController.MaxHitPoints) * 100;
+        BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / BlueCharacterStatsController.MaxHitPoints) * 100;
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
@@ -347,8 +347,6 @@ public class GameLoopController : MonoBehaviour
         _initialBlueCharacterPosition = BlueCharacterLoadoutController.transform.position;
         _initialRedCharacterRotation = RedCharacterLoadoutController.transform.rotation;
         _initialBlueCharacterRotation = BlueCharacterLoadoutController.transform.rotation;
-        _initialRedCharacterHitPoints = RedCharacterStatsController.HitPoints;
-        _initialBlueCharacterHitPoints = BlueCharacterStatsController.HitPoints;
         InitialFlagPosition = FlagController.transform.position;
         InitialFlagRotation = FlagController.transform.rotation;
         _rounds = new List<Round>
@@ -391,8 +389,8 @@ public class GameLoopController : MonoBehaviour
             {
                 RedHPText.text = "" + RedCharacterStatsController.HitPoints;
                 BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
-                RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / _initialRedCharacterHitPoints) * 100;
-                BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / _initialBlueCharacterHitPoints) * 100;
+                RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / RedCharacterStatsController.MaxHitPoints) * 100;
+                BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / BlueCharacterStatsController.MaxHitPoints) * 100;
                 _currentRoundTime -= Time.deltaTime;
                 TimeSpan time = TimeSpan.FromSeconds(_currentRoundTime);
                 switch (_currentGameMode)
@@ -440,7 +438,7 @@ public class GameLoopController : MonoBehaviour
                         if (_redCountdown <= 0.0f)
                         {
                             RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-                            RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
+                            RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
                             RedCharacterStatsController.gameObject.SetActive(true);
                             RedNotificationText.gameObject.SetActive(false);
                         }
@@ -474,7 +472,7 @@ public class GameLoopController : MonoBehaviour
                         if (_blueCountdown <= 0.0f)
                         {
                             BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
-                            BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+                            BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
                             BlueCharacterStatsController.gameObject.SetActive(true);
                             BlueNotificationText.gameObject.SetActive(false);
                         }
@@ -537,10 +535,12 @@ public class GameLoopController : MonoBehaviour
                     // After message after round
                     else if (!(CurrentRound == _maxRounds || _redWins > _maxRounds / 2 || _blueWins > _maxRounds / 2))
                     {
-                        RedCharacterStatsController.HitPoints = _initialRedCharacterHitPoints;
-                        BlueCharacterStatsController.HitPoints = _initialBlueCharacterHitPoints;
+                        RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
+                        BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
                         RedCharacterAnimationController.DodgeCountdown = 0;
                         BlueCharacterAnimationController.DodgeCountdown = 0;
+                        RedCharacterStatsController.Potions++;
+                        BlueCharacterStatsController.Potions++;
                         RedDodgeCooldownText.gameObject.SetActive(false);
                         BlueDodgeCooldownText.gameObject.SetActive(false);
                         RedScore = 0;
