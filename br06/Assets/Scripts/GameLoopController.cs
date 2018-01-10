@@ -21,6 +21,8 @@ public class GameLoopController : MonoBehaviour
     public Text BlueWinsText;
     public Text RedHPText;
     public Text BlueHPText;
+    public Slider RedHPSlider;
+    public Slider BlueHPSlider;
     public Text RedScoreText;
     public Text BlueScoreText;
     public Text RoundTimeText;
@@ -225,6 +227,8 @@ public class GameLoopController : MonoBehaviour
         BlueScore = 0;
         RedHPText.text = "" + RedCharacterStatsController.HitPoints;
         BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
+        RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / _initialRedCharacterHitPoints) * 100;
+        BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / _initialBlueCharacterHitPoints) * 100;
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
@@ -387,6 +391,8 @@ public class GameLoopController : MonoBehaviour
             {
                 RedHPText.text = "" + RedCharacterStatsController.HitPoints;
                 BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
+                RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / _initialRedCharacterHitPoints) * 100;
+                BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / _initialBlueCharacterHitPoints) * 100;
                 _currentRoundTime -= Time.deltaTime;
                 TimeSpan time = TimeSpan.FromSeconds(_currentRoundTime);
                 switch (_currentGameMode)
