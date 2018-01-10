@@ -10,6 +10,7 @@ public class CharacterStatsController : MonoBehaviour
     public static int MaxPotions = 4;
 
     public Text PotionText;
+    public ParticleSystem HealParticleSystem;
 
     private int _potions = 3;
     private int _maxHitPoints;
@@ -51,6 +52,7 @@ public class CharacterStatsController : MonoBehaviour
             if (HitPoints > MaxHitPoints)
                 HitPoints = MaxHitPoints;
             Potions -= 1;
+            HealParticleSystem.Play();
         }
     }
 
