@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class RandomEnvironmentController : MonoBehaviour
@@ -6,16 +7,22 @@ public class RandomEnvironmentController : MonoBehaviour
     public Toggle RandomEnvironmentToggle;
 
     private static int SmallObjects = 4;
+    private List<int> usedObjects;
 
     public void SpawnRandomEnvironmentObjects(bool spawnMiddleObject = false)
     {
+        usedObjects = new List<int>();
         if (RandomEnvironmentToggle.isOn)
         {
             DeleteRandomEnvironmentObjects();
             int index = !spawnMiddleObject ? 1 : 0;
             while (index < transform.childCount)
             {
-                GameObject environmentObject = (GameObject)Instantiate(Resources.Load("Random Environment/Small" + Random.Range(0, SmallObjects)));
+                int objectNumber = Random.Range(0, SmallObjects);
+                while (usedObjects.Contains(objectNumber) && usedObjects.Count < SmallObjects)
+                    objectNumber = Random.Range(0, SmallObjects);
+                GameObject environmentObject = (GameObject)Instantiate(Resources.Load("Random Environment/Small" + objectNumber));
+                usedObjects.Add(objectNumber);
                 environmentObject.transform.SetParent(transform.GetChild(index));
                 environmentObject.transform.localPosition = Vector3.zero;
                 environmentObject.transform.localEulerAngles = new Vector3(0, Random.Range(0, 359), 0);
