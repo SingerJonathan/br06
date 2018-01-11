@@ -40,6 +40,8 @@ public class GameLoopController : MonoBehaviour
     public CaptureTheFlagTriggerController BlueCaptureTheFlagTriggerController;
     public FlagController FlagController;
 
+    public RandomEnvironmentController RandomEnvironmentController;
+
     public CharacterStatsController RedCharacterStatsController;
     public CharacterStatsController BlueCharacterStatsController;
     public CharacterLoadoutController RedCharacterLoadoutController;
@@ -201,6 +203,7 @@ public class GameLoopController : MonoBehaviour
     public void NewGame()
     {
         CurrentRound = 1;
+        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode == GameMode.Standard);
         _redWins = 0;
         _blueWins = 0;
         _maxRounds = Int32.Parse(_roundsDropdown.options[_roundsDropdown.value].text);
@@ -263,6 +266,8 @@ public class GameLoopController : MonoBehaviour
         FlagController.ResetMaterial();
         FlagController.GetComponent<CapsuleCollider>().enabled = true;
         DisableCharacterAnimations();
+        SwitchGameModeObjects(GameMode.Standard);
+        RandomEnvironmentController.DeleteRandomEnvironmentObjects();
     }
 
     private void ExitGame()
@@ -560,6 +565,7 @@ public class GameLoopController : MonoBehaviour
                             FlagController.GetComponent<CapsuleCollider>().enabled = true;
                         }
                         CurrentRound++;
+                        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode == GameMode.Standard);
                     }
                     // Game end conditions
                     else
