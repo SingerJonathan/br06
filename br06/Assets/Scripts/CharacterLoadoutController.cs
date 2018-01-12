@@ -116,10 +116,6 @@ public class CharacterLoadoutController : MonoBehaviour
         weaponGameObject.transform.localPosition = new Vector3(0.00146f, 0.00637f, 0.00214f);
         weaponGameObject.transform.localEulerAngles = new Vector3(-178, 45, -90);
 
-        // DEVNOTE: Remove this if / when better solution is found
-        // Scale weapon to correct size
-        weaponGameObject.transform.localScale = new Vector3(0.03f, 0.03f, 0.02f);
-
         if (!offhand)
             _mainWeaponGameObject = weaponGameObject;
         else
