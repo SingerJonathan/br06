@@ -118,7 +118,7 @@ public class CharacterLoadoutController : MonoBehaviour
 
         // DEVNOTE: Remove this if / when better solution is found
         // Scale weapon to correct size
-        weaponGameObject.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+        weaponGameObject.transform.localScale = new Vector3(0.03f, 0.03f, 0.02f);
 
         if (!offhand)
             _mainWeaponGameObject = weaponGameObject;

@@ -266,7 +266,6 @@ public class GameLoopController : MonoBehaviour
         FlagController.ResetMaterial();
         FlagController.GetComponent<CapsuleCollider>().enabled = true;
         DisableCharacterAnimations();
-        SwitchGameModeObjects(GameMode.Standard);
         RandomEnvironmentController.DeleteRandomEnvironmentObjects();
     }
 
