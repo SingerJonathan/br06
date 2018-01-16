@@ -1,10 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterLoadoutController : MonoBehaviour
 {
     public static Weapon[] Weapons;
+
+    private static List<Vector3> _weaponPositions = new List<Vector3>
+    {
+        new Vector3(0.00434f, 0.00542f, 0.00539f), // Battleaxe
+        new Vector3(0.00453f, 0.00752f, -0.00454f), // Greataxe
+        new Vector3(0.03305f, 0.00186f, 0.0084f), // Longbow
+        new Vector3(0.00146f, 0.00637f, 0.00214f), // Longsword
+        new Vector3(0.00453f, 0.00752f, -0.00454f) // Spear
+    };
+
+    private static List<Vector3> _weaponEulerAngles = new List<Vector3>
+    {
+        new Vector3(-178, 45, -90), // Battleaxe
+        new Vector3(-188, 143, -75), // Greataxe
+        new Vector3(-186, 78, 180), // Longbow
+        new Vector3(-178, 45, -90), // Longsword
+        new Vector3(-188, 143, -75) // Spear
+    };
 
     public enum WeaponEnum
     {
@@ -28,6 +47,7 @@ public class CharacterLoadoutController : MonoBehaviour
 
     private Transform _characterRightHandTransform;
     private Transform _characterLeftHandTransform;
+
 
     public WeaponEnum MainWeapon
     {
@@ -85,6 +105,8 @@ public class CharacterLoadoutController : MonoBehaviour
         // Remove game object for old weapon
         if (handTransform.childCount > 0)
             Destroy(handTransform.GetChild(0).gameObject);
+        if (_characterLeftHandTransform.childCount > 0 && _characterLeftHandTransform.GetChild(0).GetComponent<Weapon>().Bow)
+            Destroy(_characterLeftHandTransform.GetChild(0).gameObject);
 
         if (weapon == WeaponEnum.None) return;
         
@@ -112,9 +134,11 @@ public class CharacterLoadoutController : MonoBehaviour
         }
 
         // Assign parent for new weapon and adjust position
+        if (weaponGameObject.GetComponent<Weapon>().Bow)
+            handTransform = _characterLeftHandTransform;
         weaponGameObject.transform.SetParent(handTransform);
-        weaponGameObject.transform.localPosition = new Vector3(0.00146f, 0.00637f, 0.00214f);
-        weaponGameObject.transform.localEulerAngles = new Vector3(-178, 45, -90);
+        weaponGameObject.transform.localPosition = _weaponPositions[(int)weapon-1];
+        weaponGameObject.transform.localEulerAngles = _weaponEulerAngles[(int)weapon-1];
 
         if (!offhand)
             _mainWeaponGameObject = weaponGameObject;
