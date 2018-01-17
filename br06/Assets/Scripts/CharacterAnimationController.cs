@@ -8,6 +8,7 @@ public class CharacterAnimationController : MonoBehaviour
     private CharacterController _characterController;
     private Vector3 _moveDirection;
     private float _dodgeCountdown;
+    private bool _mirrorRun;
 
     // Speed variables
     public int PlayerNumber = 1;
@@ -25,6 +26,22 @@ public class CharacterAnimationController : MonoBehaviour
         set
         {
             _dodgeCountdown = value;
+        }
+    }
+
+    public bool MirrorRun
+    {
+        get
+        {
+            return _mirrorRun;
+        }
+
+        set
+        {
+            _mirrorRun = value;
+            if (!_animator)
+                _animator = GetComponent<Animator>();
+            _animator.SetBool("mirror", value);
         }
     }
 

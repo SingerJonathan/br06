@@ -133,6 +133,9 @@ public class CharacterLoadoutController : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
 
+        // Make sure the correct character running animation is used
+        GetComponent<CharacterAnimationController>().MirrorRun = weaponGameObject.GetComponent<Weapon>().Bow;
+
         // Assign parent for new weapon and adjust position
         if (weaponGameObject.GetComponent<Weapon>().Bow)
             handTransform = _characterLeftHandTransform;
