@@ -4,20 +4,18 @@ using UnityEngine.UI;
 
 public class AbilityCooldown : MonoBehaviour
 {
-
     public string abilityButtonAxisName = "Fire1";
     public Image darkMask;
     public Text CooldownTextDisplay;
 
     [SerializeField] private Ability ability;
     [SerializeField] private GameObject weaponHolder;
-    private Image myButtonImage;
+    [SerializeField] private Image myButtonImage;
     private AudioSource abilitySource;
     private float CooldownDuration;
     private float nextReadyTime;
     private float CooldownTimeLeft;
-
-
+    
     void Start()
     {
         Initialize(ability, weaponHolder);
@@ -26,12 +24,12 @@ public class AbilityCooldown : MonoBehaviour
     public void Initialize(Ability selectedAbility, GameObject weaponHolder)
     {
         ability = selectedAbility;
-        myButtonImage = GetComponent<Image>();
+        //myButtonImage = GetComponent<Image>();
         abilitySource = GetComponent<AudioSource>();
         myButtonImage.sprite = ability.aSprite;
-        darkMask.sprite = ability.aSprite;
+        //darkMask.sprite = ability.aSprite;
         CooldownDuration = ability.aBaseCooldown;
-        ability.Initialise(weaponHolder);
+        ability.Initialize(weaponHolder);
         AbilityReady();
     }
 
@@ -74,8 +72,8 @@ public class AbilityCooldown : MonoBehaviour
         darkMask.enabled = true;
         CooldownTextDisplay.enabled = true;
 
-        abilitySource.clip = ability.aSound;
-        abilitySource.Play();
+        //abilitySource.clip = ability.aSound;
+        //abilitySource.Play();
         ability.TriggerAbility();
     }
 }

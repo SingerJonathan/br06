@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Ability : ScriptableObject
 {
@@ -9,7 +7,10 @@ public abstract class Ability : ScriptableObject
     public AudioClip aSound;
     public float aBaseCooldown = 1f;
 
-    public abstract void Initialise(GameObject obj);
+    protected HitboxTriggerController _hitboxTriggerController;
+    protected string _enemyColour;
+
+    public abstract void Initialize(GameObject obj);
 
     public abstract void TriggerAbility();
 }
