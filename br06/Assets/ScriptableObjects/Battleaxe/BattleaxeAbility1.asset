@@ -9,11 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: Longsword Ability 1
+  m_Name: BattleaxeAbility1
   m_EditorClassIdentifier: 
-  aName: Longsword Ability 1
-  aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
-  aSound: {fileID: 8300000, guid: 6ab877b1bd1132848851d206f627e543, type: 3}
+  aName: Battleaxe Ability 1
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
   aBaseCooldown: 1
-  aAnimation: {fileID: 0}
   WeaponDamage: 10
