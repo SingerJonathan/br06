@@ -25,6 +25,22 @@ public class CharacterLoadoutController : MonoBehaviour
         new Vector3(-188, 143, -75) // Spear
     };
 
+    private static List<Vector3> _weaponPositionsOffhand = new List<Vector3>
+    {
+        new Vector3(-0.007f, 0.006f, 0.0005f), // Battleaxe
+        new Vector3(-0.007f, 0.006f, 0.0005f), // None
+        new Vector3(-0.007f, 0.006f, 0.0005f), // None
+        new Vector3(-0.003f, 0.006f, -0.0005f), // Longsword
+    };
+
+    private static List<Vector3> _weaponEulerAnglesOffhand = new List<Vector3>
+    {
+        new Vector3(-178, -76, -90), // Battleaxe
+        new Vector3(-178, -76, -90), // None
+        new Vector3(-178, -76, -90), // None
+        new Vector3(-178, -76, -90), // Longsword
+    };
+
     public enum WeaponEnum
     {
         None, Battleaxe, Greataxe, Longbow, Longsword, Spear
@@ -140,8 +156,16 @@ public class CharacterLoadoutController : MonoBehaviour
         if (weaponGameObject.GetComponent<Weapon>().Bow)
             handTransform = _characterLeftHandTransform;
         weaponGameObject.transform.SetParent(handTransform);
-        weaponGameObject.transform.localPosition = _weaponPositions[(int)weapon-1];
-        weaponGameObject.transform.localEulerAngles = _weaponEulerAngles[(int)weapon-1];
+        if (offhand)
+        {
+            weaponGameObject.transform.localPosition = _weaponPositionsOffhand[(int)weapon - 1];
+            weaponGameObject.transform.localEulerAngles = _weaponEulerAnglesOffhand[(int)weapon - 1];
+        }
+        else
+        {
+            weaponGameObject.transform.localPosition = _weaponPositions[(int)weapon - 1];
+            weaponGameObject.transform.localEulerAngles = _weaponEulerAngles[(int)weapon - 1];
+        }
 
         if (!offhand)
             _mainWeaponGameObject = weaponGameObject;
