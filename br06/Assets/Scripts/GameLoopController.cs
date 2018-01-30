@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameLoopController : MonoBehaviour
@@ -10,6 +11,8 @@ public class GameLoopController : MonoBehaviour
     {
         Standard, KingOfTheHill, CaptureTheFlag
     }
+
+    public EventSystem EventSystem;
 
     public GameObject MainMenuCanvasGameObject;
     public GameObject GameSetupCanvasGameObject;
@@ -56,6 +59,8 @@ public class GameLoopController : MonoBehaviour
     private Quaternion _initialRedCharacterRotation;
     private Quaternion _initialBlueCharacterRotation;
 
+    private GameObject _newGameButtonGameObject;
+    private GameObject _mainMenuPanelGameObject;
     private GameObject _confirmPanelGameObject;
     private Button _confirmPanelYesButton;
     private Button _quitButton;
@@ -189,6 +194,8 @@ public class GameLoopController : MonoBehaviour
         LoadoutCanvasGameObject.SetActive(false);
         HUDCanvasGameObject.SetActive(false);
         NotificationText.gameObject.SetActive(false);
+        LoadoutCanvasGameObject.GetComponent<CanvasGroup>().interactable = true;
+        EventSystem.SetSelectedGameObject(_roundsDropdown.gameObject);
     }
 
     public void CancelNewGame()
@@ -198,6 +205,8 @@ public class GameLoopController : MonoBehaviour
         LoadoutCanvasGameObject.SetActive(false);
         HUDCanvasGameObject.SetActive(false);
         NotificationText.gameObject.SetActive(false);
+        _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+        EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
     }
 
     public void NewGame()
@@ -257,6 +266,8 @@ public class GameLoopController : MonoBehaviour
         GameSetupCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(false);
         HUDCanvasGameObject.SetActive(false);
+        _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+        EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
         _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
         RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
@@ -296,6 +307,9 @@ public class GameLoopController : MonoBehaviour
     public void OpenConfirmDialogue(string context)
     {
         _confirmPanelGameObject.SetActive(true);
+        _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
+        _confirmPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+        EventSystem.SetSelectedGameObject(_confirmPanelYesButton.gameObject);
         UnityAction call;
         switch (context)
         {
@@ -318,6 +332,8 @@ public class GameLoopController : MonoBehaviour
     public void CloseConfirmDialogue()
     {
         _confirmPanelGameObject.SetActive(false);
+        _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+        EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
     }
 
     public void RefreshRoundList()
@@ -345,8 +361,10 @@ public class GameLoopController : MonoBehaviour
         _quitButton = MainMenuCanvasGameObject.transform.Find("Main Panel/Quit Button").GetComponent<Button>();
         _roundsDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Rounds Dropdown").GetComponent<Dropdown>();
         _roundDurationDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Minutes Dropdown").GetComponent<Dropdown>();
-        _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Main Panel/Confirm Panel").gameObject;
-        _confirmPanelYesButton = _confirmPanelGameObject.transform.Find("Yes Button").GetComponent<Button>();
+        _mainMenuPanelGameObject = MainMenuCanvasGameObject.transform.Find("Main Panel").gameObject;
+        _newGameButtonGameObject = _mainMenuPanelGameObject.transform.Find("New Game Button").gameObject;
+        _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Confirm Panel").gameObject;
+        _confirmPanelYesButton = _confirmPanelGameObject.transform.Find("Buttons/Yes Button").GetComponent<Button>();
         _initialRedCharacterPosition = RedCharacterLoadoutController.transform.position;
         _initialBlueCharacterPosition = BlueCharacterLoadoutController.transform.position;
         _initialRedCharacterRotation = RedCharacterLoadoutController.transform.rotation;
@@ -586,10 +604,12 @@ public class GameLoopController : MonoBehaviour
                 {
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();
+                    _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
                 }
                 else
                 {
                     MainMenuCanvasGameObject.SetActive(false);
+                    _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
                     RedCharacterAnimationController.enabled = true;
                     BlueCharacterAnimationController.enabled = true;
                 }
