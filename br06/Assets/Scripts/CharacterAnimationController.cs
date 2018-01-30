@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CharacterAnimationController : MonoBehaviour
 {
-    [HideInInspector]
     public Animator _animator;
     private CharacterController _characterController;
     private Vector3 _moveDirection;
@@ -39,15 +38,12 @@ public class CharacterAnimationController : MonoBehaviour
         set
         {
             _mirrorRun = value;
-            if (!_animator)
-                _animator = GetComponent<Animator>();
             _animator.SetBool("mirror", value);
         }
     }
 
     void Start()
     {
-        _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
     }
 

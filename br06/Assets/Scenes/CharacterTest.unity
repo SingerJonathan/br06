@@ -1092,6 +1092,11 @@ Prefab:
       propertyPath: DodgeSpeed
       value: 35
       objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 1815809325}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc1230d0132ef3b43b02c71ec57a2da2, type: 2}
   m_IsPrefabParent: 0
@@ -7042,7 +7047,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9019608, g: 0.9019608, b: 0.9019608, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -18535,6 +18540,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 32.8
       objectReference: {fileID: 0}
+    - target: {fileID: 114243106556387398, guid: dc1230d0132ef3b43b02c71ec57a2da2,
+        type: 2}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 1908055204}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc1230d0132ef3b43b02c71ec57a2da2, type: 2}
   m_IsPrefabParent: 0

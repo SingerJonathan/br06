@@ -605,13 +605,17 @@ public class GameLoopController : MonoBehaviour
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+                    EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
                 }
                 else
                 {
                     MainMenuCanvasGameObject.SetActive(false);
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
-                    RedCharacterAnimationController.enabled = true;
-                    BlueCharacterAnimationController.enabled = true;
+                    if (!LoadoutCanvasGameObject.activeInHierarchy && _currentRoundTime > 0.0f)
+                    {
+                        RedCharacterAnimationController.enabled = true;
+                        BlueCharacterAnimationController.enabled = true;
+                    }
                 }
             }
         }
