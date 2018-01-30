@@ -57,6 +57,8 @@ public class CharacterAnimationController : MonoBehaviour
         if (_characterController.isGrounded && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Dodge"))
         {
             _moveDirection = new Vector3(-Input.GetAxis("Vertical" + PlayerNumber), 0, Input.GetAxis("Horizontal" + PlayerNumber));
+            if (_moveDirection == Vector3.zero)
+                _moveDirection = new Vector3(-Input.GetAxis("VerticalAlt" + PlayerNumber), 0, Input.GetAxis("HorizontalAlt" + PlayerNumber));
             if (_animator.GetNextAnimatorStateInfo(0).IsName("Dodge"))
             {
                 _moveDirection = transform.forward.normalized * DodgeSpeed;
