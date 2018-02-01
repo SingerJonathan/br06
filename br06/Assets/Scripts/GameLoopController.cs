@@ -36,6 +36,14 @@ public class GameLoopController : MonoBehaviour
     public Text NotificationText;
     public Text GameModeText;
 
+    public GameObject[,] LoadoutStatePanels = new GameObject[2,6];
+    public GameObject RedState1Panel;
+    public GameObject RedState2Panel;
+    public GameObject RedState5Panel;
+    public GameObject BlueState1Panel;
+    public GameObject BlueState2Panel;
+    public GameObject BlueState5Panel;
+
     public GameObject KingOfTheHillObjects;
     public KingOfTheHillCollisionController HillCollisionController;
     public GameObject CaptureTheFlagObjects;
@@ -47,10 +55,12 @@ public class GameLoopController : MonoBehaviour
 
     public CharacterStatsController RedCharacterStatsController;
     public CharacterStatsController BlueCharacterStatsController;
-    public CharacterLoadoutController RedCharacterLoadoutController;
     public CharacterAnimationController RedCharacterAnimationController;
-    public CharacterLoadoutController BlueCharacterLoadoutController;
     public CharacterAnimationController BlueCharacterAnimationController;
+    public CharacterLoadoutController[] CharacterLoadoutControllers;
+
+    public Dropdown[] MainWeaponDropdowns;
+    public Dropdown[] OffhandWeaponDropdowns;
 
     private Vector3 _initialFlagPosition;
     private Quaternion _initialFlagRotation;
@@ -59,6 +69,7 @@ public class GameLoopController : MonoBehaviour
     private Quaternion _initialRedCharacterRotation;
     private Quaternion _initialBlueCharacterRotation;
 
+    private CanvasGroup _loadoutCanvasGroup;
     private GameObject _newGameButtonGameObject;
     private GameObject _mainMenuPanelGameObject;
     private GameObject _confirmPanelGameObject;
@@ -66,6 +77,7 @@ public class GameLoopController : MonoBehaviour
     private Button _quitButton;
     private Dropdown _roundsDropdown;
     private Dropdown _roundDurationDropdown;
+
     private int _maxRounds;
     private float _roundDuration;
     private int _currentRound;
@@ -81,6 +93,9 @@ public class GameLoopController : MonoBehaviour
     private GameMode _currentGameMode = GameMode.Standard;
     private float _redScore;
     private float _blueScore;
+
+    private bool[] _loadoutAxisTriggered = new bool[2];
+    private int[] _loadoutNavigationStates = new int[2];
 
     private static string _timeFormat = "{0:D1}:{1:D2}";
 
@@ -211,6 +226,8 @@ public class GameLoopController : MonoBehaviour
 
     public void NewGame()
     {
+        _loadoutNavigationStates[0] = 0;
+        _loadoutNavigationStates[1] = 0;
         CurrentRound = 1;
         RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode == GameMode.Standard);
         _redWins = 0;
@@ -241,23 +258,25 @@ public class GameLoopController : MonoBehaviour
         BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
         RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / RedCharacterStatsController.MaxHitPoints) * 100;
         BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / BlueCharacterStatsController.MaxHitPoints) * 100;
-        RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-        BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+        CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+        CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
         FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
         FlagController.ResetMaterial();
         FlagController.GetComponent<CapsuleCollider>().enabled = true;
-        RedCharacterLoadoutController.ReadyToggle.isOn = false;
-        BlueCharacterLoadoutController.ReadyToggle.isOn = false;
+        CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
+        CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
         RedCharacterAnimationController.enabled = false;
         BlueCharacterAnimationController.enabled = false;
         _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
+        _loadoutCanvasGroup.interactable = true;
     }
 
     private void QuitToMainMenu()
     {
-        _confirmPanelGameObject.SetActive(false); 
+        _confirmPanelGameObject.SetActive(false);
+        _loadoutCanvasGroup.interactable = false;
         CurrentRound = 0;
         _quitButton.interactable = false;
         RedCharacterAnimationController.enabled = false;
@@ -270,8 +289,8 @@ public class GameLoopController : MonoBehaviour
         EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
         _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
-        RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-        BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+        CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+        CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
         FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
         FlagController.ResetMaterial();
@@ -356,8 +375,119 @@ public class GameLoopController : MonoBehaviour
         }
     }
 
+    private void SwitchActiveLoadoutStatePanel(int playerNumber, int state)
+    {
+        for (int index = 0; index < LoadoutStatePanels.GetLength(1); index++)
+            if (LoadoutStatePanels[playerNumber, index] != null)
+                if (index == state)
+                    LoadoutStatePanels[playerNumber, index].SetActive(true);
+                else
+                    LoadoutStatePanels[playerNumber, index].SetActive(false);
+    }
+
+    private void HandleLoadoutInput(int playerNumber)
+    {
+        // State 1: Weapon Dropdown
+        if (_loadoutNavigationStates[playerNumber] == 1)
+        {
+            if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) == 0 && Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) == 0)
+                _loadoutAxisTriggered[playerNumber] = false;
+            if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) < 0 || Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) < 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    MainWeaponDropdowns[playerNumber].value++;
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) > 0 || Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) > 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    MainWeaponDropdowns[playerNumber].value--;
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
+                if (OffhandWeaponDropdowns[playerNumber].enabled)
+                {
+                    _loadoutNavigationStates[playerNumber] = 2;
+                    SwitchActiveLoadoutStatePanel(playerNumber, 2);
+                }
+                else // Two-handed
+                {
+                    _loadoutNavigationStates[playerNumber] = 5;
+                    SwitchActiveLoadoutStatePanel(playerNumber, 5);
+                }
+        }
+        // State 2: Offhand Weapon Dropdown
+        else if (_loadoutNavigationStates[playerNumber] == 2)
+        {
+            if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) == 0 && Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) == 0)
+                _loadoutAxisTriggered[playerNumber] = false;
+            if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) < 0 || Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) < 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    OffhandWeaponDropdowns[playerNumber].value++;
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) > 0 || Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) > 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    OffhandWeaponDropdowns[playerNumber].value--;
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
+            {
+                _loadoutNavigationStates[playerNumber] = 5;
+                SwitchActiveLoadoutStatePanel(playerNumber, 5);
+            }
+            else if (Input.GetButtonDown("Cancel" + (playerNumber + 1)) || Input.GetButtonDown("CancelAlt" + (playerNumber + 1)))
+            {
+                _loadoutNavigationStates[playerNumber] = 1;
+                SwitchActiveLoadoutStatePanel(playerNumber, 1);
+            }
+        }
+        // State 3: Detailed Ability View
+        // State 4: Ability Mutation
+        // State 5: Ready
+        else if (_loadoutNavigationStates[playerNumber] == 5)
+        {
+            if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
+                CharacterLoadoutControllers[playerNumber].ReadyToggle.isOn = true;
+            else if (Input.GetButtonDown("Cancel" + (playerNumber + 1)) || Input.GetButtonDown("CancelAlt" + (playerNumber + 1)))
+            {
+                if (CharacterLoadoutControllers[playerNumber].ReadyToggle.isOn)
+                    CharacterLoadoutControllers[playerNumber].ReadyToggle.isOn = false;
+                else if (CurrentRound == 1)
+                {
+                    if (OffhandWeaponDropdowns[playerNumber].enabled)
+                    {
+                        _loadoutNavigationStates[playerNumber] = 2;
+                        SwitchActiveLoadoutStatePanel(playerNumber, 2);
+                    }
+                    else // Two-handed
+                    {
+                        _loadoutNavigationStates[playerNumber] = 1;
+                        SwitchActiveLoadoutStatePanel(playerNumber, 1);
+                    }
+                }
+            }
+        }
+    }
+
     void Start()
     {
+        LoadoutStatePanels[0, 1] = RedState1Panel;
+        LoadoutStatePanels[0, 2] = RedState2Panel;
+        LoadoutStatePanels[0, 5] = RedState5Panel;
+        LoadoutStatePanels[1, 1] = BlueState1Panel;
+        LoadoutStatePanels[1, 2] = BlueState2Panel;
+        LoadoutStatePanels[1, 5] = BlueState5Panel;
         _quitButton = MainMenuCanvasGameObject.transform.Find("Main Panel/Quit Button").GetComponent<Button>();
         _roundsDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Rounds Dropdown").GetComponent<Dropdown>();
         _roundDurationDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Minutes Dropdown").GetComponent<Dropdown>();
@@ -365,10 +495,11 @@ public class GameLoopController : MonoBehaviour
         _newGameButtonGameObject = _mainMenuPanelGameObject.transform.Find("New Game Button").gameObject;
         _confirmPanelGameObject = MainMenuCanvasGameObject.transform.Find("Confirm Panel").gameObject;
         _confirmPanelYesButton = _confirmPanelGameObject.transform.Find("Buttons/Yes Button").GetComponent<Button>();
-        _initialRedCharacterPosition = RedCharacterLoadoutController.transform.position;
-        _initialBlueCharacterPosition = BlueCharacterLoadoutController.transform.position;
-        _initialRedCharacterRotation = RedCharacterLoadoutController.transform.rotation;
-        _initialBlueCharacterRotation = BlueCharacterLoadoutController.transform.rotation;
+        _loadoutCanvasGroup = LoadoutCanvasGameObject.GetComponent<CanvasGroup>();
+        _initialRedCharacterPosition = CharacterLoadoutControllers[0].transform.position;
+        _initialBlueCharacterPosition = CharacterLoadoutControllers[1].transform.position;
+        _initialRedCharacterRotation = CharacterLoadoutControllers[0].transform.rotation;
+        _initialBlueCharacterRotation = CharacterLoadoutControllers[1].transform.rotation;
         InitialFlagPosition = FlagController.transform.position;
         InitialFlagRotation = FlagController.transform.rotation;
         _rounds = new List<Round>
@@ -382,14 +513,30 @@ public class GameLoopController : MonoBehaviour
         // Game is in progress
         if (CurrentRound > 0)
         {
-            // In Loadout menu
+            if (_loadoutCanvasGroup.interactable)
+            {
+                if (!(_loadoutNavigationStates[0] == 0 && (Input.GetButtonDown("Submit1") || Input.GetButtonDown("SubmitAlt1"))))
+                {
+                    HandleLoadoutInput(0);
+                    HandleLoadoutInput(1);
+                }
+                else
+                {
+                    _loadoutNavigationStates[0] = 1;
+                    _loadoutNavigationStates[1] = 1;
+                    SwitchActiveLoadoutStatePanel(0, 1);
+                    SwitchActiveLoadoutStatePanel(1, 1);
+                }
+            }
+            // Listen for ready up
             if (LoadoutCanvasGameObject.activeInHierarchy)
             {
-                if (RedCharacterLoadoutController.Ready && BlueCharacterLoadoutController.Ready)
+                if (CharacterLoadoutControllers[0].Ready && CharacterLoadoutControllers[1].Ready)
                 {
                     NotificationText.gameObject.SetActive(true);
                     _countdown = 3;
                     NotificationText.text = "" + 3;
+                    _loadoutCanvasGroup.interactable = false;
                     LoadoutCanvasGameObject.SetActive(false);
                 }
             }
@@ -459,7 +606,7 @@ public class GameLoopController : MonoBehaviour
                         RedNotificationText.text = "" + (int)(_redCountdown + 1);
                         if (_redCountdown <= 0.0f)
                         {
-                            RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+                            CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
                             RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
                             RedCharacterStatsController.gameObject.SetActive(true);
                             RedNotificationText.gameObject.SetActive(false);
@@ -493,7 +640,7 @@ public class GameLoopController : MonoBehaviour
                         BlueNotificationText.text = "" + (int)(_blueCountdown + 1);
                         if (_blueCountdown <= 0.0f)
                         {
-                            BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                            CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
                             BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
                             BlueCharacterStatsController.gameObject.SetActive(true);
                             BlueNotificationText.gameObject.SetActive(false);
@@ -570,10 +717,11 @@ public class GameLoopController : MonoBehaviour
                         TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);
                         RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
                         LoadoutCanvasGameObject.SetActive(true);
-                        RedCharacterLoadoutController.ReadyToggle.isOn = false;
-                        BlueCharacterLoadoutController.ReadyToggle.isOn = false;
-                        RedCharacterLoadoutController.transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-                        BlueCharacterLoadoutController.transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                        _loadoutCanvasGroup.interactable = true;
+                        CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
+                        CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
+                        CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+                        CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
                         if (CurrentGameMode == GameMode.CaptureTheFlag)
                         {
                             FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
@@ -605,12 +753,14 @@ public class GameLoopController : MonoBehaviour
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+                    _loadoutCanvasGroup.interactable = false;
                     EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
                 }
                 else
                 {
                     MainMenuCanvasGameObject.SetActive(false);
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
+                    _loadoutCanvasGroup.interactable = true;
                     if (!LoadoutCanvasGameObject.activeInHierarchy && _currentRoundTime > 0.0f)
                     {
                         RedCharacterAnimationController.enabled = true;
