@@ -96,8 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Battleaxe
   TwoHanded: 0
-  DamageMin: 2
-  DamageMax: 8
-  AttackSpeed: 7
-  CriticalHitRate: 5
-  CriticalHitMultiplier: 3
+  Bow: 0
+  Abilities:
+  - {fileID: 11400000, guid: ccfdec69b6771bf4ea7bffc61a21524e, type: 2}
+  - {fileID: 11400000, guid: ccfdec69b6771bf4ea7bffc61a21524e, type: 2}
+  - {fileID: 11400000, guid: ccfdec69b6771bf4ea7bffc61a21524e, type: 2}

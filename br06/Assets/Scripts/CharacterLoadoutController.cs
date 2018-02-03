@@ -112,6 +112,12 @@ public class CharacterLoadoutController : MonoBehaviour
         }
     }
 
+    public void SetAbilitiesActive(bool active)
+    {
+        foreach (AbilityCooldown ability in Abilities)
+            ability.enabled = active;
+    }
+
     private void ChangeWeapon(WeaponEnum weapon, bool offhand = false)
     {
         // DEVNOTE: Remove this when Loadout GUI is implemented
@@ -151,11 +157,13 @@ public class CharacterLoadoutController : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
 
+        Weapon weaponComponent = weaponGameObject.GetComponent<Weapon>();
+
         // Make sure the correct character running animation is used
-        GetComponent<CharacterAnimationController>().MirrorRun = weaponGameObject.GetComponent<Weapon>().Bow;
+        GetComponent<CharacterAnimationController>().MirrorRun = weaponComponent.Bow;
 
         // Assign parent for new weapon and adjust position
-        if (weaponGameObject.GetComponent<Weapon>().Bow)
+        if (weaponComponent.Bow)
             handTransform = _characterLeftHandTransform;
         weaponGameObject.transform.SetParent(handTransform);
         if (offhand)
@@ -173,6 +181,14 @@ public class CharacterLoadoutController : MonoBehaviour
             _mainWeaponGameObject = weaponGameObject;
         else
             _offhandWeaponGameObject = weaponGameObject;
+
+        // Assign weapon abilities to buttons and HUD icons
+        for (int index = 0; index < weaponComponent.Abilities.Length; index++)
+            if ((!offhand && index < weaponComponent.Abilities.Length - 1) || (offhand && index == weaponComponent.Abilities.Length - 1) || weaponComponent.TwoHanded)
+            {
+                Abilities[index].Ability = weaponComponent.Abilities[index];
+                Abilities[index].Initialize(weaponComponent.Abilities[index], gameObject);
+            }
     }
 
     // DEVNOTE: Consider moving this into OnValueChanged in inspector for dropdown

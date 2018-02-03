@@ -297,6 +297,8 @@ public class GameLoopController : MonoBehaviour
         FlagController.GetComponent<CapsuleCollider>().enabled = true;
         DisableCharacterAnimations();
         RandomEnvironmentController.DeleteRandomEnvironmentObjects();
+        foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+            loadoutController.SetAbilitiesActive(false);
     }
 
     private void ExitGame()
@@ -502,6 +504,8 @@ public class GameLoopController : MonoBehaviour
         _initialBlueCharacterRotation = CharacterLoadoutControllers[1].transform.rotation;
         InitialFlagPosition = FlagController.transform.position;
         InitialFlagRotation = FlagController.transform.rotation;
+        foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+            loadoutController.SetAbilitiesActive(false);
         _rounds = new List<Round>
         {
             RoundList.transform.GetChild(0).GetComponent<Round>()
@@ -551,6 +555,8 @@ public class GameLoopController : MonoBehaviour
                     RedCharacterAnimationController.enabled = true;
                     BlueCharacterAnimationController.enabled = true;
                     _currentRoundTime = _roundDuration;
+                    foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+                        loadoutController.SetAbilitiesActive(true);
                 }
             }
             // Countdown finished, round started
@@ -598,7 +604,7 @@ public class GameLoopController : MonoBehaviour
                         BlueDodgeCooldownText.gameObject.SetActive(false);
                 }
                 // Red Respawning
-                if (RedCharacterStatsController.HitPoints == 0 && CurrentGameMode != GameMode.Standard)
+                if (RedCharacterStatsController.HitPoints <= 0 && CurrentGameMode != GameMode.Standard)
                 {
                     if (_redCountdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
                     {
@@ -632,7 +638,7 @@ public class GameLoopController : MonoBehaviour
                     }
                 }
                 // Blue Respawning
-                if (BlueCharacterStatsController.HitPoints == 0 && CurrentGameMode != GameMode.Standard)
+                if (BlueCharacterStatsController.HitPoints <= 0 && CurrentGameMode != GameMode.Standard)
                 {
                     if (_blueCountdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
                     {
@@ -669,6 +675,8 @@ public class GameLoopController : MonoBehaviour
                 if (_currentRoundTime <= 0.0f || (CurrentGameMode == GameMode.Standard && (RedCharacterStatsController.HitPoints == 0 || BlueCharacterStatsController.HitPoints == 0)))
                 {
                     DisableCharacterAnimations();
+                    foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+                        loadoutController.SetAbilitiesActive(false);
                     if ((int)_redScore > (int)_blueScore)
                     {
                         _redWins++;
@@ -755,6 +763,8 @@ public class GameLoopController : MonoBehaviour
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
                     _loadoutCanvasGroup.interactable = false;
                     EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
+                    foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+                        loadoutController.SetAbilitiesActive(false);
                 }
                 else
                 {
@@ -766,6 +776,8 @@ public class GameLoopController : MonoBehaviour
                         RedCharacterAnimationController.enabled = true;
                         BlueCharacterAnimationController.enabled = true;
                     }
+                    foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+                        loadoutController.SetAbilitiesActive(true);
                 }
             }
         }

@@ -15,7 +15,20 @@ public class AbilityCooldown : MonoBehaviour
     private float CooldownDuration;
     private float nextReadyTime;
     private float CooldownTimeLeft;
-    
+
+    public Ability Ability
+    {
+        get
+        {
+            return ability;
+        }
+
+        set
+        {
+            ability = value;
+        }
+    }
+
     void Start()
     {
         Initialize(ability, weaponHolder);

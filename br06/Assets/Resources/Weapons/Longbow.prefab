@@ -97,8 +97,7 @@ MonoBehaviour:
   Name: Longbow
   TwoHanded: 1
   Bow: 1
-  DamageMin: 1
-  DamageMax: 7
-  AttackSpeed: 7
-  CriticalHitRate: 10
-  CriticalHitMultiplier: 2
+  Abilities:
+  - {fileID: 11400000, guid: d8e689d51345eab4ea34415df1200692, type: 2}
+  - {fileID: 11400000, guid: d8e689d51345eab4ea34415df1200692, type: 2}
+  - {fileID: 11400000, guid: d8e689d51345eab4ea34415df1200692, type: 2}

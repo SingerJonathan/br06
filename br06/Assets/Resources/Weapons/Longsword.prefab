@@ -96,8 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Longsword
   TwoHanded: 0
-  DamageMin: 3
-  DamageMax: 7
-  AttackSpeed: 7
-  CriticalHitRate: 10
-  CriticalHitMultiplier: 2
+  Bow: 0
+  Abilities:
+  - {fileID: 11400000, guid: aa412232b51b1e040bbb620dc9088f41, type: 2}
+  - {fileID: 11400000, guid: aa412232b51b1e040bbb620dc9088f41, type: 2}
+  - {fileID: 11400000, guid: aa412232b51b1e040bbb620dc9088f41, type: 2}
