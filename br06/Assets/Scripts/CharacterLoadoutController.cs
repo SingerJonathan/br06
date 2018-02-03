@@ -48,6 +48,8 @@ public class CharacterLoadoutController : MonoBehaviour
 
     public CanvasRenderer LoadoutPanel;
 
+    public AbilityCooldown[] Abilities;
+
     [HideInInspector]
     public Toggle ReadyToggle;
     private bool _ready;
