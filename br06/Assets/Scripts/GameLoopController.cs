@@ -679,7 +679,7 @@ public class GameLoopController : MonoBehaviour
                     }
                 }
                 // Round end conditions
-                if (_currentRoundTime <= 0.0f || (CurrentGameMode == GameMode.Standard && (RedCharacterStatsController.HitPoints == 0 || BlueCharacterStatsController.HitPoints == 0)))
+                if (_currentRoundTime <= 0.0f || (CurrentGameMode == GameMode.Standard && (RedCharacterStatsController.HitPoints <= 0 || BlueCharacterStatsController.HitPoints <= 0)))
                 {
                     DisableCharacterAnimations();
                     foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)

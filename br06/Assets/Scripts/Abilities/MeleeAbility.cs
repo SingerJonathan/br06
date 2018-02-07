@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Abilities/MeleeAbility")]
 public class MeleeAbility : Ability {
 
     public int WeaponDamage = 1;

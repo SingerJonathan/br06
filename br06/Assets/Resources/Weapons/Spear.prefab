@@ -22,6 +22,9 @@ GameObject:
   - component: {fileID: 33354804609262852}
   - component: {fileID: 23978671989029180}
   - component: {fileID: 114719167508747742}
+  - component: {fileID: 114542416091564724}
+  - component: {fileID: 114227842396057850}
+  - component: {fileID: 114825447619741504}
   m_Layer: 0
   m_Name: Spear
   m_TagString: Untagged
@@ -83,6 +86,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300000, guid: 32d92eaeb94368345bceadb19645a214, type: 3}
+--- !u!114 &114227842396057850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Spear Ability 2
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 3
+  WeaponDamage: 20
+--- !u!114 &114542416091564724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Spear Ability 1
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 1
+  WeaponDamage: 10
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,6 +133,22 @@ MonoBehaviour:
   TwoHanded: 1
   Bow: 0
   Abilities:
-  - {fileID: 11400000, guid: d8e689d51345eab4ea34415df1200692, type: 2}
-  - {fileID: 11400000, guid: d8e689d51345eab4ea34415df1200692, type: 2}
-  - {fileID: 11400000, guid: d8e689d51345eab4ea34415df1200692, type: 2}
+  - {fileID: 114542416091564724}
+  - {fileID: 114227842396057850}
+  - {fileID: 114825447619741504}
+--- !u!114 &114825447619741504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Spear Ability 3
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 5
+  WeaponDamage: 30

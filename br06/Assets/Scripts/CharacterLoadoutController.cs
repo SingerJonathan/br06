@@ -237,6 +237,8 @@ public class CharacterLoadoutController : MonoBehaviour
         ReadyToggle = LoadoutPanel.transform.Find("Ready Toggle").GetComponent<Toggle>();
 
         Weapons = Resources.LoadAll<Weapon>("Weapons");
+        ChangeWeapon(WeaponEnum.Longsword, false);
+        ChangeWeapon(WeaponEnum.Longsword, true);
     }
 
     void OnDestroy()

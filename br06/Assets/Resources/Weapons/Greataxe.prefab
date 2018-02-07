@@ -22,6 +22,9 @@ GameObject:
   - component: {fileID: 33354804609262852}
   - component: {fileID: 23978671989029180}
   - component: {fileID: 114719167508747742}
+  - component: {fileID: 114207363627053186}
+  - component: {fileID: 114807718117568956}
+  - component: {fileID: 114525346162659172}
   m_Layer: 0
   m_Name: Greataxe
   m_TagString: Untagged
@@ -83,6 +86,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300002, guid: 0fe4a27464d212040b5c6c443767140e, type: 3}
+--- !u!114 &114207363627053186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Greataxe Ability 1
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 1
+  WeaponDamage: 10
+--- !u!114 &114525346162659172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Greataxe Ability 3
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 5
+  WeaponDamage: 30
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,6 +133,22 @@ MonoBehaviour:
   TwoHanded: 1
   Bow: 0
   Abilities:
-  - {fileID: 11400000, guid: 5edc49df3153b9349894d1108223a5ad, type: 2}
-  - {fileID: 11400000, guid: 5edc49df3153b9349894d1108223a5ad, type: 2}
-  - {fileID: 11400000, guid: 5edc49df3153b9349894d1108223a5ad, type: 2}
+  - {fileID: 114207363627053186}
+  - {fileID: 114807718117568956}
+  - {fileID: 114525346162659172}
+--- !u!114 &114807718117568956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Greataxe Ability 2
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 3
+  WeaponDamage: 20

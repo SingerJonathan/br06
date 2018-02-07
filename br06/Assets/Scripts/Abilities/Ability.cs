@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Ability : ScriptableObject
+public abstract class Ability : MonoBehaviour
 {
     public string aName = "New Ability";
     public Sprite aSprite;
