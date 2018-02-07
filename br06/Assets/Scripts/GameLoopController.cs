@@ -44,6 +44,9 @@ public class GameLoopController : MonoBehaviour
     public GameObject BlueState2Panel;
     public GameObject BlueState5Panel;
 
+    public HitboxTriggerController[] RedHitboxControllers;
+    public HitboxTriggerController[] BlueHitboxControllers;
+
     public GameObject KingOfTheHillObjects;
     public KingOfTheHillCollisionController HillCollisionController;
     public GameObject CaptureTheFlagObjects;
@@ -640,6 +643,10 @@ public class GameLoopController : MonoBehaviour
                             HillCollisionController.RedColliding = false;
                         }
                         RedCharacterStatsController.gameObject.SetActive(false);
+                        foreach (HitboxTriggerController hitbox in BlueHitboxControllers)
+                            hitbox.CollidingObjects.Remove(RedCharacterStatsController.gameObject);
+                        foreach (HitboxTriggerController hitbox in RedHitboxControllers)
+                            hitbox.CollidingObjects.Remove(BlueCharacterStatsController.gameObject);
                         _redCountdown = _respawnTime;
                         RedNotificationText.gameObject.SetActive(true);
                     }
@@ -674,6 +681,10 @@ public class GameLoopController : MonoBehaviour
                             HillCollisionController.BlueColliding = false;
                         }
                         BlueCharacterStatsController.gameObject.SetActive(false);
+                        foreach (HitboxTriggerController hitbox in BlueHitboxControllers)
+                            hitbox.CollidingObjects.Remove(RedCharacterStatsController.gameObject);
+                        foreach (HitboxTriggerController hitbox in RedHitboxControllers)
+                            hitbox.CollidingObjects.Remove(BlueCharacterStatsController.gameObject);
                         _blueCountdown = _respawnTime;
                         BlueNotificationText.gameObject.SetActive(true);
                     }
@@ -681,6 +692,10 @@ public class GameLoopController : MonoBehaviour
                 // Round end conditions
                 if (_currentRoundTime <= 0.0f || (CurrentGameMode == GameMode.Standard && (RedCharacterStatsController.HitPoints <= 0 || BlueCharacterStatsController.HitPoints <= 0)))
                 {
+                    foreach (HitboxTriggerController hitbox in BlueHitboxControllers)
+                        hitbox.CollidingObjects.Remove(RedCharacterStatsController.gameObject);
+                    foreach (HitboxTriggerController hitbox in RedHitboxControllers)
+                        hitbox.CollidingObjects.Remove(BlueCharacterStatsController.gameObject);
                     DisableCharacterAnimations();
                     foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
                         loadoutController.SetAbilitiesActive(false);

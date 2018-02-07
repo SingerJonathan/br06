@@ -13731,6 +13731,12 @@ MonoBehaviour:
   BlueState1Panel: {fileID: 2022590976}
   BlueState2Panel: {fileID: 790336775}
   BlueState5Panel: {fileID: 1449239102}
+  RedHitboxControllers:
+  - {fileID: 1308021767}
+  - {fileID: 1608454639}
+  BlueHitboxControllers:
+  - {fileID: 15373781}
+  - {fileID: 271398331}
   KingOfTheHillObjects: {fileID: 1586095204}
   HillCollisionController: {fileID: 454941217}
   CaptureTheFlagObjects: {fileID: 612721782}
