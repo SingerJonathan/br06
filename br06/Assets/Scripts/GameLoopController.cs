@@ -50,6 +50,7 @@ public class GameLoopController : MonoBehaviour
     public CaptureTheFlagTriggerController RedCaptureTheFlagTriggerController;
     public CaptureTheFlagTriggerController BlueCaptureTheFlagTriggerController;
     public FlagController FlagController;
+    public Text FlagRespawnText;
 
     public RandomEnvironmentController RandomEnvironmentController;
 
@@ -228,6 +229,12 @@ public class GameLoopController : MonoBehaviour
     {
         _loadoutNavigationStates[0] = 0;
         _loadoutNavigationStates[1] = 0;
+        RedCharacterStatsController.gameObject.SetActive(true);
+        _redCountdown = 0;
+        RedNotificationText.gameObject.SetActive(false);
+        BlueCharacterStatsController.gameObject.SetActive(true);
+        _blueCountdown = 0;
+        BlueNotificationText.gameObject.SetActive(false);
         CurrentRound = 1;
         RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode == GameMode.Standard);
         _redWins = 0;
@@ -730,6 +737,12 @@ public class GameLoopController : MonoBehaviour
                         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
                         CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                        RedCharacterStatsController.gameObject.SetActive(true);
+                        _redCountdown = 0;
+                        RedNotificationText.gameObject.SetActive(false);
+                        BlueCharacterStatsController.gameObject.SetActive(true);
+                        _blueCountdown = 0;
+                        BlueNotificationText.gameObject.SetActive(false);
                         if (CurrentGameMode == GameMode.CaptureTheFlag)
                         {
                             FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
