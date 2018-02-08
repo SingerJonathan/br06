@@ -66,6 +66,9 @@ public class CharacterLoadoutController : MonoBehaviour
     private Transform _characterRightHandTransform;
     private Transform _characterLeftHandTransform;
 
+    public Color ReadyColor;
+    public Color UnreadyColor;
+
 
     public WeaponEnum MainWeapon
     {
@@ -106,9 +109,9 @@ public class CharacterLoadoutController : MonoBehaviour
         {
             _ready = value;
             if (_ready)
-                ReadyToggle.transform.Find("Background").GetComponent<Image>().color = Color.green;
+                ReadyToggle.transform.Find("Background").GetComponent<Image>().color = ReadyColor;
             else
-                ReadyToggle.transform.Find("Background").GetComponent<Image>().color = Color.white;
+                ReadyToggle.transform.Find("Background").GetComponent<Image>().color = UnreadyColor;
         }
     }
 

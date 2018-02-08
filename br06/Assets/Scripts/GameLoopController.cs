@@ -232,6 +232,9 @@ public class GameLoopController : MonoBehaviour
     {
         _loadoutNavigationStates[0] = 0;
         _loadoutNavigationStates[1] = 0;
+        HillCollisionController.RedColliding = false;
+        HillCollisionController.BlueColliding = false;
+        HillCollisionController.DetermineMaterial();
         RedCharacterStatsController.gameObject.SetActive(true);
         _redCountdown = 0;
         RedNotificationText.gameObject.SetActive(false);
@@ -641,6 +644,7 @@ public class GameLoopController : MonoBehaviour
                         else if (CurrentGameMode == GameMode.KingOfTheHill)
                         {
                             HillCollisionController.RedColliding = false;
+                            HillCollisionController.DetermineMaterial();
                         }
                         RedCharacterStatsController.gameObject.SetActive(false);
                         foreach (HitboxTriggerController hitbox in BlueHitboxControllers)
@@ -679,6 +683,7 @@ public class GameLoopController : MonoBehaviour
                         else if (CurrentGameMode == GameMode.KingOfTheHill)
                         {
                             HillCollisionController.BlueColliding = false;
+                            HillCollisionController.DetermineMaterial();
                         }
                         BlueCharacterStatsController.gameObject.SetActive(false);
                         foreach (HitboxTriggerController hitbox in BlueHitboxControllers)
@@ -699,6 +704,12 @@ public class GameLoopController : MonoBehaviour
                     DisableCharacterAnimations();
                     foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
                         loadoutController.SetAbilitiesActive(false);
+                    if (CurrentGameMode == GameMode.KingOfTheHill)
+                    {
+                        HillCollisionController.RedColliding = false;
+                        HillCollisionController.BlueColliding = false;
+                        HillCollisionController.DetermineMaterial();
+                    }
                     if ((int)_redScore > (int)_blueScore)
                     {
                         _redWins++;
