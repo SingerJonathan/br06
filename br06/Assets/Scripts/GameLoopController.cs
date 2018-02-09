@@ -424,7 +424,7 @@ public class GameLoopController : MonoBehaviour
                 }
             }
             if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
-                if (OffhandWeaponDropdowns[playerNumber].enabled)
+                if (OffhandWeaponDropdowns[playerNumber].interactable)
                 {
                     _loadoutNavigationStates[playerNumber] = 2;
                     SwitchActiveLoadoutStatePanel(playerNumber, 2);
@@ -480,7 +480,7 @@ public class GameLoopController : MonoBehaviour
                     CharacterLoadoutControllers[playerNumber].ReadyToggle.isOn = false;
                 else if (CurrentRound == 1)
                 {
-                    if (OffhandWeaponDropdowns[playerNumber].enabled)
+                    if (OffhandWeaponDropdowns[playerNumber].interactable)
                     {
                         _loadoutNavigationStates[playerNumber] = 2;
                         SwitchActiveLoadoutStatePanel(playerNumber, 2);

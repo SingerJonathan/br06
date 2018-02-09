@@ -208,12 +208,12 @@ public class CharacterLoadoutController : MonoBehaviour
             MainWeapon = (WeaponEnum)weapon+1;
             if (weapon != -1 && Weapons[weapon].TwoHanded)
             {
-                _offhandWeaponDropdown.enabled = false;
+                _offhandWeaponDropdown.interactable = false;
                 _offhandWeaponDropdown.value = 0;
             }
             else
             {
-                _offhandWeaponDropdown.enabled = true;
+                _offhandWeaponDropdown.interactable = true;
             }
         }
         else
