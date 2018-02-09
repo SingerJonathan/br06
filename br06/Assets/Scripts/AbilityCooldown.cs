@@ -64,7 +64,7 @@ public class AbilityCooldown : MonoBehaviour
         }
     }
 
-    private void AbilityReady()
+    public void AbilityReady()
     {
         CooldownTextDisplay.enabled = false;
         darkMask.enabled = false;

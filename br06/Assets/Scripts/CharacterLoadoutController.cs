@@ -121,6 +121,12 @@ public class CharacterLoadoutController : MonoBehaviour
             ability.enabled = active;
     }
 
+    public void ResetAbilityCooldowns()
+    {
+        foreach (AbilityCooldown ability in Abilities)
+            ability.AbilityReady();
+    }
+
     private void ChangeWeapon(WeaponEnum weapon, bool offhand = false)
     {
         // DEVNOTE: Remove this when Loadout GUI is implemented

@@ -31,6 +31,8 @@ public class GameLoopController : MonoBehaviour
     public Text RoundTimeText;
     public Text RedDodgeCooldownText;
     public Text BlueDodgeCooldownText;
+    public Image RedDodgeDarkMask;
+    public Image BlueDodgeDarkMask;
     public Text RedNotificationText;
     public Text BlueNotificationText;
     public Text NotificationText;
@@ -165,6 +167,17 @@ public class GameLoopController : MonoBehaviour
                 GameModeText.text = "Standard";
             }
             SwitchGameModeObjects(_currentGameMode);
+            switch (_currentGameMode)
+            {
+                case GameMode.Standard:
+                    RedScoreText.transform.parent.gameObject.SetActive(false);
+                    BlueScoreText.transform.parent.gameObject.SetActive(false);
+                    break;
+                default:
+                    RedScoreText.transform.parent.gameObject.SetActive(true);
+                    BlueScoreText.transform.parent.gameObject.SetActive(true);
+                    break;
+            }
         }
     }
 
@@ -605,14 +618,16 @@ public class GameLoopController : MonoBehaviour
                 if (RedCharacterAnimationController.DodgeCountdown > 0.0f)
                 {
                     RedDodgeCooldownText.gameObject.SetActive(true);
-                    RedDodgeCooldownText.text = "" + (int)(RedCharacterAnimationController.DodgeCountdown + 1);
+                    RedDodgeDarkMask.fillAmount = RedCharacterAnimationController.DodgeCountdown / RedCharacterStatsController.DodgeCooldown;
+                    RedDodgeCooldownText.text = "" + Mathf.Round(RedCharacterAnimationController.DodgeCountdown);
                     if (RedCharacterAnimationController.DodgeCountdown <= 0.05f)
                         RedDodgeCooldownText.gameObject.SetActive(false);
                 }
                 if (BlueCharacterAnimationController.DodgeCountdown > 0.0f)
                 {
                     BlueDodgeCooldownText.gameObject.SetActive(true);
-                    BlueDodgeCooldownText.text = "" + (int)(BlueCharacterAnimationController.DodgeCountdown + 1);
+                    BlueDodgeDarkMask.fillAmount = BlueCharacterAnimationController.DodgeCountdown / BlueCharacterStatsController.DodgeCooldown;
+                    BlueDodgeCooldownText.text = "" + Mathf.Round(BlueCharacterAnimationController.DodgeCountdown);
                     if (BlueCharacterAnimationController.DodgeCountdown <= 0.05f)
                         BlueDodgeCooldownText.gameObject.SetActive(false);
                 }
@@ -714,13 +729,13 @@ public class GameLoopController : MonoBehaviour
                     {
                         _redWins++;
                         RedWinsText.text = "" + _redWins;
-                        NotificationText.text = string.Format("ROUND {0}\nRED WINS", CurrentRound);
+                        NotificationText.text = string.Format("ROUND {0}\nPINK WINS", CurrentRound);
                     }
                     else if ((int)_blueScore > (int)_redScore)
                     {
                         _blueWins++;
                         BlueWinsText.text = "" + _blueWins;
-                        NotificationText.text = string.Format("ROUND {0}\nBLUE WINS", CurrentRound);
+                        NotificationText.text = string.Format("ROUND {0}\nGREEN WINS", CurrentRound);
                     }
                     else
                     {
@@ -747,14 +762,22 @@ public class GameLoopController : MonoBehaviour
                     {
                         RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
                         BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
+                        RedHPText.text = "" + RedCharacterStatsController.HitPoints;
+                        BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
+                        RedHPSlider.value = ((float)RedCharacterStatsController.HitPoints / RedCharacterStatsController.MaxHitPoints) * 100;
+                        BlueHPSlider.value = ((float)BlueCharacterStatsController.HitPoints / BlueCharacterStatsController.MaxHitPoints) * 100;
                         RedCharacterAnimationController.DodgeCountdown = 0;
                         BlueCharacterAnimationController.DodgeCountdown = 0;
                         RedCharacterStatsController.Potions++;
                         BlueCharacterStatsController.Potions++;
                         RedDodgeCooldownText.gameObject.SetActive(false);
                         BlueDodgeCooldownText.gameObject.SetActive(false);
+                        RedDodgeDarkMask.fillAmount = 0;
+                        BlueDodgeDarkMask.fillAmount = 0;
                         RedScore = 0;
                         BlueScore = 0;
+                        RedScoreText.text = "" + (int)_redScore;
+                        BlueScoreText.text = "" + (int)_blueScore;
                         TimeSpan newTime = TimeSpan.FromSeconds(_roundDuration);
                         RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
                         LoadoutCanvasGameObject.SetActive(true);
@@ -763,6 +786,8 @@ public class GameLoopController : MonoBehaviour
                         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
                         CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                        CharacterLoadoutControllers[0].ResetAbilityCooldowns();
+                        CharacterLoadoutControllers[1].ResetAbilityCooldowns();
                         RedCharacterStatsController.gameObject.SetActive(true);
                         _redCountdown = 0;
                         RedNotificationText.gameObject.SetActive(false);
@@ -783,9 +808,9 @@ public class GameLoopController : MonoBehaviour
                     else
                     {
                         if (_redWins > _maxRounds / 2 || CurrentRound == _maxRounds && _redWins > _blueWins)
-                            NotificationText.text = "GAME OVER\nRED WINS";
+                            NotificationText.text = "GAME OVER\nPINK WINS";
                         else if (_blueWins > _maxRounds / 2 || CurrentRound == _maxRounds && _blueWins > _redWins)
-                            NotificationText.text = "GAME OVER\nBLUE WINS";
+                            NotificationText.text = "GAME OVER\nGREEN WINS";
                         else
                             NotificationText.text = "GAME OVER\nDRAW";
                         _winCountdown = 5;
