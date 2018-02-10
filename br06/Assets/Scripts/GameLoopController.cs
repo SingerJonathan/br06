@@ -220,6 +220,7 @@ public class GameLoopController : MonoBehaviour
 
     private void SetupGame()
     {
+        CurrentRound = 0;
         _confirmPanelGameObject.SetActive(false);
         MainMenuCanvasGameObject.SetActive(false);
         GameSetupCanvasGameObject.SetActive(true);
@@ -292,11 +293,14 @@ public class GameLoopController : MonoBehaviour
         FlagController.GetComponent<CapsuleCollider>().enabled = true;
         CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
-        RedCharacterAnimationController.enabled = false;
-        BlueCharacterAnimationController.enabled = false;
         _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
         _loadoutCanvasGroup.interactable = true;
+        RedDodgeDarkMask.fillAmount = 0;
+        BlueDodgeDarkMask.fillAmount = 0;
+        DisableCharacterAnimations();
+        foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+            loadoutController.SetAbilitiesActive(false);
     }
 
     private void QuitToMainMenu()
@@ -571,7 +575,7 @@ public class GameLoopController : MonoBehaviour
                 }
             }
             // Start countdown after both players are ready
-            else if (_countdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy)
+            else if (_countdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy && !GameSetupCanvasGameObject.activeInHierarchy)
             {
                 _countdown -= Time.deltaTime;
                 NotificationText.text = "" + (int)(_countdown + 1);
@@ -835,13 +839,13 @@ public class GameLoopController : MonoBehaviour
                     MainMenuCanvasGameObject.SetActive(false);
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
                     _loadoutCanvasGroup.interactable = true;
-                    if (!LoadoutCanvasGameObject.activeInHierarchy && _currentRoundTime > 0.0f)
+                    if (!LoadoutCanvasGameObject.activeInHierarchy && _currentRoundTime > 0.0f && !NotificationText.gameObject.activeInHierarchy)
                     {
                         RedCharacterAnimationController.enabled = true;
                         BlueCharacterAnimationController.enabled = true;
-                    }
                     foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
                         loadoutController.SetAbilitiesActive(true);
+                    }
                 }
             }
         }
