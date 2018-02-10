@@ -103,7 +103,7 @@ MonoBehaviour:
         intensity: 0.08
         threshold: 0.03
         softKnee: 0
-        radius: 1.5
+        radius: 1
         antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
