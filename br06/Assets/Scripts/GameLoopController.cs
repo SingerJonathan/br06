@@ -256,7 +256,7 @@ public class GameLoopController : MonoBehaviour
         _blueCountdown = 0;
         BlueNotificationText.gameObject.SetActive(false);
         CurrentRound = 1;
-        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode == GameMode.Standard);
+        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode);
         _redWins = 0;
         _blueWins = 0;
         _maxRounds = Int32.Parse(_roundsDropdown.options[_roundsDropdown.value].text);
@@ -806,7 +806,7 @@ public class GameLoopController : MonoBehaviour
                             FlagController.GetComponent<CapsuleCollider>().enabled = true;
                         }
                         CurrentRound++;
-                        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode == GameMode.Standard);
+                        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode);
                     }
                     // Game end conditions
                     else

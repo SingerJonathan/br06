@@ -21,12 +21,14 @@ public class HitboxTriggerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        _collidingObjects.Add(other.gameObject);
+        if (other.name.Contains("Character"))
+            _collidingObjects.Add(other.gameObject);
     }
 
     void OnTriggerExit(Collider other)
     {
-        _collidingObjects.Remove(other.gameObject);
+        if (_collidingObjects.Contains(other.gameObject))
+            _collidingObjects.Remove(other.gameObject);
     }
 
     void Start()
