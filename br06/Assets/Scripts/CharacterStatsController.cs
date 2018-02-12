@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterStatsController : MonoBehaviour
@@ -8,6 +10,7 @@ public class CharacterStatsController : MonoBehaviour
     public int PotionHealValue = 50;
     public static int InitialPotions = 3;
     public static int MaxPotions = 4;
+    private bool bleed = false;
 
     public Text PotionText;
     public ParticleSystem HealParticleSystem;
@@ -66,6 +69,24 @@ public class CharacterStatsController : MonoBehaviour
         if (Input.GetButtonDown("Potion" + GetComponent<CharacterAnimationController>().PlayerNumber))
         {
             DrinkPotion();
+        }
+        if (bleed)
+            StartCoroutine(BleedRoutine(4f));
+    }
+
+    public void setBleed()
+    {
+        if (!bleed)
+            bleed = true;
+    }
+
+    IEnumerator BleedRoutine(float bleedTime)
+    {
+        bleed = false;
+        for(int i = 0; i <= 4; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            HitPoints -= 3;
         }
     }
 }

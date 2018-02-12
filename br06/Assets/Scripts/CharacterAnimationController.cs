@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class CharacterAnimationController : MonoBehaviour
@@ -8,12 +9,16 @@ public class CharacterAnimationController : MonoBehaviour
     private Vector3 _moveDirection;
     private float _dodgeCountdown;
     private bool _mirrorRun;
+    private bool _knockedBack = false;
+    protected string _enemyColour;
+
 
     // Speed variables
     public int PlayerNumber = 1;
     public float RunSpeed = 12f;
     public float DodgeSpeed = 35f;
     public float Gravity = 1000.0f;
+    public float knockbackForce = 1f;
 
     public float DodgeCountdown
     {
@@ -45,6 +50,7 @@ public class CharacterAnimationController : MonoBehaviour
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
+        _enemyColour = _animator.name.Contains("Red") ? "Blue" : "Red";
     }
 
     void Update()
@@ -72,6 +78,16 @@ public class CharacterAnimationController : MonoBehaviour
         }
         _moveDirection.y -= Gravity * Time.deltaTime;
         _characterController.Move(_moveDirection * Time.deltaTime);
+
+        // Handle knockback animation
+        if(_knockedBack)
+        {
+            Vector3 enemyPosition = GameObject.FindGameObjectWithTag(_enemyColour).transform.position;
+            Vector3 collisionDirection = enemyPosition - transform.position;
+            collisionDirection = -collisionDirection.normalized;
+            _characterController.Move(collisionDirection * knockbackForce);
+            StartCoroutine("knockbackDistance");
+        }
         
         // Handle animations
         if (Input.GetButton("Dodge" + PlayerNumber) && _dodgeCountdown <= 0.0f)
@@ -86,5 +102,16 @@ public class CharacterAnimationController : MonoBehaviour
         {
             _animator.SetBool("running", false);
         }
+    }
+
+    public void KnockedBack()
+    {
+        _knockedBack = true;
+    }
+
+    IEnumerator knockbackDistance()
+    {
+        yield return new WaitForSeconds(knockbackForce);
+        _knockedBack = false;
     }
 }

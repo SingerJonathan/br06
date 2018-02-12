@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23978671989029180}
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114995662742463474}
-  - component: {fileID: 114332970420359104}
+  - component: {fileID: 114855125921125720}
   - component: {fileID: 114442189694261384}
   m_Layer: 0
   m_Name: Longsword
@@ -54,7 +54,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,7 +69,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -86,22 +84,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300000, guid: b9303d30d0335354689955e52d77a135, type: 3}
---- !u!114 &114332970420359104
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: Longsword Ability 2
-  aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
-  aSound: {fileID: 8300000, guid: 6ab877b1bd1132848851d206f627e543, type: 3}
-  aBaseCooldown: 3
-  WeaponDamage: 20
 --- !u!114 &114442189694261384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,10 +96,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longsword Ability 3
-  aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
-  aSound: {fileID: 8300000, guid: 6ab877b1bd1132848851d206f627e543, type: 3}
-  aBaseCooldown: 5
-  WeaponDamage: 30
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 1
+  WeaponDamage: 10
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,8 +116,24 @@ MonoBehaviour:
   Bow: 0
   Abilities:
   - {fileID: 114995662742463474}
-  - {fileID: 114332970420359104}
+  - {fileID: 114855125921125720}
   - {fileID: 114442189694261384}
+--- !u!114 &114855125921125720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565facea9f4ab0e4a8bb7a0134d5a7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Longsword Ability 2
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aBaseCooldown: 4
+  WeaponDamage: 1
 --- !u!114 &114995662742463474
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -84,7 +84,6 @@ public class AbilityCooldown : MonoBehaviour
         CooldownTimeLeft = CooldownDuration;
         darkMask.enabled = true;
         CooldownTextDisplay.enabled = true;
-
         //abilitySource.clip = ability.aSound;
         //abilitySource.Play();
         ability.TriggerAbility();
