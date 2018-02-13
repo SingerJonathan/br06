@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -98,6 +100,7 @@ MonoBehaviour:
   aName: Spear Ability 2
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 7
   WeaponDamage: 15
 --- !u!114 &114542416091564724
@@ -114,6 +117,7 @@ MonoBehaviour:
   aName: Spear Ability 1
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
   WeaponDamage: 10
 --- !u!114 &114719167508747742
@@ -148,5 +152,6 @@ MonoBehaviour:
   aName: Spear Ability 3
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 5
   WeaponDamage: 30

@@ -60,7 +60,7 @@ public class CharacterAnimationController : MonoBehaviour
             _dodgeCountdown -= Time.deltaTime;
         else if (_dodgeCountdown <= 0.0f)
             _moveDirection = Vector3.zero;
-        if (_characterController.isGrounded && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Dodge"))
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Dodge") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Ability"))
         {
             _moveDirection = new Vector3(-Input.GetAxis("Vertical" + PlayerNumber), 0, Input.GetAxis("Horizontal" + PlayerNumber));
             if (_moveDirection == Vector3.zero)
@@ -76,8 +76,9 @@ public class CharacterAnimationController : MonoBehaviour
             Vector3 newDir = Vector3.RotateTowards(transform.forward, _moveDirection, step, 0.0F);
             transform.rotation = Quaternion.LookRotation(newDir);
         }
-        _moveDirection.y -= Gravity * Time.deltaTime;
-        _characterController.Move(_moveDirection * Time.deltaTime);
+        _moveDirection.y -= Gravity;
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Ability"))
+            _characterController.Move(_moveDirection * Time.deltaTime);
 
         // Handle knockback animation
         if(_knockedBack)

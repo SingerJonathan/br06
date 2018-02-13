@@ -100,6 +100,7 @@ MonoBehaviour:
   aName: Longbow Ability 2
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 3
   WeaponDamage: 20
 --- !u!114 &114470879433384718
@@ -116,6 +117,7 @@ MonoBehaviour:
   aName: Longbow Ability 1
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
   WeaponDamage: 10
 --- !u!114 &114515514529267168
@@ -132,6 +134,7 @@ MonoBehaviour:
   aName: Longbow Ability 3
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 5
   WeaponDamage: 30
 --- !u!114 &114719167508747742

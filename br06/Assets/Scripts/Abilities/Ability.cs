@@ -5,6 +5,7 @@ public abstract class Ability : MonoBehaviour
     public string aName = "New Ability";
     public Sprite aSprite;
     public AudioClip aSound;
+    public AnimationClip aClip;
     public float aBaseCooldown = 1f;
     protected string _enemyColour;
 

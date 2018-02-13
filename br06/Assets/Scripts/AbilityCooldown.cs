@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class AbilityCooldown : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class AbilityCooldown : MonoBehaviour
     [SerializeField] private Ability ability;
     [SerializeField] private GameObject weaponHolder;
     [SerializeField] private Image myButtonImage;
+    private Animator weaponHolderAnimator;
     private AudioSource abilitySource;
     private float CooldownDuration;
     private float nextReadyTime;
@@ -32,6 +34,7 @@ public class AbilityCooldown : MonoBehaviour
     void Start()
     {
         Initialize(ability, weaponHolder);
+        weaponHolderAnimator = weaponHolder.GetComponent<Animator>();
     }
 
     public void Initialize(Ability selectedAbility, GameObject weaponHolder)
@@ -80,12 +83,33 @@ public class AbilityCooldown : MonoBehaviour
 
     private void ButtonTriggered()
     {
-        nextReadyTime = CooldownDuration + Time.time;
-        CooldownTimeLeft = CooldownDuration;
-        darkMask.enabled = true;
-        CooldownTextDisplay.enabled = true;
-        //abilitySource.clip = ability.aSound;
-        //abilitySource.Play();
-        ability.TriggerAbility();
+        if (!weaponHolderAnimator.GetCurrentAnimatorStateInfo(0).IsName("Dodge") && !weaponHolderAnimator.GetCurrentAnimatorStateInfo(0).IsName("Ability"))
+        {
+            if(ability.aClip)
+            {
+                AnimatorOverrideController overrideController = new AnimatorOverrideController(weaponHolderAnimator.runtimeAnimatorController);
+                List<KeyValuePair<AnimationClip, AnimationClip>> clips = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                foreach (AnimationClip clip in overrideController.animationClips)
+                    if (clip.name.Contains("Ability"))
+                        clips.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, ability.aClip));
+                overrideController.ApplyOverrides(clips);
+                weaponHolderAnimator.runtimeAnimatorController = overrideController;
+            }
+            weaponHolderAnimator.SetBool("ability", true);
+            StartCoroutine(CompleteAnimation());
+            nextReadyTime = CooldownDuration + Time.time;
+            CooldownTimeLeft = CooldownDuration;
+            darkMask.enabled = true;
+            CooldownTextDisplay.enabled = true;
+            //abilitySource.clip = ability.aSound;
+            //abilitySource.Play();
+            ability.TriggerAbility();
+        }
+    }
+
+    private IEnumerator CompleteAnimation()
+    {
+        yield return new WaitForSeconds(ability.aClip.length/2);
+        weaponHolderAnimator.SetBool("ability", false);
     }
 }
