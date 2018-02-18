@@ -389,27 +389,32 @@ public class GameLoopController : MonoBehaviour
 
     public void OpenConfirmDialogue(string context)
     {
-        _confirmPanelGameObject.SetActive(true);
-        _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
-        _confirmPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
-        EventSystem.SetSelectedGameObject(_confirmPanelYesButton.gameObject);
-        UnityAction call;
-        switch (context)
+        if (context == "New" && CurrentRound == 0)
+            SetupGame();
+        else
         {
-            case "New":
-                call = SetupGame;
-                break;
-            case "Quit":
-                call = QuitToMainMenu;
-                break;
-            case "Exit":
-                call = ExitGame;
-                break;
-            default:
-                call = delegate { };
-                break;
+            _confirmPanelGameObject.SetActive(true);
+            _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
+            _confirmPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+            EventSystem.SetSelectedGameObject(_confirmPanelYesButton.gameObject);
+            UnityAction call;
+            switch (context)
+            {
+                case "New":
+                    call = SetupGame;
+                    break;
+                case "Quit":
+                    call = QuitToMainMenu;
+                    break;
+                case "Exit":
+                    call = ExitGame;
+                    break;
+                default:
+                    call = delegate { };
+                    break;
+            }
+            _confirmPanelYesButton.onClick.AddListener(call);
         }
-        _confirmPanelYesButton.onClick.AddListener(call);
     }
 
     public void CloseConfirmDialogue()
