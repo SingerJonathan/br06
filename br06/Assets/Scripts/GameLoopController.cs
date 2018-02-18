@@ -236,6 +236,7 @@ public class GameLoopController : MonoBehaviour
     {
         //if (CurrentRound > 0 && (_currentRoundTime > 0.0f || _countdown > 0.0f))
         StartTransition(false, true);
+        StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
         CurrentRound = 0;
         _confirmPanelGameObject.SetActive(false);
         MainMenuCanvasGameObject.SetActive(false);

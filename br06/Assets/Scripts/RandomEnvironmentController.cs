@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RandomEnvironmentController : MonoBehaviour
 {
     public Toggle RandomEnvironmentToggle;
+    public AudioSource TerrainTransitionSound;
 
     private static int SmallObjects = 4;
     private static int LargeObjects = 1;
@@ -13,7 +14,7 @@ public class RandomEnvironmentController : MonoBehaviour
     private List<GameObject> _childGameObjects;
     private List<GameObject> _environmentObjects;
     private GameObject _environmentObject;
-    private int _rotatingObjectsCount;
+    //private int _rotatingObjectsCount;
 
     private int _collidersCount;
 
@@ -39,10 +40,13 @@ public class RandomEnvironmentController : MonoBehaviour
 
     public void SpawnRandomEnvironmentObjects(GameLoopController.GameMode gameMode)
     {
-        if (_environmentObjects.Count > 0)
+        if (_environmentObjects.Count > 0 && !_sinkOrRaiseActive)
+        {
             foreach (GameObject environmentObject in _environmentObjects)
                 if (environmentObject)
                     environmentObject.GetComponent<Animator>().SetTrigger("sink");
+            TerrainTransitionSound.Play();
+        }
         _sinkOrRaiseActive = true;
         StartCoroutine(DelayedSpawnObjects(gameMode));
     }
@@ -52,7 +56,7 @@ public class RandomEnvironmentController : MonoBehaviour
         yield return new WaitForSeconds(3);
         _usedObjects = new List<int>();
         _childGameObjects = new List<GameObject>();
-        _rotatingObjectsCount = 0;
+        //_rotatingObjectsCount = 0;
         _environmentObjects = new List<GameObject>();
         DeleteRandomEnvironmentObjects();
         if (RandomEnvironmentToggle.isOn)
@@ -93,6 +97,7 @@ public class RandomEnvironmentController : MonoBehaviour
                 _environmentObjects.Add(_environmentObject);
             }
         }
+        Invoke("PlayTerrainTransitionSound", 1);
         yield return new WaitForSeconds(3);
         _sinkOrRaiseActive = false;
     }
@@ -127,17 +132,26 @@ public class RandomEnvironmentController : MonoBehaviour
             for (int subIndex = 0; subIndex < transform.GetChild(index).childCount; subIndex++)
                 Destroy(transform.GetChild(index).GetChild(subIndex).gameObject);
         }
+        _environmentObjects.Clear();
     }
 
     public IEnumerator SinkAndDeleteObjects()
     {
-        if (_environmentObjects.Count > 0)
+        if (_environmentObjects.Count > 0 && !_sinkOrRaiseActive)
+        {
             foreach (GameObject environmentObject in _environmentObjects)
                 if (environmentObject)
                     environmentObject.GetComponent<Animator>().SetTrigger("sink");
+            TerrainTransitionSound.Play();
+        }
         _sinkOrRaiseActive = true;
         yield return new WaitForSeconds(3);
         DeleteRandomEnvironmentObjects();
         _sinkOrRaiseActive = false;
+    }
+
+    private void PlayTerrainTransitionSound()
+    {
+        TerrainTransitionSound.Play();
     }
 }
