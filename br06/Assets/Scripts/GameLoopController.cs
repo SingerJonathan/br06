@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,12 @@ public class GameLoopController : MonoBehaviour
     }
 
     public EventSystem EventSystem;
+
+    public Animator CameraAnimator;
+    public Vector3 RedCharacterGamePosition;
+    public Vector3 BlueCharacterGamePosition;
+    public Vector3 RedCharacterGameRotation;
+    public Vector3 BlueCharacterGameRotation;
 
     public GameObject MainMenuCanvasGameObject;
     public GameObject GameSetupCanvasGameObject;
@@ -74,6 +81,11 @@ public class GameLoopController : MonoBehaviour
     private Vector3 _initialBlueCharacterPosition;
     private Quaternion _initialRedCharacterRotation;
     private Quaternion _initialBlueCharacterRotation;
+
+    private Vector3 _targetRedCharacterPosition;
+    private Vector3 _targetBlueCharacterPosition;
+    private Vector3 _targetRedCharacterRotation;
+    private Vector3 _targetBlueCharacterRotation;
 
     private CanvasGroup _loadoutCanvasGroup;
     private GameObject _newGameButtonGameObject;
@@ -220,6 +232,8 @@ public class GameLoopController : MonoBehaviour
 
     private void SetupGame()
     {
+        //if (CurrentRound > 0 && (_currentRoundTime > 0.0f || _countdown > 0.0f))
+        StartTransition(false, true);
         CurrentRound = 0;
         _confirmPanelGameObject.SetActive(false);
         MainMenuCanvasGameObject.SetActive(false);
@@ -288,7 +302,8 @@ public class GameLoopController : MonoBehaviour
         CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
         CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
-        FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
+        FlagController.transform.localPosition = InitialFlagPosition;
+        FlagController.transform.rotation = InitialFlagRotation;
         FlagController.ResetMaterial();
         FlagController.GetComponent<CapsuleCollider>().enabled = true;
         CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
@@ -305,6 +320,7 @@ public class GameLoopController : MonoBehaviour
 
     private void QuitToMainMenu()
     {
+        StartTransition(false, true);
         _confirmPanelGameObject.SetActive(false);
         _loadoutCanvasGroup.interactable = false;
         CurrentRound = 0;
@@ -319,14 +335,15 @@ public class GameLoopController : MonoBehaviour
         EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
         _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
-        CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-        CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+        //CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+        //CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
-        FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
+        FlagController.transform.localPosition = InitialFlagPosition;
+        FlagController.transform.rotation = InitialFlagRotation;
         FlagController.ResetMaterial();
         FlagController.GetComponent<CapsuleCollider>().enabled = true;
         DisableCharacterAnimations();
-        RandomEnvironmentController.DeleteRandomEnvironmentObjects();
+        StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
         foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
             loadoutController.SetAbilitiesActive(false);
     }
@@ -341,17 +358,30 @@ public class GameLoopController : MonoBehaviour
         switch (gameMode)
         {
             case GameMode.Standard:
-                KingOfTheHillObjects.SetActive(false);
-                CaptureTheFlagObjects.SetActive(false);
+                StartCoroutine(SinkAndRaiseObjects(KingOfTheHillObjects));
+                StartCoroutine(SinkAndRaiseObjects(CaptureTheFlagObjects));
                 break;
             case GameMode.KingOfTheHill:
-                KingOfTheHillObjects.SetActive(true);
-                CaptureTheFlagObjects.SetActive(false);
+                StartCoroutine(SinkAndRaiseObjects(CaptureTheFlagObjects, KingOfTheHillObjects));
                 break;
             case GameMode.CaptureTheFlag:
-                KingOfTheHillObjects.SetActive(false);
-                CaptureTheFlagObjects.SetActive(true);
+                StartCoroutine(SinkAndRaiseObjects(KingOfTheHillObjects, CaptureTheFlagObjects));
                 break;
+        }
+    }
+
+    private IEnumerator SinkAndRaiseObjects(GameObject objectToSink, GameObject objectToRaise = null)
+    {
+        if (objectToSink != null && !objectToSink.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Sink"))
+        {
+            objectToSink.GetComponent<Animator>().SetTrigger("sink");
+            yield return new WaitForSeconds(3);
+            objectToSink.SetActive(false);
+        }
+        if (objectToRaise != null && !objectToSink.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Raise"))
+        {
+            objectToRaise.SetActive(true);
+            objectToRaise.GetComponent<Animator>().SetTrigger("raise");
         }
     }
 
@@ -532,7 +562,7 @@ public class GameLoopController : MonoBehaviour
         _initialBlueCharacterPosition = CharacterLoadoutControllers[1].transform.position;
         _initialRedCharacterRotation = CharacterLoadoutControllers[0].transform.rotation;
         _initialBlueCharacterRotation = CharacterLoadoutControllers[1].transform.rotation;
-        InitialFlagPosition = FlagController.transform.position;
+        InitialFlagPosition = FlagController.transform.localPosition;
         InitialFlagRotation = FlagController.transform.rotation;
         foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
             loadoutController.SetAbilitiesActive(false);
@@ -542,8 +572,67 @@ public class GameLoopController : MonoBehaviour
         };
     }
 
+    private bool _transitionActive;
+
+    private void StartTransition(bool toGame, bool animateCamera)
+    {
+        if ((toGame && !CameraAnimator.GetCurrentAnimatorStateInfo(0).IsName("Menu To Game")) || (toGame && !animateCamera))
+        {
+            _targetRedCharacterPosition = RedCharacterGamePosition;
+            _targetRedCharacterRotation = RedCharacterGameRotation;
+            _targetBlueCharacterPosition = BlueCharacterGamePosition;
+            _targetBlueCharacterRotation = BlueCharacterGameRotation;
+            if (animateCamera)
+                CameraAnimator.SetTrigger("animate");
+            _transitionActive = true;
+            RedCharacterStatsController.GetComponent<Animator>().SetBool("running", true);
+            BlueCharacterStatsController.GetComponent<Animator>().SetBool("running", true);
+        }
+        else if ((!toGame && CameraAnimator.GetCurrentAnimatorStateInfo(0).IsName("Menu To Game")) || (!toGame && !animateCamera))
+        {
+            _targetRedCharacterPosition = _initialRedCharacterPosition;
+            _targetRedCharacterRotation = _initialRedCharacterRotation.eulerAngles;
+            _targetBlueCharacterPosition = _initialBlueCharacterPosition;
+            _targetBlueCharacterRotation = _initialBlueCharacterRotation.eulerAngles;
+            if (animateCamera)
+                CameraAnimator.SetTrigger("animate");
+            _transitionActive = true;
+            RedCharacterStatsController.GetComponent<Animator>().SetBool("running", true);
+            BlueCharacterStatsController.GetComponent<Animator>().SetBool("running", true);
+        }
+    }
+
     void Update()
     {
+        if (_transitionActive)
+        {
+            float step = (RedCharacterAnimationController.RunSpeed*1.5f) * Time.deltaTime;
+            RedCharacterStatsController.transform.position = Vector3.MoveTowards(RedCharacterStatsController.transform.position, _targetRedCharacterPosition, step);
+            BlueCharacterStatsController.transform.position = Vector3.MoveTowards(BlueCharacterStatsController.transform.position, _targetBlueCharacterPosition, step);
+            Vector3 redDir;
+            Vector3 blueDir;
+            if (RedCharacterStatsController.transform.position == _targetRedCharacterPosition)
+            {
+                RedCharacterStatsController.GetComponent<Animator>().SetBool("running", false);
+                redDir = Vector3.RotateTowards(RedCharacterStatsController.transform.forward, _targetBlueCharacterPosition - _targetRedCharacterPosition, step, 0.0F);
+            }
+            else
+                redDir = Vector3.RotateTowards(RedCharacterStatsController.transform.forward, _targetRedCharacterPosition - RedCharacterStatsController.transform.position, step, 0.0F);
+            if (BlueCharacterStatsController.transform.position == _targetBlueCharacterPosition)
+            {
+                BlueCharacterStatsController.GetComponent<Animator>().SetBool("running", false);
+                blueDir = Vector3.RotateTowards(BlueCharacterStatsController.transform.forward, _targetRedCharacterPosition - _targetBlueCharacterPosition, step, 0.0F);
+            }
+            else
+                blueDir = Vector3.RotateTowards(BlueCharacterStatsController.transform.forward, _targetBlueCharacterPosition - BlueCharacterStatsController.transform.position, step, 0.0F);
+            RedCharacterStatsController.transform.rotation = Quaternion.LookRotation(redDir);
+            BlueCharacterStatsController.transform.rotation = Quaternion.LookRotation(blueDir);
+            if (RedCharacterStatsController.transform.eulerAngles.y >= _targetRedCharacterRotation.y - 0.03f && RedCharacterStatsController.transform.eulerAngles.y <= _targetRedCharacterRotation.y + 0.03f
+            && BlueCharacterStatsController.transform.eulerAngles.y >= _targetBlueCharacterRotation.y - 0.03f && BlueCharacterStatsController.transform.eulerAngles.y <= _targetBlueCharacterRotation.y + 0.03f)
+            {
+                _transitionActive = false;
+            }
+        }
         // Game is in progress
         if (CurrentRound > 0)
         {
@@ -567,16 +656,18 @@ public class GameLoopController : MonoBehaviour
             {
                 if (CharacterLoadoutControllers[0].Ready && CharacterLoadoutControllers[1].Ready)
                 {
-                    NotificationText.gameObject.SetActive(true);
                     _countdown = 3;
                     NotificationText.text = "" + 3;
-                    _loadoutCanvasGroup.interactable = false;
                     LoadoutCanvasGameObject.SetActive(false);
+                    if (CurrentRound == 1)
+                        StartTransition(true, true);
+                    _loadoutCanvasGroup.interactable = false;
                 }
             }
             // Start countdown after both players are ready
-            else if (_countdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy && !GameSetupCanvasGameObject.activeInHierarchy)
+            else if (_countdown > 0.0f && !MainMenuCanvasGameObject.activeInHierarchy && !GameSetupCanvasGameObject.activeInHierarchy && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive)
             {
+                NotificationText.gameObject.SetActive(true);
                 _countdown -= Time.deltaTime;
                 NotificationText.text = "" + (int)(_countdown + 1);
                 if (_countdown <= 0.0f)
@@ -644,7 +735,7 @@ public class GameLoopController : MonoBehaviour
                         RedNotificationText.text = "" + (int)(_redCountdown + 1);
                         if (_redCountdown <= 0.0f)
                         {
-                            CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+                            CharacterLoadoutControllers[0].transform.SetPositionAndRotation(RedCharacterGamePosition, Quaternion.Euler(RedCharacterGameRotation));
                             RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
                             RedCharacterStatsController.gameObject.SetActive(true);
                             RedNotificationText.gameObject.SetActive(false);
@@ -683,7 +774,7 @@ public class GameLoopController : MonoBehaviour
                         BlueNotificationText.text = "" + (int)(_blueCountdown + 1);
                         if (_blueCountdown <= 0.0f)
                         {
-                            CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                            CharacterLoadoutControllers[1].transform.SetPositionAndRotation(BlueCharacterGamePosition, Quaternion.Euler(BlueCharacterGameRotation));
                             BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
                             BlueCharacterStatsController.gameObject.SetActive(true);
                             BlueNotificationText.gameObject.SetActive(false);
@@ -747,6 +838,10 @@ public class GameLoopController : MonoBehaviour
                     }
                     _winCountdown = 5;
                     NotificationText.gameObject.SetActive(true);
+                    StartTransition(true, false);
+                    StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
+                    StartCoroutine(SinkAndRaiseObjects(KingOfTheHillObjects));
+                    StartCoroutine(SinkAndRaiseObjects(CaptureTheFlagObjects));
                 }
             }
             // Message after round or game
@@ -788,8 +883,8 @@ public class GameLoopController : MonoBehaviour
                         _loadoutCanvasGroup.interactable = true;
                         CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
-                        CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-                        CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
+                        //CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
+                        //CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
                         CharacterLoadoutControllers[0].ResetAbilityCooldowns();
                         CharacterLoadoutControllers[1].ResetAbilityCooldowns();
                         RedCharacterStatsController.gameObject.SetActive(true);
@@ -801,7 +896,8 @@ public class GameLoopController : MonoBehaviour
                         if (CurrentGameMode == GameMode.CaptureTheFlag)
                         {
                             FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
-                            FlagController.transform.SetPositionAndRotation(InitialFlagPosition, InitialFlagRotation);
+                            FlagController.transform.localPosition = InitialFlagPosition;
+                            FlagController.transform.rotation = InitialFlagRotation;
                             FlagController.ResetMaterial();
                             FlagController.GetComponent<CapsuleCollider>().enabled = true;
                         }
@@ -824,7 +920,7 @@ public class GameLoopController : MonoBehaviour
             }
             if (Input.GetButtonDown("Main Menu"))
             {
-                if (!MainMenuCanvasGameObject.activeInHierarchy)
+                if (!MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive)
                 {
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();

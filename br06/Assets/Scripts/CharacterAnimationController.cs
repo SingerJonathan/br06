@@ -33,6 +33,19 @@ public class CharacterAnimationController : MonoBehaviour
         }
     }
 
+    public CharacterController CharacterController
+    {
+        get
+        {
+            return _characterController;
+        }
+
+        set
+        {
+            _characterController = value;
+        }
+    }
+
     public bool MirrorRun
     {
         get

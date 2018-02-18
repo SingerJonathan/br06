@@ -39,7 +39,8 @@ public class CaptureTheFlagTriggerController : MonoBehaviour
             GameLoopController.FlagRespawnText.text = ""+(int)(_respawnCountdown+1);
             if (_respawnCountdown <= 0.0f)
             {
-                _flag.SetPositionAndRotation(GameLoopController.InitialFlagPosition, GameLoopController.InitialFlagRotation);
+                _flag.localPosition = GameLoopController.InitialFlagPosition;
+                _flag.rotation = GameLoopController.InitialFlagRotation;
                 _flag.gameObject.SetActive(true);
                 GameLoopController.FlagRespawnText.gameObject.SetActive(false);
             }

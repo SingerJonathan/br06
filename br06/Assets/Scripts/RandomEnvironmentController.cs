@@ -11,16 +11,49 @@ public class RandomEnvironmentController : MonoBehaviour
     private static int LargeObjects = 1;
     private List<int> _usedObjects;
     private List<GameObject> _childGameObjects;
+    private List<GameObject> _environmentObjects;
+    private GameObject _environmentObject;
     private int _rotatingObjectsCount;
 
-    private GameObject _environmentObject;
     private int _collidersCount;
+
+    private bool _sinkOrRaiseActive;
+
+    public bool SinkOrRaiseActive
+    {
+        get
+        {
+            return _sinkOrRaiseActive;
+        }
+
+        set
+        {
+            _sinkOrRaiseActive = value;
+        }
+    }
+
+    void Start()
+    {
+        _environmentObjects = new List<GameObject>();
+    }
 
     public void SpawnRandomEnvironmentObjects(GameLoopController.GameMode gameMode)
     {
+        if (_environmentObjects.Count > 0)
+            foreach (GameObject environmentObject in _environmentObjects)
+                if (environmentObject)
+                    environmentObject.GetComponent<Animator>().SetTrigger("sink");
+        _sinkOrRaiseActive = true;
+        StartCoroutine(DelayedSpawnObjects(gameMode));
+    }
+
+    private IEnumerator DelayedSpawnObjects(GameLoopController.GameMode gameMode)
+    {
+        yield return new WaitForSeconds(3);
         _usedObjects = new List<int>();
         _childGameObjects = new List<GameObject>();
         _rotatingObjectsCount = 0;
+        _environmentObjects = new List<GameObject>();
         DeleteRandomEnvironmentObjects();
         if (RandomEnvironmentToggle.isOn)
         {
@@ -48,6 +81,7 @@ public class RandomEnvironmentController : MonoBehaviour
                         environmentObjectComponent.RotationSpeed = Random.Range(5, 11);
                         _rotatingObjectsCount++;
                     }*/
+                    _environmentObjects.Add(environmentObject);
                 }
                 index++;
             }
@@ -56,8 +90,11 @@ public class RandomEnvironmentController : MonoBehaviour
                 _environmentObject = (GameObject)Instantiate(Resources.Load("Random Environment/Large" + Random.Range(0, LargeObjects)));
                 _environmentObject.transform.SetParent(transform.GetChild(1));
                 _environmentObject.transform.localPosition = Vector3.zero;
+                _environmentObjects.Add(_environmentObject);
             }
         }
+        yield return new WaitForSeconds(3);
+        _sinkOrRaiseActive = false;
     }
 
     public void RotateWithoutCollisions()
@@ -90,5 +127,17 @@ public class RandomEnvironmentController : MonoBehaviour
             for (int subIndex = 0; subIndex < transform.GetChild(index).childCount; subIndex++)
                 Destroy(transform.GetChild(index).GetChild(subIndex).gameObject);
         }
+    }
+
+    public IEnumerator SinkAndDeleteObjects()
+    {
+        if (_environmentObjects.Count > 0)
+            foreach (GameObject environmentObject in _environmentObjects)
+                if (environmentObject)
+                    environmentObject.GetComponent<Animator>().SetTrigger("sink");
+        _sinkOrRaiseActive = true;
+        yield return new WaitForSeconds(3);
+        DeleteRandomEnvironmentObjects();
+        _sinkOrRaiseActive = false;
     }
 }

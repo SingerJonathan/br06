@@ -103,13 +103,14 @@ public class AbilityCooldown : MonoBehaviour
             CooldownTextDisplay.enabled = true;
             //abilitySource.clip = ability.aSound;
             //abilitySource.Play();
-            ability.TriggerAbility();
         }
     }
 
     private IEnumerator CompleteAnimation()
     {
-        yield return new WaitForSeconds(ability.aClip.length/2);
+        yield return new WaitForSeconds(ability.aClip.length/4);
+            ability.TriggerAbility();
+        yield return new WaitForSeconds(ability.aClip.length/4);
         weaponHolderAnimator.SetBool("ability", false);
     }
 }
