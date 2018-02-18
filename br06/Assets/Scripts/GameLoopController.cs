@@ -447,6 +447,7 @@ public class GameLoopController : MonoBehaviour
                     LoadoutStatePanels[playerNumber, index].SetActive(true);
                 else
                     LoadoutStatePanels[playerNumber, index].SetActive(false);
+        GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
     }
 
     private void HandleLoadoutInput(int playerNumber)

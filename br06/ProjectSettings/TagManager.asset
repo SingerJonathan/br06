@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Red
   - Blue
+  - Click Sound
+  - Select Sound
   layers:
   - Default
   - TransparentFX
