@@ -375,6 +375,7 @@ public class GameLoopController : MonoBehaviour
         if (objectToSink != null && !objectToSink.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Sink"))
         {
             objectToSink.GetComponent<Animator>().SetTrigger("sink");
+            objectToSink.GetComponent<Animator>().ResetTrigger("raise");
             yield return new WaitForSeconds(3);
             objectToSink.SetActive(false);
         }
@@ -382,6 +383,7 @@ public class GameLoopController : MonoBehaviour
         {
             objectToRaise.SetActive(true);
             objectToRaise.GetComponent<Animator>().SetTrigger("raise");
+            objectToSink.GetComponent<Animator>().ResetTrigger("sink");
         }
     }
 
