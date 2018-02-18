@@ -106,6 +106,8 @@ public class GameLoopController : MonoBehaviour
     private float _winCountdown;
     private float _redCountdown;
     private float _blueCountdown;
+
+    private bool _firstCountdownSoundPlayed;
     
     private List<Round> _rounds;
     private GameMode _currentGameMode = GameMode.Standard;
@@ -670,6 +672,7 @@ public class GameLoopController : MonoBehaviour
                     if (CurrentRound == 1)
                         StartTransition(true, true);
                     _loadoutCanvasGroup.interactable = false;
+                    _firstCountdownSoundPlayed = false;
                 }
             }
             // Start countdown after both players are ready
@@ -677,9 +680,16 @@ public class GameLoopController : MonoBehaviour
             {
                 NotificationText.gameObject.SetActive(true);
                 _countdown -= Time.deltaTime;
-                NotificationText.text = "" + (int)(_countdown + 1);
+                if (NotificationText.text != ("" + (int)(_countdown + 1)) || !_firstCountdownSoundPlayed)
+                {
+                    _firstCountdownSoundPlayed = true;
+                    NotificationText.text = "" + (int)(_countdown + 1);
+                    GameObject.FindGameObjectWithTag("Countdown Sound").GetComponent<AudioSource>().Play();
+                }
                 if (_countdown <= 0.0f)
                 {
+                    _firstCountdownSoundPlayed = false;
+                    GameObject.FindGameObjectWithTag("Go Sound").GetComponent<AudioSource>().Play();
                     NotificationText.gameObject.SetActive(false);
                     RedCharacterAnimationController.enabled = true;
                     BlueCharacterAnimationController.enabled = true;

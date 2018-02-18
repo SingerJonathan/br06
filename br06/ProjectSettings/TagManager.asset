@@ -8,6 +8,8 @@ TagManager:
   - Blue
   - Click Sound
   - Select Sound
+  - Countdown Sound
+  - Go Sound
   layers:
   - Default
   - TransparentFX
