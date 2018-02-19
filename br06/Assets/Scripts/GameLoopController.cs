@@ -180,7 +180,6 @@ public class GameLoopController : MonoBehaviour
                 CurrentGameMode = GameMode.Standard;
                 GameModeText.text = "Standard";
             }
-            SwitchGameModeObjects(_currentGameMode);
             switch (_currentGameMode)
             {
                 case GameMode.Standard:
@@ -234,10 +233,10 @@ public class GameLoopController : MonoBehaviour
 
     private void SetupGame()
     {
-        //if (CurrentRound > 0 && (_currentRoundTime > 0.0f || _countdown > 0.0f))
         StartTransition(false, true);
         StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
         CurrentRound = 0;
+        SwitchGameModeObjects(GameMode.Standard);
         _confirmPanelGameObject.SetActive(false);
         MainMenuCanvasGameObject.SetActive(false);
         GameSetupCanvasGameObject.SetActive(true);
@@ -261,6 +260,10 @@ public class GameLoopController : MonoBehaviour
 
     public void NewGame()
     {
+        _redScore = 0;
+        _blueScore = 0;
+        RedScoreText.text = "" + (int)_redScore;
+        BlueScoreText.text = "" + (int)_blueScore;
         _loadoutNavigationStates[0] = 0;
         _loadoutNavigationStates[1] = 0;
         HillCollisionController.RedColliding = false;
@@ -273,7 +276,6 @@ public class GameLoopController : MonoBehaviour
         _blueCountdown = 0;
         BlueNotificationText.gameObject.SetActive(false);
         CurrentRound = 1;
-        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode);
         _redWins = 0;
         _blueWins = 0;
         _maxRounds = Int32.Parse(_roundsDropdown.options[_roundsDropdown.value].text);
@@ -327,6 +329,7 @@ public class GameLoopController : MonoBehaviour
         _confirmPanelGameObject.SetActive(false);
         _loadoutCanvasGroup.interactable = false;
         CurrentRound = 0;
+        SwitchGameModeObjects(GameMode.Standard);
         _quitButton.interactable = false;
         RedCharacterAnimationController.enabled = false;
         BlueCharacterAnimationController.enabled = false;
@@ -338,8 +341,6 @@ public class GameLoopController : MonoBehaviour
         EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
         _confirmPanelYesButton.onClick.RemoveAllListeners();
         _confirmPanelGameObject.SetActive(false);
-        //CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-        //CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
         FlagController.transform.localPosition = InitialFlagPosition;
         FlagController.transform.rotation = InitialFlagRotation;
@@ -674,6 +675,8 @@ public class GameLoopController : MonoBehaviour
                         StartTransition(true, true);
                     _loadoutCanvasGroup.interactable = false;
                     _firstCountdownSoundPlayed = false;
+                    RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode);
+                    SwitchGameModeObjects(_currentGameMode);
                 }
             }
             // Start countdown after both players are ready
@@ -700,7 +703,7 @@ public class GameLoopController : MonoBehaviour
                 }
             }
             // Countdown finished, round started
-            else if (_currentRoundTime > 0.0f && !NotificationText.gameObject.activeInHierarchy && !MainMenuCanvasGameObject.activeInHierarchy)
+            else if (_currentRoundTime > 0.0f && !NotificationText.gameObject.activeInHierarchy && !MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive)
             {
                 RedHPText.text = "" + RedCharacterStatsController.HitPoints;
                 BlueHPText.text = "" + BlueCharacterStatsController.HitPoints;
@@ -902,8 +905,6 @@ public class GameLoopController : MonoBehaviour
                         _loadoutCanvasGroup.interactable = true;
                         CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
-                        //CharacterLoadoutControllers[0].transform.SetPositionAndRotation(_initialRedCharacterPosition, _initialRedCharacterRotation);
-                        //CharacterLoadoutControllers[1].transform.SetPositionAndRotation(_initialBlueCharacterPosition, _initialBlueCharacterRotation);
                         CharacterLoadoutControllers[0].ResetAbilityCooldowns();
                         CharacterLoadoutControllers[1].ResetAbilityCooldowns();
                         RedCharacterStatsController.gameObject.SetActive(true);
@@ -921,7 +922,6 @@ public class GameLoopController : MonoBehaviour
                             FlagController.GetComponent<CapsuleCollider>().enabled = true;
                         }
                         CurrentRound++;
-                        RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode);
                     }
                     // Game end conditions
                     else
@@ -939,7 +939,7 @@ public class GameLoopController : MonoBehaviour
             }
             if (Input.GetButtonDown("Main Menu"))
             {
-                if (!MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive)
+                if (!MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive)
                 {
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();
