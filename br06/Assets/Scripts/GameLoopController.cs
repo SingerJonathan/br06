@@ -15,6 +15,8 @@ public class GameLoopController : MonoBehaviour
 
     public EventSystem EventSystem;
 
+    public Text RoomNumberText;
+
     public Animator CameraAnimator;
     public Vector3 RedCharacterGamePosition;
     public Vector3 BlueCharacterGamePosition;
@@ -116,6 +118,9 @@ public class GameLoopController : MonoBehaviour
 
     private bool[] _loadoutAxisTriggered = new bool[2];
     private int[] _loadoutNavigationStates = new int[2];
+
+    private bool QuitToMainMenuPressed;
+    private bool NewGamePressed;
 
     private static string _timeFormat = "{0:D1}:{1:D2}";
 
@@ -233,18 +238,19 @@ public class GameLoopController : MonoBehaviour
 
     private void SetupGame()
     {
+        NewGamePressed = true;
         StartTransition(false, true);
-        StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
+        if (CurrentRound != 0)
+            StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
         CurrentRound = 0;
         SwitchGameModeObjects(GameMode.Standard);
         _confirmPanelGameObject.SetActive(false);
         MainMenuCanvasGameObject.SetActive(false);
-        GameSetupCanvasGameObject.SetActive(true);
+        GameSetupCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(false);
         HUDCanvasGameObject.SetActive(false);
         NotificationText.gameObject.SetActive(false);
         LoadoutCanvasGameObject.GetComponent<CanvasGroup>().interactable = true;
-        EventSystem.SetSelectedGameObject(_roundsDropdown.gameObject);
     }
 
     public void CancelNewGame()
@@ -325,6 +331,8 @@ public class GameLoopController : MonoBehaviour
 
     private void QuitToMainMenu()
     {
+        QuitToMainMenuPressed = true;
+        MainMenuCanvasGameObject.SetActive(false);
         StartTransition(false, true);
         _confirmPanelGameObject.SetActive(false);
         _loadoutCanvasGroup.interactable = false;
@@ -333,14 +341,10 @@ public class GameLoopController : MonoBehaviour
         _quitButton.interactable = false;
         RedCharacterAnimationController.enabled = false;
         BlueCharacterAnimationController.enabled = false;
-        MainMenuCanvasGameObject.SetActive(true);
         GameSetupCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(false);
         HUDCanvasGameObject.SetActive(false);
-        _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
-        EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
         _confirmPanelYesButton.onClick.RemoveAllListeners();
-        _confirmPanelGameObject.SetActive(false);
         FlagController.transform.SetParent(CaptureTheFlagObjects.transform);
         FlagController.transform.localPosition = InitialFlagPosition;
         FlagController.transform.rotation = InitialFlagRotation;
@@ -582,6 +586,8 @@ public class GameLoopController : MonoBehaviour
         {
             RoundList.transform.GetChild(0).GetComponent<Round>()
         };
+        if (RoomNumberText)
+            RoomNumberText.text = "#" + new System.Random().Next(0, 1000000).ToString("D6");
     }
 
     private bool _transitionActive;
@@ -688,18 +694,19 @@ public class GameLoopController : MonoBehaviour
                 {
                     _firstCountdownSoundPlayed = true;
                     NotificationText.text = "" + (int)(_countdown + 1);
-                    GameObject.FindGameObjectWithTag("Countdown Sound").GetComponent<AudioSource>().Play();
-                }
-                if (_countdown <= 0.0f)
-                {
-                    _firstCountdownSoundPlayed = false;
-                    GameObject.FindGameObjectWithTag("Go Sound").GetComponent<AudioSource>().Play();
-                    NotificationText.gameObject.SetActive(false);
-                    RedCharacterAnimationController.enabled = true;
-                    BlueCharacterAnimationController.enabled = true;
-                    _currentRoundTime = _roundDuration;
-                    foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
-                        loadoutController.SetAbilitiesActive(true);
+                    if (_countdown <= 0.0f)
+                    {
+                        _firstCountdownSoundPlayed = false;
+                        GameObject.FindGameObjectWithTag("Go Sound").GetComponent<AudioSource>().Play();
+                        NotificationText.gameObject.SetActive(false);
+                        RedCharacterAnimationController.enabled = true;
+                        BlueCharacterAnimationController.enabled = true;
+                        _currentRoundTime = _roundDuration;
+                        foreach (CharacterLoadoutController loadoutController in CharacterLoadoutControllers)
+                            loadoutController.SetAbilitiesActive(true);
+                    }
+                    else
+                        GameObject.FindGameObjectWithTag("Countdown Sound").GetComponent<AudioSource>().Play();
                 }
             }
             // Countdown finished, round started
@@ -963,6 +970,19 @@ public class GameLoopController : MonoBehaviour
                     }
                 }
             }
+        }
+        if (QuitToMainMenuPressed && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive)
+        {
+            MainMenuCanvasGameObject.SetActive(true);
+            _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+            EventSystem.SetSelectedGameObject(_newGameButtonGameObject.gameObject);
+            QuitToMainMenuPressed = false;
+        }
+        else if (NewGamePressed && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive)
+        {
+            GameSetupCanvasGameObject.SetActive(true);
+            EventSystem.SetSelectedGameObject(_roundsDropdown.gameObject);
+            NewGamePressed = false;
         }
     }
 }
