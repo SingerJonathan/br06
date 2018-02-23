@@ -25,6 +25,10 @@ GameObject:
   - component: {fileID: 114542416091564724}
   - component: {fileID: 114342761588123658}
   - component: {fileID: 114825447619741504}
+  - component: {fileID: 114963899124166636}
+  - component: {fileID: 114043207732983078}
+  - component: {fileID: 114369248190939224}
+  - component: {fileID: 114494851295461352}
   m_Layer: 0
   m_Name: Spear
   m_TagString: Untagged
@@ -86,6 +90,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300000, guid: 32d92eaeb94368345bceadb19645a214, type: 3}
+--- !u!114 &114043207732983078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 21300000, guid: bc7e8a1ab2a41eb41a439b1c771c28aa, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1
 --- !u!114 &114342761588123658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,11 +119,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Ability 2
-  aSprite: {fileID: 0}
+  aSprite: {fileID: 21300000, guid: 2c0aa0ac1750cd3458eddfcf8821c878, type: 3}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 7
   WeaponDamage: 15
+--- !u!114 &114369248190939224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 21300000, guid: 761c8873f91a85049aa7c5be10d4d944, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1
+--- !u!114 &114494851295461352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 21300000, guid: bc7e8a1ab2a41eb41a439b1c771c28aa, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1
 --- !u!114 &114542416091564724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Ability 1
-  aSprite: {fileID: 0}
+  aSprite: {fileID: 21300000, guid: 2c0aa0ac1750cd3458eddfcf8821c878, type: 3}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
@@ -138,6 +193,11 @@ MonoBehaviour:
   - {fileID: 114542416091564724}
   - {fileID: 114342761588123658}
   - {fileID: 114825447619741504}
+  MutatedAbilities:
+  - {fileID: 114963899124166636}
+  - {fileID: 114043207732983078}
+  - {fileID: 114369248190939224}
+  - {fileID: 114494851295461352}
 --- !u!114 &114825447619741504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,8 +210,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Ability 3
-  aSprite: {fileID: 0}
+  aSprite: {fileID: 21300000, guid: 2c0aa0ac1750cd3458eddfcf8821c878, type: 3}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 5
   WeaponDamage: 30
+--- !u!114 &114963899124166636
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 21300000, guid: 761c8873f91a85049aa7c5be10d4d944, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1

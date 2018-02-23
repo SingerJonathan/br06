@@ -11,6 +11,7 @@ TagManager:
   - Countdown Sound
   - Go Sound
   - Terrain Transition Sound
+  - Description
   layers:
   - Default
   - TransparentFX

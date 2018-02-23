@@ -50,6 +50,12 @@ public class CharacterLoadoutController : MonoBehaviour
 
     public AbilityCooldown[] Abilities;
 
+    public Image[] LoadoutGUIAbilityIcons;
+    public Image[] LoadoutGUIMutatationIcons;
+    private int _abilityIndex;
+    private int _mutationIndex;
+
+
     [HideInInspector]
     public Toggle ReadyToggle;
     private bool _ready;
@@ -112,6 +118,32 @@ public class CharacterLoadoutController : MonoBehaviour
                 ReadyToggle.transform.Find("Background").GetComponent<Image>().color = ReadyColor;
             else
                 ReadyToggle.transform.Find("Background").GetComponent<Image>().color = UnreadyColor;
+        }
+    }
+
+    public int AbilityIndex
+    {
+        get
+        {
+            return _abilityIndex;
+        }
+
+        set
+        {
+            _abilityIndex = value;
+        }
+    }
+
+    public int MutationIndex
+    {
+        get
+        {
+            return _mutationIndex;
+        }
+
+        set
+        {
+            _mutationIndex = value;
         }
     }
 
@@ -197,6 +229,9 @@ public class CharacterLoadoutController : MonoBehaviour
             {
                 Abilities[index].Ability = weaponComponent.Abilities[index];
                 Abilities[index].Initialize(weaponComponent.Abilities[index], gameObject);
+                LoadoutGUIAbilityIcons[index].sprite = weaponComponent.Abilities[index].aSprite;
+                LoadoutGUIAbilityIcons[index].transform.parent.Find("Description").GetComponent<Text>().text = weaponComponent.Abilities[index].aDescription;
+                LoadoutGUIAbilityIcons[index].transform.parent.Find("Description/Name").GetComponent<Text>().text = weaponComponent.Abilities[index].aTitle;
             }
     }
 
@@ -224,6 +259,96 @@ public class CharacterLoadoutController : MonoBehaviour
         }
         else
             OffhandWeapon = (WeaponEnum)weapon+1;
+    }
+
+    public void MutateAbility(bool resetMutation)
+    {
+        Weapon mainWeaponComponent = _mainWeaponGameObject.GetComponent<Weapon>();
+        Weapon offhandWeaponComponent = _offhandWeaponGameObject.GetComponent<Weapon>();
+        if (resetMutation)
+        {
+            if (_abilityIndex == offhandWeaponComponent.Abilities.Length - 1)
+            {
+                if (_offhandWeaponDropdown.value != 0)
+                {
+                    Abilities[_abilityIndex].Ability = offhandWeaponComponent.Abilities[_abilityIndex];
+                    Abilities[_abilityIndex].Initialize(offhandWeaponComponent.Abilities[_abilityIndex], gameObject);
+                    LoadoutGUIAbilityIcons[_abilityIndex].sprite = offhandWeaponComponent.Abilities[_abilityIndex].aSprite;
+                    LoadoutGUIMutatationIcons[2].sprite = offhandWeaponComponent.MutatedAbilities[2].aSprite;
+                    LoadoutGUIMutatationIcons[3].sprite = offhandWeaponComponent.MutatedAbilities[3].aSprite;
+                    LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text = offhandWeaponComponent.Abilities[_abilityIndex].aDescription;
+                    LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text = offhandWeaponComponent.Abilities[_abilityIndex].aTitle;
+                    LoadoutGUIMutatationIcons[2].transform.parent.Find("Description").GetComponent<Text>().text = offhandWeaponComponent.MutatedAbilities[2].aDescription;
+                    LoadoutGUIMutatationIcons[2].transform.parent.Find("Description/Name").GetComponent<Text>().text = offhandWeaponComponent.MutatedAbilities[2].aTitle;
+                    LoadoutGUIMutatationIcons[3].transform.parent.Find("Description").GetComponent<Text>().text = offhandWeaponComponent.MutatedAbilities[3].aDescription;
+                    LoadoutGUIMutatationIcons[3].transform.parent.Find("Description/Name").GetComponent<Text>().text = offhandWeaponComponent.MutatedAbilities[3].aTitle;
+                }
+                else// if (mainWeaponComponent.TwoHanded)
+                {
+                    Abilities[_abilityIndex].Ability = mainWeaponComponent.Abilities[_abilityIndex];
+                    Abilities[_abilityIndex].Initialize(mainWeaponComponent.Abilities[_abilityIndex], gameObject);
+                    LoadoutGUIAbilityIcons[_abilityIndex].sprite = mainWeaponComponent.Abilities[_abilityIndex].aSprite;
+                    LoadoutGUIMutatationIcons[2].sprite = mainWeaponComponent.MutatedAbilities[2].aSprite;
+                    LoadoutGUIMutatationIcons[3].sprite = mainWeaponComponent.MutatedAbilities[3].aSprite;
+                    LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.Abilities[_abilityIndex].aDescription;
+                    LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.Abilities[_abilityIndex].aTitle;
+                    LoadoutGUIMutatationIcons[2].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[2].aDescription;
+                    LoadoutGUIMutatationIcons[2].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[2].aTitle;
+                    LoadoutGUIMutatationIcons[3].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[3].aDescription;
+                    LoadoutGUIMutatationIcons[3].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[3].aTitle;
+                }
+            }
+            else
+            {
+                Abilities[_abilityIndex].Ability = mainWeaponComponent.Abilities[_abilityIndex];
+                Abilities[_abilityIndex].Initialize(mainWeaponComponent.Abilities[_abilityIndex], gameObject);
+                LoadoutGUIAbilityIcons[_abilityIndex].sprite = mainWeaponComponent.Abilities[_abilityIndex].aSprite;
+                LoadoutGUIMutatationIcons[0].sprite = mainWeaponComponent.MutatedAbilities[0].aSprite;
+                LoadoutGUIMutatationIcons[1].sprite = mainWeaponComponent.MutatedAbilities[1].aSprite;
+                LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.Abilities[_abilityIndex].aDescription;
+                LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.Abilities[_abilityIndex].aTitle;
+                LoadoutGUIMutatationIcons[0].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[0].aDescription;
+                LoadoutGUIMutatationIcons[0].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[0].aTitle;
+                LoadoutGUIMutatationIcons[1].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[1].aDescription;
+                LoadoutGUIMutatationIcons[1].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[1].aTitle;
+            }
+        }
+        else if (_abilityIndex == offhandWeaponComponent.Abilities.Length - 1)
+        {
+            if (_offhandWeaponDropdown.value != 0)
+            {
+                Abilities[_abilityIndex].Ability = offhandWeaponComponent.MutatedAbilities[_mutationIndex + 2];
+                Abilities[_abilityIndex].Initialize(offhandWeaponComponent.MutatedAbilities[_mutationIndex + 2], gameObject);
+                LoadoutGUIMutatationIcons[_mutationIndex + 2].sprite = LoadoutGUIAbilityIcons[_abilityIndex].sprite;
+                LoadoutGUIAbilityIcons[_abilityIndex].sprite = offhandWeaponComponent.MutatedAbilities[_mutationIndex + 2].aSprite;
+                LoadoutGUIMutatationIcons[_mutationIndex + 2].transform.parent.Find("Description").GetComponent<Text>().text = LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text;
+                LoadoutGUIMutatationIcons[_mutationIndex + 2].transform.parent.Find("Description/Name").GetComponent<Text>().text = LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text;
+                LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text = offhandWeaponComponent.MutatedAbilities[_mutationIndex + 2].aDescription;
+                LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text = offhandWeaponComponent.MutatedAbilities[_mutationIndex + 2].aTitle;
+            }
+            else// if (mainWeaponComponent.TwoHanded)
+            {
+                Abilities[_abilityIndex].Ability = mainWeaponComponent.MutatedAbilities[_mutationIndex + 2];
+                Abilities[_abilityIndex].Initialize(mainWeaponComponent.MutatedAbilities[_mutationIndex + 2], gameObject);
+                LoadoutGUIMutatationIcons[_mutationIndex + 2].sprite = LoadoutGUIAbilityIcons[_abilityIndex].sprite;
+                LoadoutGUIAbilityIcons[_abilityIndex].sprite = mainWeaponComponent.MutatedAbilities[_mutationIndex + 2].aSprite;
+                LoadoutGUIMutatationIcons[_mutationIndex + 2].transform.parent.Find("Description").GetComponent<Text>().text = LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text;
+                LoadoutGUIMutatationIcons[_mutationIndex + 2].transform.parent.Find("Description/Name").GetComponent<Text>().text = LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text;
+                LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[_mutationIndex + 2].aDescription;
+                LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[_mutationIndex + 2].aTitle;
+            }
+        }
+        else
+        {
+            Abilities[_abilityIndex].Ability = mainWeaponComponent.MutatedAbilities[_mutationIndex];
+            Abilities[_abilityIndex].Initialize(mainWeaponComponent.MutatedAbilities[_mutationIndex], gameObject);
+            LoadoutGUIMutatationIcons[_mutationIndex].sprite = LoadoutGUIAbilityIcons[_abilityIndex].sprite;
+            LoadoutGUIAbilityIcons[_abilityIndex].sprite = mainWeaponComponent.MutatedAbilities[_mutationIndex].aSprite;
+            LoadoutGUIMutatationIcons[_mutationIndex].transform.parent.Find("Description").GetComponent<Text>().text = LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text;
+            LoadoutGUIMutatationIcons[_mutationIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text = LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text;
+            LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[_mutationIndex].aDescription;
+            LoadoutGUIAbilityIcons[_abilityIndex].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[_mutationIndex].aTitle;
+        }
     }
 
     void Start()
@@ -255,9 +380,4 @@ public class CharacterLoadoutController : MonoBehaviour
         _mainWeaponDropdown.onValueChanged.RemoveAllListeners();
         _offhandWeaponDropdown.onValueChanged.RemoveAllListeners();
     }
-
-    void Update()
-    {
-		
-	}
 }

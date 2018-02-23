@@ -25,6 +25,10 @@ GameObject:
   - component: {fileID: 114995662742463474}
   - component: {fileID: 114855125921125720}
   - component: {fileID: 114442189694261384}
+  - component: {fileID: 114547203511441328}
+  - component: {fileID: 114246161598023184}
+  - component: {fileID: 114901773604147890}
+  - component: {fileID: 114152489760296650}
   m_Layer: 0
   m_Name: Longsword
   m_TagString: Untagged
@@ -86,6 +90,44 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300000, guid: b9303d30d0335354689955e52d77a135, type: 3}
+--- !u!114 &114152489760296650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565facea9f4ab0e4a8bb7a0134d5a7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Mutated Ability 3
+  aTitle: Bleeding Strike 5
+  aDescription: Make your opponent bleed even more!
+  aSprite: {fileID: 21300000, guid: bc7e8a1ab2a41eb41a439b1c771c28aa, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 5
+  WeaponDamage: 7
+--- !u!114 &114246161598023184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565facea9f4ab0e4a8bb7a0134d5a7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Mutated Ability 2
+  aTitle: Bleeding Strike 3
+  aDescription: Make your opponent bleed even more!
+  aSprite: {fileID: 21300000, guid: bc7e8a1ab2a41eb41a439b1c771c28aa, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 10
+  WeaponDamage: 12
 --- !u!114 &114442189694261384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,10 +140,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longsword Ability 3
-  aSprite: {fileID: 0}
+  aTitle: Longsword Swing
+  aDescription: Basic attack.
+  aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
+  WeaponDamage: 10
+--- !u!114 &114547203511441328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565facea9f4ab0e4a8bb7a0134d5a7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Mutated Ability 2
+  aTitle: Bleeding Strike 2
+  aDescription: Make your opponent bleed slightly more!
+  aSprite: {fileID: 21300000, guid: 761c8873f91a85049aa7c5be10d4d944, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 8
   WeaponDamage: 10
 --- !u!114 &114719167508747742
 MonoBehaviour:
@@ -121,6 +184,11 @@ MonoBehaviour:
   - {fileID: 114995662742463474}
   - {fileID: 114855125921125720}
   - {fileID: 114442189694261384}
+  MutatedAbilities:
+  - {fileID: 114547203511441328}
+  - {fileID: 114246161598023184}
+  - {fileID: 114901773604147890}
+  - {fileID: 114152489760296650}
 --- !u!114 &114855125921125720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,11 +201,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longsword Ability 2
-  aSprite: {fileID: 0}
+  aTitle: Bleeding Strike
+  aDescription: Make your opponent bleed!
+  aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 4
   WeaponDamage: 1
+--- !u!114 &114901773604147890
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565facea9f4ab0e4a8bb7a0134d5a7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Mutated Ability 3
+  aTitle: Bleeding Strike 4
+  aDescription: Make your opponent bleed slightly more!
+  aSprite: {fileID: 21300000, guid: 761c8873f91a85049aa7c5be10d4d944, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 6
+  WeaponDamage: 8
 --- !u!114 &114995662742463474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,6 +239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longsword Ability 1
+  aTitle: Longsword Swing
+  aDescription: Basic attack.
   aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
   aSound: {fileID: 8300000, guid: 6ab877b1bd1132848851d206f627e543, type: 3}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
