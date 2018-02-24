@@ -52,8 +52,12 @@ public class CharacterLoadoutController : MonoBehaviour
 
     public Image[] LoadoutGUIAbilityIcons;
     public Image[] LoadoutGUIMutatationIcons;
+    public Image[] LoadoutGUIDescriptionIcons;
     private int _abilityIndex;
     private int _mutationIndex;
+
+    private int _mutationsAvailable;
+    public Text MutationsAvailableText;
 
 
     [HideInInspector]
@@ -147,6 +151,51 @@ public class CharacterLoadoutController : MonoBehaviour
         }
     }
 
+    public int MutationsAvailable
+    {
+        get
+        {
+            return _mutationsAvailable;
+        }
+
+        set
+        {
+            _mutationsAvailable = value;
+            MutationsAvailableText.text = "" + value;
+        }
+    }
+
+    public GameObject MainWeaponGameObject
+    {
+        get
+        {
+            return _mainWeaponGameObject;
+        }
+
+        set
+        {
+            _mainWeaponGameObject = value;
+        }
+    }
+
+    public GameObject OffhandWeaponGameObject
+    {
+        get
+        {
+            return _offhandWeaponGameObject;
+        }
+
+        set
+        {
+            _offhandWeaponGameObject = value;
+        }
+    }
+
+    public void DecrementMutationsAvailable()
+    {
+        MutationsAvailable--;
+    }
+
     public void SetAbilitiesActive(bool active)
     {
         foreach (AbilityCooldown ability in Abilities)
@@ -161,7 +210,6 @@ public class CharacterLoadoutController : MonoBehaviour
 
     private void ChangeWeapon(WeaponEnum weapon, bool offhand = false)
     {
-        // DEVNOTE: Remove this when Loadout GUI is implemented
         if (_characterRightHandTransform == null)
             Start();
 
@@ -232,10 +280,12 @@ public class CharacterLoadoutController : MonoBehaviour
                 LoadoutGUIAbilityIcons[index].sprite = weaponComponent.Abilities[index].aSprite;
                 LoadoutGUIAbilityIcons[index].transform.parent.Find("Description").GetComponent<Text>().text = weaponComponent.Abilities[index].aDescription;
                 LoadoutGUIAbilityIcons[index].transform.parent.Find("Description/Name").GetComponent<Text>().text = weaponComponent.Abilities[index].aTitle;
+                LoadoutGUIDescriptionIcons[index].sprite = weaponComponent.Abilities[index].aSprite;
+                LoadoutGUIDescriptionIcons[index].transform.parent.Find("Description").GetComponent<Text>().text = weaponComponent.Abilities[index].aDescription;
+                LoadoutGUIDescriptionIcons[index].transform.parent.Find("Description/Name").GetComponent<Text>().text = weaponComponent.Abilities[index].aTitle;
             }
     }
 
-    // DEVNOTE: Consider moving this into OnValueChanged in inspector for dropdown
     private void OnWeaponDropdownValueChanged(Dropdown dropdown)
     {
         int weapon = -1;
@@ -259,6 +309,8 @@ public class CharacterLoadoutController : MonoBehaviour
         }
         else
             OffhandWeapon = (WeaponEnum)weapon+1;
+        if (!_mainWeaponGameObject.GetComponent<Weapon>().TwoHanded && _offhandWeaponDropdown.value == 0)
+            _offhandWeaponDropdown.value = 1;
     }
 
     public void MutateAbility(bool resetMutation)
@@ -353,8 +405,8 @@ public class CharacterLoadoutController : MonoBehaviour
 
     void Start()
     {
-        _characterRightHandTransform = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:RightShoulder").Find("mixamorig:RightArm").Find("mixamorig:RightForeArm").Find("mixamorig:RightHand");
-        _characterLeftHandTransform = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:LeftShoulder").Find("mixamorig:LeftArm").Find("mixamorig:LeftForeArm").Find("mixamorig:LeftHand");
+        _characterRightHandTransform = transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand");
+        _characterLeftHandTransform = transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand");
 
         _mainWeaponDropdown = LoadoutPanel.transform.Find("Main Weapon Dropdown").GetComponent<Dropdown>();
         _offhandWeaponDropdown = LoadoutPanel.transform.Find("Offhand Weapon Dropdown").GetComponent<Dropdown>();

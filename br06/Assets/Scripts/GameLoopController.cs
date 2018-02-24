@@ -175,6 +175,21 @@ public class GameLoopController : MonoBehaviour
         set
         {
             _currentRound = value;
+            if (CurrentRound > 1)
+            {
+                // Disable ability description list and enable ability mutation after first round
+                CharacterLoadoutControllers[0].LoadoutGUIDescriptionIcons[0].transform.parent.parent.gameObject.SetActive(false);
+                CharacterLoadoutControllers[1].LoadoutGUIDescriptionIcons[0].transform.parent.parent.gameObject.SetActive(false);
+                CharacterLoadoutControllers[0].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(true);
+                CharacterLoadoutControllers[1].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                CharacterLoadoutControllers[0].LoadoutGUIDescriptionIcons[0].transform.parent.parent.gameObject.SetActive(true);
+                CharacterLoadoutControllers[1].LoadoutGUIDescriptionIcons[0].transform.parent.parent.gameObject.SetActive(true);
+                CharacterLoadoutControllers[0].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(false);
+                CharacterLoadoutControllers[1].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(false);
+            }
             if (CurrentRound > 0)
             {
                 CurrentGameMode = _rounds[_currentRound - 1].GameMode;
@@ -266,6 +281,12 @@ public class GameLoopController : MonoBehaviour
 
     public void NewGame()
     {
+        foreach (Dropdown dropdown in MainWeaponDropdowns)
+            dropdown.value = 0;
+        foreach (Dropdown dropdown in OffhandWeaponDropdowns)
+            dropdown.value = 1;
+        foreach (CharacterLoadoutController loadout in CharacterLoadoutControllers)
+            loadout.MutationsAvailable = 0;
         _redScore = 0;
         _blueScore = 0;
         RedScoreText.text = "" + (int)_redScore;
@@ -914,6 +935,8 @@ public class GameLoopController : MonoBehaviour
                         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[0].ResetAbilityCooldowns();
                         CharacterLoadoutControllers[1].ResetAbilityCooldowns();
+                        CharacterLoadoutControllers[0].MutationsAvailable++;
+                        CharacterLoadoutControllers[1].MutationsAvailable++;
                         RedCharacterStatsController.gameObject.SetActive(true);
                         _redCountdown = 0;
                         RedNotificationText.gameObject.SetActive(false);
