@@ -24,13 +24,18 @@ public class AbilityMutationButtonBehaviour : MonoBehaviour
 	{
 		// Only allow mutation if there are mutations available and the ability isn't already mutated
 		OtherAbilityMutations.SetActive(false);
-		if (CharacterLoadoutController.MutationsAvailable > 0
-		&& (CharacterLoadoutController.Abilities[AbilityIndex].Ability == CharacterLoadoutController.MainWeaponGameObject.GetComponent<Weapon>().Abilities[AbilityIndex]
-		|| CharacterLoadoutController.Abilities[AbilityIndex].Ability == CharacterLoadoutController.OffhandWeaponGameObject.GetComponent<Weapon>().Abilities[AbilityIndex]))
+		if (MutationPossible())
 		{
 			GetComponent<GameObjectActiveToggle>().ToggleGameObjectActive();
 			CharacterLoadoutController.AbilityIndex = AbilityIndex;
 			CharacterLoadoutController.MutateAbility(true);
 		}
+	}
+
+	public bool MutationPossible()
+	{
+		return CharacterLoadoutController.MutationsAvailable > 0
+		&& (CharacterLoadoutController.Abilities[AbilityIndex].Ability == CharacterLoadoutController.MainWeaponGameObject.GetComponent<Weapon>().Abilities[AbilityIndex]
+		|| CharacterLoadoutController.Abilities[AbilityIndex].Ability == CharacterLoadoutController.OffhandWeaponGameObject.GetComponent<Weapon>().Abilities[AbilityIndex]);
 	}
 }

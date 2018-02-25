@@ -11,7 +11,10 @@ TagManager:
   - Countdown Sound
   - Go Sound
   - Terrain Transition Sound
-  - Description
+  - EventSystem
+  - GameLoopController
+  - Red Description
+  - Blue Description
   layers:
   - Default
   - TransparentFX

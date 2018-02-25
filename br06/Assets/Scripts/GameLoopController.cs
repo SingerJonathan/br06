@@ -48,12 +48,8 @@ public class GameLoopController : MonoBehaviour
     public Text GameModeText;
 
     public GameObject[,] LoadoutStatePanels = new GameObject[2,6];
-    public GameObject RedState1Panel;
-    public GameObject RedState2Panel;
-    public GameObject RedState5Panel;
-    public GameObject BlueState1Panel;
-    public GameObject BlueState2Panel;
-    public GameObject BlueState5Panel;
+    public GameObject[] RedStatePanels;
+    public GameObject[] BlueStatePanels;
 
     public HitboxTriggerController[] RedHitboxControllers;
     public HitboxTriggerController[] BlueHitboxControllers;
@@ -182,6 +178,11 @@ public class GameLoopController : MonoBehaviour
                 CharacterLoadoutControllers[1].LoadoutGUIDescriptionIcons[0].transform.parent.parent.gameObject.SetActive(false);
                 CharacterLoadoutControllers[0].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(true);
                 CharacterLoadoutControllers[1].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(true);
+                // Disable weapon dropdowns after first round
+                foreach (Dropdown dropdown in MainWeaponDropdowns)
+                    dropdown.interactable = false;
+                foreach (Dropdown dropdown in OffhandWeaponDropdowns)
+                    dropdown.interactable = false;
             }
             else
             {
@@ -189,6 +190,10 @@ public class GameLoopController : MonoBehaviour
                 CharacterLoadoutControllers[1].LoadoutGUIDescriptionIcons[0].transform.parent.parent.gameObject.SetActive(true);
                 CharacterLoadoutControllers[0].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(false);
                 CharacterLoadoutControllers[1].LoadoutGUIAbilityIcons[0].transform.parent.parent.gameObject.SetActive(false);
+                foreach (Dropdown dropdown in MainWeaponDropdowns)
+                    dropdown.interactable = true;
+                foreach (Dropdown dropdown in OffhandWeaponDropdowns)
+                    dropdown.interactable = true;
             }
             if (CurrentRound > 0)
             {
@@ -285,6 +290,11 @@ public class GameLoopController : MonoBehaviour
             dropdown.value = 0;
         foreach (Dropdown dropdown in OffhandWeaponDropdowns)
             dropdown.value = 1;
+        foreach (CharacterLoadoutController loadout in CharacterLoadoutControllers)
+        {
+            loadout.MainWeapon = CharacterLoadoutController.WeaponEnum.Longsword;
+            loadout.OffhandWeapon = CharacterLoadoutController.WeaponEnum.Longsword;
+        }
         foreach (CharacterLoadoutController loadout in CharacterLoadoutControllers)
             loadout.MutationsAvailable = 0;
         _redScore = 0;
@@ -552,12 +562,146 @@ public class GameLoopController : MonoBehaviour
             }
         }
         // State 3: Detailed Ability View
+        else if (_loadoutNavigationStates[playerNumber] == 3)
+        {
+            if (Input.GetAxisRaw("Horizontal" + (playerNumber + 1)) == 0 && Input.GetAxisRaw("HorizontalAlt" + (playerNumber + 1)) == 0
+            && Input.GetAxisRaw("Vertical" + (playerNumber + 1)) == 0 && Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) == 0)
+                _loadoutAxisTriggered[playerNumber] = false;
+            if (Input.GetAxisRaw("Horizontal" + (playerNumber + 1)) < 0 || Input.GetAxisRaw("HorizontalAlt" + (playerNumber + 1)) < 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    if (CharacterLoadoutControllers[playerNumber].AbilityIndex > 0)
+                    {
+                        LoadoutStatePanels[playerNumber,3].transform.GetChild(CharacterLoadoutControllers[playerNumber].AbilityIndex).gameObject.SetActive(false);
+                        CharacterLoadoutControllers[playerNumber].AbilityIndex--;
+                        LoadoutStatePanels[playerNumber,3].transform.GetChild(CharacterLoadoutControllers[playerNumber].AbilityIndex).gameObject.SetActive(true);
+                        CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[CharacterLoadoutControllers[playerNumber].AbilityIndex].transform.parent.GetComponent<AbilityDescriptionSwitcher>().OnSelect(null);
+                        GameObject.FindGameObjectWithTag("Select Sound").GetComponent<AudioSource>().Play();
+                    }
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetAxisRaw("Horizontal" + (playerNumber + 1)) > 0 || Input.GetAxisRaw("HorizontalAlt" + (playerNumber + 1)) > 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    if (CharacterLoadoutControllers[playerNumber].AbilityIndex < CharacterLoadoutControllers[playerNumber].Abilities.Length - 1)
+                    {
+                        LoadoutStatePanels[playerNumber,3].transform.GetChild(CharacterLoadoutControllers[playerNumber].AbilityIndex).gameObject.SetActive(false);
+                        CharacterLoadoutControllers[playerNumber].AbilityIndex++;
+                        LoadoutStatePanels[playerNumber,3].transform.GetChild(CharacterLoadoutControllers[playerNumber].AbilityIndex).gameObject.SetActive(true);
+                        CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[CharacterLoadoutControllers[playerNumber].AbilityIndex].transform.parent.GetComponent<AbilityDescriptionSwitcher>().OnSelect(null);
+                        GameObject.FindGameObjectWithTag("Select Sound").GetComponent<AudioSource>().Play();
+                    }
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) < 0 || Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) < 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber]
+                && CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[CharacterLoadoutControllers[playerNumber].AbilityIndex].transform.parent.GetComponent<AbilityMutationButtonBehaviour>()
+                && CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[CharacterLoadoutControllers[playerNumber].AbilityIndex].transform.parent.GetComponent<AbilityMutationButtonBehaviour>().MutationPossible())
+                {
+                    CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[CharacterLoadoutControllers[playerNumber].AbilityIndex].transform.parent.GetComponent<AbilityMutationButtonBehaviour>().OnClick();
+                    _loadoutNavigationStates[playerNumber] = 4;
+                    SwitchActiveLoadoutStatePanel(playerNumber, 4);
+                    CharacterLoadoutControllers[playerNumber].MutationIndex = 0;
+                    int index = CharacterLoadoutControllers[playerNumber].MutationIndex;
+                    if (CharacterLoadoutControllers[playerNumber].AbilityIndex == 2)
+                        index += 2;
+                    for (int child = 0; child < 4; child++)
+                        LoadoutStatePanels[playerNumber,4].transform.GetChild(child).gameObject.SetActive(false);
+                    LoadoutStatePanels[playerNumber,4].transform.GetChild(index).gameObject.SetActive(true);
+                    CharacterLoadoutControllers[playerNumber].LoadoutGUIMutatationIcons[index].transform.parent.GetComponent<AbilityDescriptionSwitcher>().OnSelect(null);
+                    GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
+            {
+                _loadoutNavigationStates[playerNumber] = 5;
+                SwitchActiveLoadoutStatePanel(playerNumber, 5);
+                GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
+            }
+        }
         // State 4: Ability Mutation
+        else if (_loadoutNavigationStates[playerNumber] == 4)
+        {
+            if (Input.GetAxisRaw("Horizontal" + (playerNumber + 1)) == 0 && Input.GetAxisRaw("HorizontalAlt" + (playerNumber + 1)) == 0
+            && Input.GetAxisRaw("Vertical" + (playerNumber + 1)) == 0 && Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) == 0)
+                _loadoutAxisTriggered[playerNumber] = false;
+            if (Input.GetAxisRaw("Horizontal" + (playerNumber + 1)) < 0 || Input.GetAxisRaw("HorizontalAlt" + (playerNumber + 1)) < 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    if (CharacterLoadoutControllers[playerNumber].MutationIndex > 0)
+                    {
+                        int index = CharacterLoadoutControllers[playerNumber].MutationIndex;
+                        if (CharacterLoadoutControllers[playerNumber].AbilityIndex == 2)
+                            index += 2;
+                        for (int child = 0; child < 4; child++)
+                            LoadoutStatePanels[playerNumber,4].transform.GetChild(child).gameObject.SetActive(false);
+                        CharacterLoadoutControllers[playerNumber].MutationIndex--;
+                        index--;
+                        LoadoutStatePanels[playerNumber,4].transform.GetChild(index).gameObject.SetActive(true);
+                        CharacterLoadoutControllers[playerNumber].LoadoutGUIMutatationIcons[index].transform.parent.GetComponent<AbilityDescriptionSwitcher>().OnSelect(null);
+                        GameObject.FindGameObjectWithTag("Select Sound").GetComponent<AudioSource>().Play();
+                    }
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetAxisRaw("Horizontal" + (playerNumber + 1)) > 0 || Input.GetAxisRaw("HorizontalAlt" + (playerNumber + 1)) > 0)
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    if (CharacterLoadoutControllers[playerNumber].MutationIndex < 1)
+                    {
+                        int index = CharacterLoadoutControllers[playerNumber].MutationIndex;
+                        if (CharacterLoadoutControllers[playerNumber].AbilityIndex == 2)
+                            index += 2;
+                        for (int child = 0; child < 4; child++)
+                            LoadoutStatePanels[playerNumber,4].transform.GetChild(child).gameObject.SetActive(false);
+                        CharacterLoadoutControllers[playerNumber].MutationIndex++;
+                        index++;
+                        LoadoutStatePanels[playerNumber,4].transform.GetChild(index).gameObject.SetActive(true);
+                        CharacterLoadoutControllers[playerNumber].LoadoutGUIMutatationIcons[index].transform.parent.GetComponent<AbilityDescriptionSwitcher>().OnSelect(null);
+                        GameObject.FindGameObjectWithTag("Select Sound").GetComponent<AudioSource>().Play();
+                    }
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetAxisRaw("Vertical" + (playerNumber + 1)) > 0 || Input.GetAxisRaw("VerticalAlt" + (playerNumber + 1)) > 0
+            || Input.GetButtonDown("Cancel" + (playerNumber + 1)) || Input.GetButtonDown("CancelAlt" + (playerNumber + 1)))
+            {
+                if (!_loadoutAxisTriggered[playerNumber])
+                {
+                    CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[CharacterLoadoutControllers[playerNumber].AbilityIndex].transform.parent.GetComponent<AbilityMutationButtonBehaviour>().OnClick();
+                    _loadoutNavigationStates[playerNumber] = 3;
+                    SwitchActiveLoadoutStatePanel(playerNumber, 3);
+                    CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[CharacterLoadoutControllers[playerNumber].AbilityIndex].transform.parent.GetComponent<AbilityDescriptionSwitcher>().OnSelect(null);
+                    GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
+                    _loadoutAxisTriggered[playerNumber] = true;
+                }
+            }
+            else if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
+            {
+                int index = CharacterLoadoutControllers[playerNumber].MutationIndex;
+                if (CharacterLoadoutControllers[playerNumber].AbilityIndex == 2)
+                    index += 2;
+                CharacterLoadoutControllers[playerNumber].LoadoutGUIMutatationIcons[index].transform.parent.GetComponent<Button>().onClick.Invoke();
+                _loadoutNavigationStates[playerNumber] = 3;
+                SwitchActiveLoadoutStatePanel(playerNumber, 3);
+                GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
+            }
+        }
         // State 5: Ready
         else if (_loadoutNavigationStates[playerNumber] == 5)
         {
             if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
+            {
                 CharacterLoadoutControllers[playerNumber].ReadyToggle.isOn = true;
+            }
             else if (Input.GetButtonDown("Cancel" + (playerNumber + 1)) || Input.GetButtonDown("CancelAlt" + (playerNumber + 1)))
             {
                 if (CharacterLoadoutControllers[playerNumber].ReadyToggle.isOn)
@@ -575,18 +719,27 @@ public class GameLoopController : MonoBehaviour
                         SwitchActiveLoadoutStatePanel(playerNumber, 1);
                     }
                 }
+                else if (CurrentRound > 1)
+                {
+                    _loadoutNavigationStates[playerNumber] = 3;
+                    SwitchActiveLoadoutStatePanel(playerNumber, 3);
+                }
             }
         }
     }
 
     void Start()
     {
-        LoadoutStatePanels[0, 1] = RedState1Panel;
-        LoadoutStatePanels[0, 2] = RedState2Panel;
-        LoadoutStatePanels[0, 5] = RedState5Panel;
-        LoadoutStatePanels[1, 1] = BlueState1Panel;
-        LoadoutStatePanels[1, 2] = BlueState2Panel;
-        LoadoutStatePanels[1, 5] = BlueState5Panel;
+        LoadoutStatePanels[0, 1] = RedStatePanels[0];
+        LoadoutStatePanels[0, 2] = RedStatePanels[1];
+        LoadoutStatePanels[0, 3] = RedStatePanels[2];
+        LoadoutStatePanels[0, 4] = RedStatePanels[3];
+        LoadoutStatePanels[0, 5] = RedStatePanels[4];
+        LoadoutStatePanels[1, 1] = BlueStatePanels[0];
+        LoadoutStatePanels[1, 2] = BlueStatePanels[1];
+        LoadoutStatePanels[1, 3] = BlueStatePanels[2];
+        LoadoutStatePanels[1, 4] = BlueStatePanels[3];
+        LoadoutStatePanels[1, 5] = BlueStatePanels[4];
         _quitButton = MainMenuCanvasGameObject.transform.Find("Main Panel/Quit Button").GetComponent<Button>();
         _roundsDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Rounds Dropdown").GetComponent<Dropdown>();
         _roundDurationDropdown = GameSetupCanvasGameObject.transform.Find("Panel/Minutes Dropdown").GetComponent<Dropdown>();
@@ -909,6 +1062,17 @@ public class GameLoopController : MonoBehaviour
                     // After message after round
                     else if (!(CurrentRound == _maxRounds || _redWins > _maxRounds / 2 || _blueWins > _maxRounds / 2))
                     {
+                        for (int playerNumber = 0; playerNumber <= 1; playerNumber++)
+                        {
+                            _loadoutNavigationStates[playerNumber] = 3;
+                            SwitchActiveLoadoutStatePanel(playerNumber, 3);
+                            for (int child = 0; child < 3; child++)
+                                LoadoutStatePanels[playerNumber,3].transform.GetChild(child).gameObject.SetActive(false);
+                            LoadoutStatePanels[playerNumber,3].transform.GetChild(0).gameObject.SetActive(true);
+                            CharacterLoadoutControllers[playerNumber].LoadoutGUIAbilityIcons[0].transform.parent.GetComponent<AbilityDescriptionSwitcher>().OnSelect(null);
+                            CharacterLoadoutControllers[playerNumber].AbilityIndex = 0;
+                            CharacterLoadoutControllers[playerNumber].MutationIndex = 0;
+                        }
                         RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
                         BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
                         RedHPText.text = "" + RedCharacterStatsController.HitPoints;
