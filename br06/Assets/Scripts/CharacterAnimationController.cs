@@ -9,6 +9,7 @@ public class CharacterAnimationController : MonoBehaviour
     private Vector3 _moveDirection;
     private float _dodgeCountdown;
     private bool _mirrorRun;
+    private bool _twoHandedRun;
     private bool _knockedBack = false;
     protected string _enemyColour;
 
@@ -57,6 +58,24 @@ public class CharacterAnimationController : MonoBehaviour
         {
             _mirrorRun = value;
             _animator.SetBool("mirror", value);
+            if (value)
+                TwoHandedRun = false;
+        }
+    }
+
+    public bool TwoHandedRun
+    {
+        get
+        {
+            return _twoHandedRun;
+        }
+
+        set
+        {
+            _twoHandedRun = value;
+            _animator.SetBool("twohanded", value);
+            if (value)
+                MirrorRun = false;
         }
     }
 

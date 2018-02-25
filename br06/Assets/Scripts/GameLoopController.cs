@@ -291,11 +291,6 @@ public class GameLoopController : MonoBehaviour
         foreach (Dropdown dropdown in OffhandWeaponDropdowns)
             dropdown.value = 1;
         foreach (CharacterLoadoutController loadout in CharacterLoadoutControllers)
-        {
-            loadout.MainWeapon = CharacterLoadoutController.WeaponEnum.Longsword;
-            loadout.OffhandWeapon = CharacterLoadoutController.WeaponEnum.Longsword;
-        }
-        foreach (CharacterLoadoutController loadout in CharacterLoadoutControllers)
             loadout.MutationsAvailable = 0;
         _redScore = 0;
         _blueScore = 0;

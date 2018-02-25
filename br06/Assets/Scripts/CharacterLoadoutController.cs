@@ -249,6 +249,7 @@ public class CharacterLoadoutController : MonoBehaviour
         Weapon weaponComponent = weaponGameObject.GetComponent<Weapon>();
 
         // Make sure the correct character running animation is used
+        GetComponent<CharacterAnimationController>().TwoHandedRun = weaponComponent.TwoHanded;
         GetComponent<CharacterAnimationController>().MirrorRun = weaponComponent.Bow;
 
         // Assign parent for new weapon and adjust position
@@ -405,8 +406,8 @@ public class CharacterLoadoutController : MonoBehaviour
 
     void Start()
     {
-        _characterRightHandTransform = transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand");
-        _characterLeftHandTransform = transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand");
+        _characterRightHandTransform = transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder/mixamorig:RightArm/mixamorig:RightForeArm/mixamorig:RightHand/Weapon");
+        _characterLeftHandTransform = transform.Find("mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/Weapon");
 
         _mainWeaponDropdown = LoadoutPanel.transform.Find("Main Weapon Dropdown").GetComponent<Dropdown>();
         _offhandWeaponDropdown = LoadoutPanel.transform.Find("Offhand Weapon Dropdown").GetComponent<Dropdown>();
