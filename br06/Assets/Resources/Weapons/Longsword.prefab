@@ -24,15 +24,11 @@ GameObject:
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114995662742463474}
   - component: {fileID: 114855125921125720}
-<<<<<<< HEAD
-  - component: {fileID: 114148123741167852}
-=======
-  - component: {fileID: 114442189694261384}
+  - component: {fileID: 114089457469770324}
   - component: {fileID: 114547203511441328}
   - component: {fileID: 114246161598023184}
   - component: {fileID: 114901773604147890}
   - component: {fileID: 114152489760296650}
->>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
   m_Layer: 0
   m_Name: Longsword
   m_TagString: Untagged
@@ -62,6 +58,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -77,6 +74,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -92,9 +90,25 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300000, guid: b9303d30d0335354689955e52d77a135, type: 3}
-<<<<<<< HEAD
---- !u!114 &114148123741167852
-=======
+--- !u!114 &114089457469770324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bfd330375ca7a48af0cb8cbf9f7951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Longsword Ability 3
+  aTitle: Longsword Pull
+  aDescription: Pull your oponent towards you
+  aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 5
+  WeaponDamage: 15
 --- !u!114 &114152489760296650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,32 +147,6 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 10
   WeaponDamage: 12
---- !u!114 &114442189694261384
->>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3bfd330375ca7a48af0cb8cbf9f7951, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: Longsword Ability 3
-<<<<<<< HEAD
-=======
-  aTitle: Longsword Swing
-  aDescription: Basic attack.
->>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
-  aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
-  aBaseCooldown: 1
-<<<<<<< HEAD
-  WeaponDamage: 20
-=======
-  WeaponDamage: 10
 --- !u!114 &114547203511441328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,7 +166,6 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 8
   WeaponDamage: 10
->>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,16 +183,12 @@ MonoBehaviour:
   Abilities:
   - {fileID: 114995662742463474}
   - {fileID: 114855125921125720}
-<<<<<<< HEAD
-  - {fileID: 114148123741167852}
-=======
-  - {fileID: 114442189694261384}
+  - {fileID: 114089457469770324}
   MutatedAbilities:
   - {fileID: 114547203511441328}
   - {fileID: 114246161598023184}
   - {fileID: 114901773604147890}
   - {fileID: 114152489760296650}
->>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
 --- !u!114 &114855125921125720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -218,11 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longsword Ability 2
-<<<<<<< HEAD
-=======
   aTitle: Bleeding Strike
   aDescription: Make your opponent bleed!
->>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
   aSprite: {fileID: 21300000, guid: 3aa4ce060c93e1443b520ee8e1dbc2c6, type: 3}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
