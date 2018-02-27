@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114207363627053186}
   - component: {fileID: 114807718117568956}
-  - component: {fileID: 114525346162659172}
+  - component: {fileID: 114865698960294122}
   m_Layer: 0
   m_Name: Greataxe
   m_TagString: Untagged
@@ -54,7 +54,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,7 +69,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -103,23 +101,6 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
   WeaponDamage: 10
---- !u!114 &114525346162659172
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: Greataxe Ability 3
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
-  aBaseCooldown: 5
-  WeaponDamage: 30
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,7 +118,7 @@ MonoBehaviour:
   Abilities:
   - {fileID: 114207363627053186}
   - {fileID: 114807718117568956}
-  - {fileID: 114525346162659172}
+  - {fileID: 114865698960294122}
 --- !u!114 &114807718117568956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,3 +136,20 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 3
   WeaponDamage: 20
+--- !u!114 &114865698960294122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f7a436108113a04c9478e52897f5fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Greataxe Ability 3
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1

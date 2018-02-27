@@ -10,6 +10,8 @@ public class CharacterStatsController : MonoBehaviour
     public int PotionHealValue = 50;
     public static int InitialPotions = 3;
     public static int MaxPotions = 4;
+    public float BleedInterval = 1f;
+    public float BleedTime = 1f;
     private bool bleed = false;
 
     public Text PotionText;
@@ -71,7 +73,7 @@ public class CharacterStatsController : MonoBehaviour
             DrinkPotion();
         }
         if (bleed)
-            StartCoroutine(BleedRoutine(4f));
+            StartCoroutine(BleedRoutine());
     }
 
     public void setBleed()
@@ -80,7 +82,7 @@ public class CharacterStatsController : MonoBehaviour
             bleed = true;
     }
 
-    IEnumerator BleedRoutine(float bleedTime)
+    IEnumerator BleedRoutine()
     {
         bleed = false;
         for(int i = 0; i <= 4; i++)

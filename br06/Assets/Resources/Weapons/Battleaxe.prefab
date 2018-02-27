@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 23978671989029180}
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114434734873727356}
-  - component: {fileID: 114053236641866412}
   - component: {fileID: 114316554516848928}
+  - component: {fileID: 114357646579838006}
   m_Layer: 0
   m_Name: Battleaxe
   m_TagString: Untagged
@@ -54,7 +54,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,7 +69,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -86,23 +84,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300002, guid: 0fe4a27464d212040b5c6c443767140e, type: 3}
---- !u!114 &114053236641866412
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: Battleaxe Ability 2
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
-  aBaseCooldown: 3
-  WeaponDamage: 20
 --- !u!114 &114316554516848928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,6 +101,23 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 5
   WeaponDamage: 30
+--- !u!114 &114357646579838006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095d6501e2cf7f7489e89350f61097e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Battleaxe Ability 2
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1
 --- !u!114 &114434734873727356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,5 +151,5 @@ MonoBehaviour:
   Bow: 0
   Abilities:
   - {fileID: 114434734873727356}
-  - {fileID: 114053236641866412}
+  - {fileID: 114357646579838006}
   - {fileID: 114316554516848928}

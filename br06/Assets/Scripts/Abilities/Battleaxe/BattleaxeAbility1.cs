@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongswordBleed : Ability
+public class BattleaxeAbility1 : Ability
 {
 
-    public int WeaponDamage = 1;
     private HitboxTriggerController _hitboxTriggerController;
+    public int WeaponDamage = 1;
 
     public override void Initialize(GameObject obj)
     {
@@ -21,10 +21,8 @@ public class LongswordBleed : Ability
             if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
             {
                 _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().HitPoints -= WeaponDamage;
-                _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().setBleed();
-
+                _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().Slow();
             }
         }
     }
-
 }

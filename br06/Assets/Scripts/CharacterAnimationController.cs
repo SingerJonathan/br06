@@ -10,6 +10,8 @@ public class CharacterAnimationController : MonoBehaviour
     private float _dodgeCountdown;
     private bool _mirrorRun;
     private bool _knockedBack = false;
+    private bool pullTowards = false;
+    private bool _knockedUp = false;
     protected string _enemyColour;
 
 
@@ -19,6 +21,7 @@ public class CharacterAnimationController : MonoBehaviour
     public float DodgeSpeed = 35f;
     public float Gravity = 1000.0f;
     public float knockbackForce = 1f;
+    public float PullForce = 1f;
 
     public float DodgeCountdown
     {
@@ -44,6 +47,18 @@ public class CharacterAnimationController : MonoBehaviour
         {
             _characterController = value;
         }
+    }
+
+    internal void Slow()
+    {
+        RunSpeed = 6f;
+        StartCoroutine("SlowTime");
+        RunSpeed = 12f;
+    }
+
+    IEnumerator SlowTime()
+    {
+        yield return new WaitForSeconds(4);
     }
 
     public bool MirrorRun
@@ -102,7 +117,24 @@ public class CharacterAnimationController : MonoBehaviour
             _characterController.Move(collisionDirection * knockbackForce);
             StartCoroutine("knockbackDistance");
         }
+
+        if(pullTowards)
+        {
+            Vector3 enemyPosition = GameObject.FindGameObjectWithTag(_enemyColour).transform.position;
+            Vector3 collisionDirection = enemyPosition - transform.position;
+            collisionDirection = collisionDirection.normalized;
+            _characterController.Move(collisionDirection * knockbackForce);
+            StartCoroutine("pullDistance");
+        }
         
+        if(_knockedUp)
+        {
+            Vector3 UpDirection = new Vector3(0,3,0);
+            _characterController.Move(UpDirection * knockbackForce);
+            _moveDirection.y -= Gravity;
+            StartCoroutine("knockupDistance");
+        }
+
         // Handle animations
         if (Input.GetButton("Dodge" + PlayerNumber) && _dodgeCountdown <= 0.0f)
         {
@@ -123,9 +155,31 @@ public class CharacterAnimationController : MonoBehaviour
         _knockedBack = true;
     }
 
+    public void PullTowards()
+    {
+        pullTowards = true;
+    }
+
+    public void KnockupEnable()
+    {
+        _knockedUp = true;
+    }
+
     IEnumerator knockbackDistance()
     {
         yield return new WaitForSeconds(knockbackForce);
         _knockedBack = false;
+    }
+
+    IEnumerator pullDistance()
+    {
+        yield return new WaitForSeconds(PullForce);
+        pullTowards = false;
+    }
+
+    IEnumerator knockupDistance()
+    {
+        yield return new WaitForSeconds(PullForce);
+        _knockedUp = false;
     }
 }
