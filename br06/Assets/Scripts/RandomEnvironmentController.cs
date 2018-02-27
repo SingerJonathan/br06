@@ -15,7 +15,7 @@ public class RandomEnvironmentController : MonoBehaviour
     private List<GameObject> _environmentObjects;
     private GameObject _environmentObject;
     //private int _rotatingObjectsCount;
-
+    private GameLoopController.GameMode _gameMode;
     private int _collidersCount;
 
     private bool _sinkOrRaiseActive;
@@ -40,6 +40,7 @@ public class RandomEnvironmentController : MonoBehaviour
 
     public void SpawnRandomEnvironmentObjects(GameLoopController.GameMode gameMode)
     {
+        _gameMode = gameMode;
         if (_environmentObjects.Count > 0 && !_sinkOrRaiseActive)
         {
             foreach (GameObject environmentObject in _environmentObjects)
@@ -97,7 +98,8 @@ public class RandomEnvironmentController : MonoBehaviour
                 _environmentObjects.Add(_environmentObject);
             }
         }
-        Invoke("PlayTerrainTransitionSound", 1);
+        if (gameMode != GameLoopController.GameMode.Standard || RandomEnvironmentToggle.isOn)
+            Invoke("PlayTerrainTransitionSound", 1);
         yield return new WaitForSeconds(3);
         _sinkOrRaiseActive = false;
     }
@@ -137,17 +139,18 @@ public class RandomEnvironmentController : MonoBehaviour
 
     public IEnumerator SinkAndDeleteObjects()
     {
+        if (!_sinkOrRaiseActive && (RandomEnvironmentToggle.isOn && _environmentObjects.Count > 0) || _gameMode != GameLoopController.GameMode.Standard)
+            TerrainTransitionSound.Play();
         if (_environmentObjects.Count > 0 && !_sinkOrRaiseActive)
         {
             foreach (GameObject environmentObject in _environmentObjects)
                 if (environmentObject)
                     environmentObject.GetComponent<Animator>().SetTrigger("sink");
-            TerrainTransitionSound.Play();
+            _sinkOrRaiseActive = true;
+            yield return new WaitForSeconds(3);
+            DeleteRandomEnvironmentObjects();
+            _sinkOrRaiseActive = false;
         }
-        _sinkOrRaiseActive = true;
-        yield return new WaitForSeconds(3);
-        DeleteRandomEnvironmentObjects();
-        _sinkOrRaiseActive = false;
     }
 
     private void PlayTerrainTransitionSound()

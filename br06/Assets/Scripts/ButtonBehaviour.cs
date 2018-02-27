@@ -34,20 +34,29 @@ public class ButtonBehaviour : MonoBehaviour, ISelectHandler , IPointerEnterHand
     {
 		if (SelectSound == null)
 			SelectSound = GameObject.FindGameObjectWithTag("Select Sound").GetComponent<AudioSource>();
-		SelectSound.Play();
+		if ((GetComponent<Button>() && GetComponent<Button>().interactable)
+		|| (GetComponent<Toggle>() && GetComponent<Toggle>().interactable)
+		|| (GetComponent<Dropdown>() && GetComponent<Dropdown>().interactable))
+			SelectSound.Play();
     }
 
     public void OnSelect(BaseEventData eventData)
     {
 		if (SelectSound == null)
 			SelectSound = GameObject.FindGameObjectWithTag("Select Sound").GetComponent<AudioSource>();
-		SelectSound.Play();
+		if ((GetComponent<Button>() && GetComponent<Button>().interactable)
+		|| (GetComponent<Toggle>() && GetComponent<Toggle>().interactable)
+		|| (GetComponent<Dropdown>() && GetComponent<Dropdown>().interactable))
+			SelectSound.Play();
     }
 
 	public void OnClick()
 	{
 		if (ClickSound == null)
 			ClickSound = GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>();
-		ClickSound.Play();
+		if ((GetComponent<Button>() && GetComponent<Button>().interactable)
+		|| (GetComponent<Toggle>() && GetComponent<Toggle>().interactable)
+		|| (GetComponent<Dropdown>() && GetComponent<Dropdown>().interactable))
+			ClickSound.Play();
 	}
 }

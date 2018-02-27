@@ -6,4 +6,5 @@ public class Weapon : MonoBehaviour
     public bool TwoHanded;
     public bool Bow;
     public Ability[] Abilities;
+    public Ability[] MutatedAbilities;
 }

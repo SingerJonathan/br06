@@ -3,6 +3,8 @@
 public abstract class Ability : MonoBehaviour
 {
     public string aName = "New Ability";
+    public string aTitle = "Ability Name";
+    public string aDescription = "Ability Description";
     public Sprite aSprite;
     public AudioClip aSound;
     public AnimationClip aClip;

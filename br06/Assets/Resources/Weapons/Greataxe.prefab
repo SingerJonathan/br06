@@ -24,7 +24,15 @@ GameObject:
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114207363627053186}
   - component: {fileID: 114807718117568956}
+<<<<<<< HEAD
   - component: {fileID: 114865698960294122}
+=======
+  - component: {fileID: 114525346162659172}
+  - component: {fileID: 114232919074813082}
+  - component: {fileID: 114401511211594930}
+  - component: {fileID: 114664555387352224}
+  - component: {fileID: 114076411623553938}
+>>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
   m_Layer: 0
   m_Name: Greataxe
   m_TagString: Untagged
@@ -84,6 +92,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300002, guid: 0fe4a27464d212040b5c6c443767140e, type: 3}
+--- !u!114 &114076411623553938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 0}
+  aBaseCooldown: 1
+  WeaponDamage: 1
 --- !u!114 &114207363627053186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +126,77 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
   WeaponDamage: 10
+<<<<<<< HEAD
+=======
+--- !u!114 &114232919074813082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 0}
+  aBaseCooldown: 1
+  WeaponDamage: 1
+--- !u!114 &114401511211594930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 0}
+  aBaseCooldown: 1
+  WeaponDamage: 1
+--- !u!114 &114525346162659172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Greataxe Ability 3
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 5
+  WeaponDamage: 30
+--- !u!114 &114664555387352224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 0}
+  aBaseCooldown: 1
+  WeaponDamage: 1
+>>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,7 +214,16 @@ MonoBehaviour:
   Abilities:
   - {fileID: 114207363627053186}
   - {fileID: 114807718117568956}
+<<<<<<< HEAD
   - {fileID: 114865698960294122}
+=======
+  - {fileID: 114525346162659172}
+  MutatedAbilities:
+  - {fileID: 114232919074813082}
+  - {fileID: 114401511211594930}
+  - {fileID: 114664555387352224}
+  - {fileID: 114525346162659172}
+>>>>>>> 21daa0e37c7a55e8f4f2b1e81d39c211c4a2fa2f
 --- !u!114 &114807718117568956
 MonoBehaviour:
   m_ObjectHideFlags: 1
