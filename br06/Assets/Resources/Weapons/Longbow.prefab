@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23978671989029180}
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114630059745549626}
-  - component: {fileID: 114062704944598168}
+  - component: {fileID: 114517204864088720}
   - component: {fileID: 114515514529267168}
   - component: {fileID: 114835498733059698}
   - component: {fileID: 114914579113646752}
@@ -109,25 +109,6 @@ MonoBehaviour:
   aClip: {fileID: 0}
   aBaseCooldown: 1
   WeaponDamage: 1
---- !u!114 &114062704944598168
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: Longbow Ability 2
-  aTitle: Ability Name
-  aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
-  aBaseCooldown: 3
-  WeaponDamage: 20
 --- !u!114 &114142178476257008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,6 +147,26 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 5
   WeaponDamage: 30
+--- !u!114 &114517204864088720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467788a6d52bef549a1cbde9716419ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Longbow Ability 2
+  aTitle: Emprison
+  aDescription: Create a laser prison around your target!
+  aSprite: {fileID: 0}
+  aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
+  aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
+  aBaseCooldown: 10
+  WeaponDamage: 0
+  PrisonDuration: 5
 --- !u!114 &114630059745549626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -201,7 +202,7 @@ MonoBehaviour:
   Bow: 1
   Abilities:
   - {fileID: 114630059745549626}
-  - {fileID: 114062704944598168}
+  - {fileID: 114517204864088720}
   - {fileID: 114515514529267168}
   MutatedAbilities:
   - {fileID: 114835498733059698}

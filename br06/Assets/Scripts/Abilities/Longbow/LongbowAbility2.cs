@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-public class LongbowAbility1 : Ability
+public class LongbowAbility2 : Ability
 {
-    public int WeaponDamage = 10;
+    public int WeaponDamage = 0;
+	public float PrisonDuration = 5;
     private GameObject _characterGameObject;
     public static string leftHandString = "mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/Weapon";
 
@@ -16,7 +17,9 @@ public class LongbowAbility1 : Ability
     {
         GameObject arrow = (GameObject) Instantiate(Resources.Load("Arrow"));
         Arrow arrowComponent = arrow.transform.GetChild(0).GetComponent<Arrow>();
+		arrowComponent.CreatePrison = true;
         arrowComponent.EnemyColour = _enemyColour;
+		arrowComponent.PrisonDuration = PrisonDuration;
         arrowComponent.Damage = WeaponDamage;
         arrow.transform.position = _characterGameObject.transform.Find(leftHandString).position;
         arrow.transform.rotation = _characterGameObject.transform.rotation;
