@@ -11,6 +11,7 @@ public class CharacterAnimationController : MonoBehaviour
     private bool _mirrorRun;
     private bool _twoHandedRun;
     private bool _knockedBack = false;
+    private bool _jumpBack;
     private bool pullTowards = false;
     private bool _knockedUp = false;
     protected string _enemyColour;
@@ -22,6 +23,7 @@ public class CharacterAnimationController : MonoBehaviour
     public float DodgeSpeed = 35f;
     public float Gravity = 1000.0f;
     public float knockbackForce = 1f;
+    public float jumpBackForce = 1f;
     public float PullForce = 1f;
 
     public float DodgeCountdown
@@ -119,7 +121,7 @@ public class CharacterAnimationController : MonoBehaviour
             }
             else
                 _moveDirection *= RunSpeed;
-            float step = RunSpeed * Time.deltaTime;
+            float step = (RunSpeed * 2) * Time.deltaTime;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, _moveDirection, step, 0.0F);
             transform.rotation = Quaternion.LookRotation(newDir);
         }
@@ -135,6 +137,13 @@ public class CharacterAnimationController : MonoBehaviour
             collisionDirection = -collisionDirection.normalized;
             _characterController.Move(collisionDirection * knockbackForce);
             StartCoroutine("knockbackDistance");
+        }
+
+        if (_jumpBack)
+        {
+            Vector3 moveDirection = -transform.forward.normalized;
+            _characterController.Move(moveDirection * jumpBackForce);
+            StartCoroutine("jumpBackDistance");
         }
 
         if(pullTowards)
@@ -158,6 +167,7 @@ public class CharacterAnimationController : MonoBehaviour
         if (Input.GetButton("Dodge" + PlayerNumber) && _dodgeCountdown <= 0.0f)
         {
             _animator.SetTrigger("dodge");
+            GameObject.FindGameObjectWithTag("Dodge Sound").GetComponent<AudioSource>().Play();
         }
         if (_moveDirection.x != 0 || _moveDirection.z != 0)
         {
@@ -174,6 +184,11 @@ public class CharacterAnimationController : MonoBehaviour
         _knockedBack = true;
     }
 
+    public void JumpBack()
+    {
+        _jumpBack = true;
+    }
+
     public void PullTowards()
     {
         pullTowards = true;
@@ -188,6 +203,12 @@ public class CharacterAnimationController : MonoBehaviour
     {
         yield return new WaitForSeconds(knockbackForce);
         _knockedBack = false;
+    }
+
+    IEnumerator jumpBackDistance()
+    {
+        yield return new WaitForSeconds(jumpBackForce);
+        _jumpBack = false;
     }
 
     IEnumerator pullDistance()

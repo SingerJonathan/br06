@@ -16,6 +16,8 @@ TagManager:
   - Red Description
   - Blue Description
   - Arrow Sound
+  - Blaster Sound
+  - Dodge Sound
   layers:
   - Default
   - TransparentFX

@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114630059745549626}
   - component: {fileID: 114517204864088720}
-  - component: {fileID: 114515514529267168}
+  - component: {fileID: 114222974878237948}
   - component: {fileID: 114835498733059698}
   - component: {fileID: 114914579113646752}
   - component: {fileID: 114142178476257008}
@@ -128,7 +128,7 @@ MonoBehaviour:
   aClip: {fileID: 0}
   aBaseCooldown: 1
   WeaponDamage: 1
---- !u!114 &114515514529267168
+--- !u!114 &114222974878237948
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -136,17 +136,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 6765e277402111946b7aca4e1caffece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longbow Ability 3
-  aTitle: Ability Name
-  aDescription: Ability Description
+  aTitle: Power Shot
+  aDescription: Jump backwards and shoot a powerful shot.
   aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
+  aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
   aBaseCooldown: 5
-  WeaponDamage: 30
+  WeaponDamage: 20
 --- !u!114 &114517204864088720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -159,8 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longbow Ability 2
-  aTitle: Emprison
-  aDescription: Create a laser prison around your target!
+  aTitle: Tether
+  aDescription: Create a laser prison around your target.
   aSprite: {fileID: 0}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
@@ -179,8 +179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Longbow Ability 1
-  aTitle: Shoot
-  aDescription: Shoot a laser from your longbow!
+  aTitle: Laser Blast
+  aDescription: Shoot a laser from your longbow.
   aSprite: {fileID: 0}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
@@ -203,7 +203,7 @@ MonoBehaviour:
   Abilities:
   - {fileID: 114630059745549626}
   - {fileID: 114517204864088720}
-  - {fileID: 114515514529267168}
+  - {fileID: 114222974878237948}
   MutatedAbilities:
   - {fileID: 114835498733059698}
   - {fileID: 114914579113646752}
