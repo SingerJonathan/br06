@@ -142,7 +142,7 @@ MonoBehaviour:
   aName: Longbow Ability 3
   aTitle: Power Shot
   aDescription: Jump backwards and shoot a powerful shot.
-  aSprite: {fileID: 0}
+  aSprite: {fileID: 21300000, guid: 7497c0b9d279d1d49822b2c55cef361e, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
   aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
   aBaseCooldown: 5
@@ -161,7 +161,7 @@ MonoBehaviour:
   aName: Longbow Ability 2
   aTitle: Tether
   aDescription: Create a laser prison around your target.
-  aSprite: {fileID: 0}
+  aSprite: {fileID: 21300000, guid: 5de43dd520f731947879fda321cf8778, type: 3}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
   aBaseCooldown: 10
@@ -181,7 +181,7 @@ MonoBehaviour:
   aName: Longbow Ability 1
   aTitle: Laser Blast
   aDescription: Shoot a laser from your longbow.
-  aSprite: {fileID: 0}
+  aSprite: {fileID: 21300000, guid: 3a108bd1096d5454d940db345a80a11b, type: 3}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
   aBaseCooldown: 1
