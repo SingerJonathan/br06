@@ -15,6 +15,7 @@ TagManager:
   - GameLoopController
   - Red Description
   - Blue Description
+  - Arrow Sound
   layers:
   - Default
   - TransparentFX

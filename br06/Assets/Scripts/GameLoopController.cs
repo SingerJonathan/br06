@@ -1128,7 +1128,7 @@ public class GameLoopController : MonoBehaviour
             }
             if (Input.GetButtonDown("Main Menu"))
             {
-                if (!MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive)
+                if (!MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive && !NotificationText.gameObject.activeInHierarchy)
                 {
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();
