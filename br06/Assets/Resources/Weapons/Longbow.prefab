@@ -25,8 +25,8 @@ GameObject:
   - component: {fileID: 114630059745549626}
   - component: {fileID: 114517204864088720}
   - component: {fileID: 114222974878237948}
-  - component: {fileID: 114835498733059698}
-  - component: {fileID: 114914579113646752}
+  - component: {fileID: 114134014741598232}
+  - component: {fileID: 114414337281645494}
   - component: {fileID: 114142178476257008}
   - component: {fileID: 114006718847271854}
   m_Layer: 0
@@ -109,6 +109,28 @@ MonoBehaviour:
   aClip: {fileID: 0}
   aBaseCooldown: 1
   WeaponDamage: 1
+--- !u!114 &114134014741598232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8156de941ec081743bdeec5513938640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Longbow Ability 2 Mutation 1
+  aTitle: Static Field
+  aDescription: Generate a laser prison containing an electric field which damages
+    any opponent caught inside over time.
+  aSprite: {fileID: 21300000, guid: 5de43dd520f731947879fda321cf8778, type: 3}
+  aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
+  aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
+  aBaseCooldown: 10
+  WeaponDamage: 0
+  PrisonDuration: 5
+  FieldDamagePerSecond: 3
 --- !u!114 &114142178476257008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,6 +169,26 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
   aBaseCooldown: 5
   WeaponDamage: 20
+--- !u!114 &114414337281645494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467788a6d52bef549a1cbde9716419ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Longbow Ability 2 Mutation 2
+  aTitle: Extended Tether
+  aDescription: Generate a laser prison of increased duration around your target.
+  aSprite: {fileID: 21300000, guid: 5de43dd520f731947879fda321cf8778, type: 3}
+  aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
+  aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
+  aBaseCooldown: 10
+  WeaponDamage: 0
+  PrisonDuration: 7
 --- !u!114 &114517204864088720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aName: Longbow Ability 2
   aTitle: Tether
-  aDescription: Create a laser prison around your target.
+  aDescription: Generate a laser prison around your target.
   aSprite: {fileID: 21300000, guid: 5de43dd520f731947879fda321cf8778, type: 3}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
@@ -205,45 +247,7 @@ MonoBehaviour:
   - {fileID: 114517204864088720}
   - {fileID: 114222974878237948}
   MutatedAbilities:
-  - {fileID: 114835498733059698}
-  - {fileID: 114914579113646752}
+  - {fileID: 114134014741598232}
+  - {fileID: 114414337281645494}
   - {fileID: 114142178476257008}
   - {fileID: 114006718847271854}
---- !u!114 &114835498733059698
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1
---- !u!114 &114914579113646752
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1

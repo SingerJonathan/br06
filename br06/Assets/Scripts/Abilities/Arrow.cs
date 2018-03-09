@@ -13,7 +13,9 @@ public class Arrow : MonoBehaviour
 	private int _damage;
 	private float _speed = 100f;
     private bool _createPrison;
+    private bool _createElectricPrison;
     private float _prisonDuration;
+    private int _prisonFieldDamagePerSecond;
     private Vector3 _hitPosition;
 	private bool _hit;
 	private float _lifetime;
@@ -49,6 +51,24 @@ public class Arrow : MonoBehaviour
                 prison.transform.localPosition = Vector3.zero;
                 if (_prisonDuration != 0)
                     prison.GetComponent<Prison>().Duration = _prisonDuration;
+            }
+            else if (_createElectricPrison)
+            {
+                GameObject dummyParent = new GameObject("Prison");
+                string friendlyColour = _enemyColour.Contains("Red") ? "Blue" : "Red";
+                GameObject prison = (GameObject) Instantiate(Resources.Load(friendlyColour + " Electric Prison"));
+                prison.transform.SetParent(dummyParent.transform);
+                Vector3 newPosition = _hitPosition;
+                newPosition.y = 0;
+                dummyParent.transform.position = newPosition;
+                prison.transform.localPosition = Vector3.zero;
+                if (_prisonDuration != 0)
+                    prison.GetComponent<Prison>().Duration = _prisonDuration;
+                if (_prisonFieldDamagePerSecond != 0)
+                {
+                    prison.GetComponentInChildren<DamageFieldTriggerController>().DamagePerSecond = _prisonFieldDamagePerSecond;
+                    prison.GetComponentInChildren<DamageFieldTriggerController>().DamageOverTimeDuration = (int)_prisonDuration;
+                }
             }
 		    Destroy(transform.parent.gameObject, 0.2f);
 		}
@@ -161,6 +181,32 @@ public class Arrow : MonoBehaviour
         set
         {
             _prisonDuration = value;
+        }
+    }
+
+    public bool CreateElectricPrison
+    {
+        get
+        {
+            return _createElectricPrison;
+        }
+
+        set
+        {
+            _createElectricPrison = value;
+        }
+    }
+
+    public int PrisonFieldDamagePerSecond
+    {
+        get
+        {
+            return _prisonFieldDamagePerSecond;
+        }
+
+        set
+        {
+            _prisonFieldDamagePerSecond = value;
         }
     }
 }

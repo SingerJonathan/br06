@@ -19,6 +19,9 @@ public class CharacterStatsController : MonoBehaviour
 
     private int _potions = 3;
     private int _maxHitPoints;
+    private List<int> _damageOverTimeDurations;
+    private List<string> _damageOverTimeTags;
+
 
     public int MaxHitPoints
     {
@@ -64,6 +67,8 @@ public class CharacterStatsController : MonoBehaviour
     void Start()
     {
         MaxHitPoints = HitPoints;
+        _damageOverTimeDurations = new List<int>();
+        _damageOverTimeTags = new List<string>();
 	}
 	
 	void Update()
@@ -74,6 +79,41 @@ public class CharacterStatsController : MonoBehaviour
         }
         if (bleed)
             StartCoroutine(BleedRoutine());
+    }
+
+    public void AddDamageOverTime(int damage, int duration, string tag = "")
+    {
+        _damageOverTimeDurations.Add(duration);
+        _damageOverTimeTags.Add(tag);
+        StartCoroutine(DamageOverTimeCoroutine(damage, _damageOverTimeDurations.Count-1));
+    }
+
+    public void RemoveDamageOverTimeWithTag(string tag)
+    {
+        for (int dotIndex = 0; dotIndex < _damageOverTimeTags.Count; dotIndex++)
+        {
+            if (_damageOverTimeTags[dotIndex] == tag)
+            {
+                _damageOverTimeDurations[dotIndex] = 0;
+            }
+        }
+    }
+
+    public void ClearDamageOverTime()
+    {
+        StopAllCoroutines();
+        _damageOverTimeDurations.Clear();
+        _damageOverTimeTags.Clear();
+    }
+
+    IEnumerator DamageOverTimeCoroutine(int damage, int durationIndex)
+    {
+        while (_damageOverTimeDurations[durationIndex] > 0)
+        {
+            yield return new WaitForSeconds(1);
+            HitPoints -= damage;
+            _damageOverTimeDurations[durationIndex] -= 1;
+        }
     }
 
     public void setBleed()
