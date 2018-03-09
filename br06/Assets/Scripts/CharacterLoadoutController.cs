@@ -317,13 +317,16 @@ public class CharacterLoadoutController : MonoBehaviour
     public void MutateAbility(bool resetMutation)
     {
         Weapon mainWeaponComponent = _mainWeaponGameObject.GetComponent<Weapon>();
-        Weapon offhandWeaponComponent = _offhandWeaponGameObject.GetComponent<Weapon>();
+        Weapon offhandWeaponComponent;
+        if (_offhandWeaponGameObject)
+            offhandWeaponComponent = _offhandWeaponGameObject.GetComponent<Weapon>();
         if (resetMutation)
         {
-            if (_abilityIndex == offhandWeaponComponent.Abilities.Length - 1)
+            if (_abilityIndex == mainWeaponComponent.Abilities.Length - 1)
             {
-                if (_offhandWeaponDropdown.value != 0)
+                if (_offhandWeaponDropdown.value != 0 && _offhandWeaponGameObject)
                 {
+                    offhandWeaponComponent = _offhandWeaponGameObject.GetComponent<Weapon>();
                     Abilities[_abilityIndex].Ability = offhandWeaponComponent.Abilities[_abilityIndex];
                     Abilities[_abilityIndex].Initialize(offhandWeaponComponent.Abilities[_abilityIndex], gameObject);
                     LoadoutGUIAbilityIcons[_abilityIndex].sprite = offhandWeaponComponent.Abilities[_abilityIndex].aSprite;
@@ -366,10 +369,11 @@ public class CharacterLoadoutController : MonoBehaviour
                 LoadoutGUIMutatationIcons[1].transform.parent.Find("Description/Name").GetComponent<Text>().text = mainWeaponComponent.MutatedAbilities[1].aTitle;
             }
         }
-        else if (_abilityIndex == offhandWeaponComponent.Abilities.Length - 1)
+        else if (_abilityIndex == mainWeaponComponent.Abilities.Length - 1)
         {
             if (_offhandWeaponDropdown.value != 0)
             {
+                offhandWeaponComponent = _offhandWeaponGameObject.GetComponent<Weapon>();
                 Abilities[_abilityIndex].Ability = offhandWeaponComponent.MutatedAbilities[_mutationIndex + 2];
                 Abilities[_abilityIndex].Initialize(offhandWeaponComponent.MutatedAbilities[_mutationIndex + 2], gameObject);
                 LoadoutGUIMutatationIcons[_mutationIndex + 2].sprite = LoadoutGUIAbilityIcons[_abilityIndex].sprite;
