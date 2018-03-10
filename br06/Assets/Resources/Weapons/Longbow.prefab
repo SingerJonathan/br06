@@ -27,8 +27,8 @@ GameObject:
   - component: {fileID: 114222974878237948}
   - component: {fileID: 114134014741598232}
   - component: {fileID: 114414337281645494}
-  - component: {fileID: 114142178476257008}
-  - component: {fileID: 114006718847271854}
+  - component: {fileID: 114857962854831298}
+  - component: {fileID: 114176219977300586}
   m_Layer: 0
   m_Name: Longbow
   m_TagString: Untagged
@@ -90,25 +90,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300000, guid: 8b89711482fa83741b49ac2578c781e5, type: 3}
---- !u!114 &114006718847271854
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1
 --- !u!114 &114134014741598232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,7 +112,7 @@ MonoBehaviour:
   WeaponDamage: 0
   PrisonDuration: 5
   FieldDamagePerSecond: 3
---- !u!114 &114142178476257008
+--- !u!114 &114176219977300586
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -139,17 +120,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 6765e277402111946b7aca4e1caffece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1
+  aName: Longbow Ability 3 Mutation 2
+  aTitle: Empowered Power Shot
+  aDescription: Jump backwards and shoot a more powerful shot.
+  aSprite: {fileID: 21300000, guid: 7497c0b9d279d1d49822b2c55cef361e, type: 3}
+  aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
+  aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
+  aBaseCooldown: 5
+  WeaponDamage: 25
 --- !u!114 &114222974878237948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,5 +230,24 @@ MonoBehaviour:
   MutatedAbilities:
   - {fileID: 114134014741598232}
   - {fileID: 114414337281645494}
-  - {fileID: 114142178476257008}
-  - {fileID: 114006718847271854}
+  - {fileID: 114857962854831298}
+  - {fileID: 114176219977300586}
+--- !u!114 &114857962854831298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39160764069d7c141b55f7bcb8dd18b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Longbow Ability 3 Mutation 1
+  aTitle: Static Discharge
+  aDescription: Jump backwards, drop an electric trap and shoot a powerful shot.
+  aSprite: {fileID: 21300000, guid: 7497c0b9d279d1d49822b2c55cef361e, type: 3}
+  aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
+  aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
+  aBaseCooldown: 5
+  WeaponDamage: 10

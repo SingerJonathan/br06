@@ -21,6 +21,7 @@ public class CharacterStatsController : MonoBehaviour
     private int _maxHitPoints;
     private List<int> _damageOverTimeDurations;
     private List<string> _damageOverTimeTags;
+    private List<string> _damageOverTimeAudioSourceTags;
 
 
     public int MaxHitPoints
@@ -69,6 +70,7 @@ public class CharacterStatsController : MonoBehaviour
         MaxHitPoints = HitPoints;
         _damageOverTimeDurations = new List<int>();
         _damageOverTimeTags = new List<string>();
+        _damageOverTimeAudioSourceTags = new List<string>();
 	}
 	
 	void Update()
@@ -81,10 +83,11 @@ public class CharacterStatsController : MonoBehaviour
             StartCoroutine(BleedRoutine());
     }
 
-    public void AddDamageOverTime(int damage, int duration, string tag = "")
+    public void AddDamageOverTime(int damage, int duration, string tag = "", string audioSourceTag = "")
     {
         _damageOverTimeDurations.Add(duration);
         _damageOverTimeTags.Add(tag);
+        _damageOverTimeAudioSourceTags.Add(audioSourceTag);
         StartCoroutine(DamageOverTimeCoroutine(damage, _damageOverTimeDurations.Count-1));
     }
 
@@ -104,6 +107,7 @@ public class CharacterStatsController : MonoBehaviour
         StopAllCoroutines();
         _damageOverTimeDurations.Clear();
         _damageOverTimeTags.Clear();
+        _damageOverTimeAudioSourceTags.Clear();
     }
 
     IEnumerator DamageOverTimeCoroutine(int damage, int durationIndex)
@@ -113,6 +117,8 @@ public class CharacterStatsController : MonoBehaviour
             yield return new WaitForSeconds(1);
             HitPoints -= damage;
             _damageOverTimeDurations[durationIndex] -= 1;
+            if (_damageOverTimeAudioSourceTags[durationIndex] != "")
+                GameObject.FindGameObjectWithTag(_damageOverTimeAudioSourceTags[durationIndex]).GetComponent<AudioSource>().Play();
         }
     }
 

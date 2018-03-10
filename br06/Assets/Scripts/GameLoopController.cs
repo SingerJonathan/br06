@@ -256,9 +256,16 @@ public class GameLoopController : MonoBehaviour
         }
     }
 
+    private void DestroyTraps()
+    {
+        foreach (GameObject trap in GameObject.FindGameObjectsWithTag("Trap"))
+            Destroy(trap.transform.parent.gameObject);
+    }
+
     private void SetupGame()
     {
         NewGamePressed = true;
+        DestroyTraps();
         StartTransition(false, true);
         if (CurrentRound != 0)
             StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
@@ -358,6 +365,7 @@ public class GameLoopController : MonoBehaviour
     private void QuitToMainMenu()
     {
         QuitToMainMenuPressed = true;
+        DestroyTraps();
         MainMenuCanvasGameObject.SetActive(false);
         StartTransition(false, true);
         _confirmPanelGameObject.SetActive(false);
@@ -1040,6 +1048,7 @@ public class GameLoopController : MonoBehaviour
                     StartCoroutine(RandomEnvironmentController.SinkAndDeleteObjects());
                     StartCoroutine(SinkAndRaiseObjects(KingOfTheHillObjects));
                     StartCoroutine(SinkAndRaiseObjects(CaptureTheFlagObjects));
+                    DestroyTraps();
                 }
             }
             // Message after round or game

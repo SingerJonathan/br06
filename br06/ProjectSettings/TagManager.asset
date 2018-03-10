@@ -18,6 +18,9 @@ TagManager:
   - Arrow Sound
   - Blaster Sound
   - Dodge Sound
+  - Electric Burst Sound
+  - Magic Burst Sound
+  - Trap
   layers:
   - Default
   - TransparentFX
