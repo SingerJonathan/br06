@@ -24,6 +24,7 @@ public class GameLoopController : MonoBehaviour
     public Vector3 BlueCharacterGameRotation;
 
     public GameObject MainMenuCanvasGameObject;
+    public GameObject ControlsPanelGameObject;
     public GameObject GameSetupCanvasGameObject;
     public GameObject LoadoutCanvasGameObject;
     public GameObject HUDCanvasGameObject;
@@ -1161,6 +1162,12 @@ public class GameLoopController : MonoBehaviour
                     }
                 }
             }
+        }
+        if (ControlsPanelGameObject.activeInHierarchy && ((Input.GetButtonDown("Cancel1") || Input.GetButtonDown("CancelAlt1"))))
+        {
+            ControlsPanelGameObject.SetActive(false);
+            _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
+            GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
         }
         if (QuitToMainMenuPressed && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive)
         {
