@@ -1140,6 +1140,7 @@ public class GameLoopController : MonoBehaviour
             {
                 if (!MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive && !NotificationText.gameObject.activeInHierarchy)
                 {
+                    ControlsPanelGameObject.SetActive(false);
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = true;
