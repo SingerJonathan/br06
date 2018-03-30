@@ -31,7 +31,7 @@ public class LongswordBleed : Ability
                     Debug.DrawRay(origin.position, target.position - origin.position, Color.red, 10);
                     if (hit.transform.name.Contains(_enemyColour))
                     {
-                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().HitPoints -= WeaponDamage;
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().setBleed(BleedDamage,BleedDuration,BleedInterval);
                     }
                 }

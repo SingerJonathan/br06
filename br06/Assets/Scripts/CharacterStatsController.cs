@@ -68,7 +68,6 @@ public class CharacterStatsController : MonoBehaviour
         if(Vulnerable)
         {
             DamageValue = DamageValue + VulnerableDamage;
-            Vulnerable = false;
         }
         if(ShieldWall)
         {
@@ -77,6 +76,8 @@ public class CharacterStatsController : MonoBehaviour
             if (ShieldWallCharge == 0)
                 ShieldWall = false;
         }
+
+        Vulnerable = false;
         HitPoints -= DamageValue;
     }
 
@@ -142,7 +143,7 @@ public class CharacterStatsController : MonoBehaviour
         Vulnerable = true;
         VulnerableCooldown = _vulnerableCooldown;
         VulnerableDamage = _vulnerableDamage;
-        StartCoroutine("VulnerableWindow");
+        StartCoroutine(VulnerableWindow());
     }
 
     public void setBleed(int _BleedDamage, float _BleedDuration, float _BleedInterval)
@@ -174,7 +175,7 @@ public class CharacterStatsController : MonoBehaviour
         while (_damageOverTimeDurations[durationIndex] > 0)
         {
             yield return new WaitForSeconds(1);
-            HitPoints -= damage;
+            DoDamage(damage);
             _damageOverTimeDurations[durationIndex] -= 1;
             if (_damageOverTimeAudioSourceTags[durationIndex] != "")
                 GameObject.FindGameObjectWithTag(_damageOverTimeAudioSourceTags[durationIndex]).GetComponent<AudioSource>().Play();
@@ -190,13 +191,13 @@ public class CharacterStatsController : MonoBehaviour
         for(int i = 0; i <= BleedTicks; i++)
         {
             yield return new WaitForSeconds(BleedInterval);
-            HitPoints -= BleedDamage;
+            DoDamage(BleedDamage);
         }
     }
 
     IEnumerator VulnerableWindow()
     {
-        yield return new WaitForSeconds(VulnerableCooldown-1f);
+        yield return new WaitForSeconds(VulnerableCooldown);
         Vulnerable = false;
     }
 }

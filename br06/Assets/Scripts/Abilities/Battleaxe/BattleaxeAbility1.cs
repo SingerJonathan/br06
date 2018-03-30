@@ -22,7 +22,7 @@ public class BattleaxeAbility1 : Ability
         {
             if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
             {
-                _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().HitPoints -= WeaponDamage;
+                _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
                 _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().Slow(SlowSpeed, SlowDuration);
             }
         }
