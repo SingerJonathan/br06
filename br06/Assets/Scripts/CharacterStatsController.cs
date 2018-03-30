@@ -190,7 +190,7 @@ public class CharacterStatsController : MonoBehaviour
         for(int i = 0; i <= BleedTicks; i++)
         {
             yield return new WaitForSeconds(BleedInterval);
-            HitPoints -= BleedDamge;
+            HitPoints -= BleedDamage;
         }
     }
 
