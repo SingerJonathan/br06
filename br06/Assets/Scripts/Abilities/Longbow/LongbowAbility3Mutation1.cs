@@ -3,6 +3,7 @@
 public class LongbowAbility3Mutation1 : Ability
 {
     public int WeaponDamage = 10;
+    public float JumpBackForce = 1f;
     private GameObject _characterGameObject;
     public static string leftHandString = "mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/Weapon";
 
@@ -14,7 +15,7 @@ public class LongbowAbility3Mutation1 : Ability
 
     public override void TriggerAbility()
     {
-		_characterGameObject.GetComponent<CharacterAnimationController>().JumpBack();
+		_characterGameObject.GetComponent<CharacterAnimationController>().JumpBack(JumpBackForce);
         GameObject dummyParent = new GameObject("Trap");
         string friendlyColour = _enemyColour.Contains("Red") ? "Blue" : "Red";
         GameObject trap = (GameObject) Instantiate(Resources.Load(friendlyColour + " Electric Trap"));
@@ -23,7 +24,7 @@ public class LongbowAbility3Mutation1 : Ability
         newPosition.y = 0;
         dummyParent.transform.position = newPosition;
         trap.transform.localPosition = Vector3.zero;
-		Invoke("ShootArrow", _characterGameObject.GetComponent<CharacterAnimationController>().knockbackForce);
+		Invoke("ShootArrow", _characterGameObject.GetComponent<CharacterAnimationController>().KnockbackForce);
     }
 
 	private void ShootArrow()

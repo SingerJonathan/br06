@@ -10,8 +10,9 @@ public class CharacterStatsController : MonoBehaviour
     public int PotionHealValue = 50;
     public static int InitialPotions = 3;
     public static int MaxPotions = 4;
+    public int BleedDamge = 1;
+    public float BleedDuration = 1f;
     public float BleedInterval = 1f;
-    public float BleedTime = 1f;
     private bool bleed = false;
 
     public Text PotionText;
@@ -122,19 +123,28 @@ public class CharacterStatsController : MonoBehaviour
         }
     }
 
-    public void setBleed()
+    public void setBleed(int _BleedDamage, float _BleedDuration, float _BleedInterval)
     {
+
         if (!bleed)
+        {
+            this.BleedDamge = _BleedDamage;
+            this.BleedDuration = _BleedDuration;
+            this.BleedInterval = _BleedInterval;
             bleed = true;
+        }
     }
 
     IEnumerator BleedRoutine()
     {
         bleed = false;
-        for(int i = 0; i <= 4; i++)
+        float BleedTicks = 1f;
+        if (BleedDuration % BleedInterval == 0)
+            BleedTicks = BleedDuration / BleedInterval;
+        for(int i = 0; i <= BleedTicks; i++)
         {
-            yield return new WaitForSeconds(1f);
-            HitPoints -= 3;
+            yield return new WaitForSeconds(BleedInterval);
+            HitPoints -= BleedDamge;
         }
     }
 }

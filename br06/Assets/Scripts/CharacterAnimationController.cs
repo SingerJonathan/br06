@@ -8,23 +8,26 @@ public class CharacterAnimationController : MonoBehaviour
     private CharacterController _characterController;
     private Vector3 _moveDirection;
     private float _dodgeCountdown;
+    protected string _enemyColour;
+
+    //Bools for handling changes in movement.
     private bool _mirrorRun;
     private bool _twoHandedRun;
     private bool _knockedBack = false;
     private bool _jumpBack;
-    private bool pullTowards = false;
+    private bool _pullTowards = false;
     private bool _knockedUp = false;
-    protected string _enemyColour;
-
 
     // Speed variables
     public int PlayerNumber = 1;
     public float RunSpeed = 12f;
     public float DodgeSpeed = 35f;
     public float Gravity = 1000.0f;
-    public float knockbackForce = 1f;
-    public float jumpBackForce = 1f;
+    public float KnockbackForce = 1f;
+    public float JumpBackForce = 1f;
     public float PullForce = 1f;
+    public float KnockupDuration = 1f;
+    public float SlowDuration = 1f;
 
     public float DodgeCountdown
     {
@@ -50,18 +53,6 @@ public class CharacterAnimationController : MonoBehaviour
         {
             _characterController = value;
         }
-    }
-
-    internal void Slow()
-    {
-        RunSpeed = 6f;
-        StartCoroutine("SlowTime");
-        RunSpeed = 12f;
-    }
-
-    IEnumerator SlowTime()
-    {
-        yield return new WaitForSeconds(4);
     }
 
     public bool MirrorRun
@@ -135,32 +126,32 @@ public class CharacterAnimationController : MonoBehaviour
             Vector3 enemyPosition = GameObject.FindGameObjectWithTag(_enemyColour).transform.position;
             Vector3 collisionDirection = enemyPosition - transform.position;
             collisionDirection = -collisionDirection.normalized;
-            _characterController.Move(collisionDirection * knockbackForce);
+            _characterController.Move(collisionDirection * KnockbackForce);
             StartCoroutine("knockbackDistance");
         }
 
         if (_jumpBack)
         {
             Vector3 moveDirection = -transform.forward.normalized;
-            _characterController.Move(moveDirection * jumpBackForce);
+            _characterController.Move(moveDirection * JumpBackForce);
             StartCoroutine("jumpBackDistance");
         }
 
-        if(pullTowards)
+        if(_pullTowards)
         {
             Vector3 enemyPosition = GameObject.FindGameObjectWithTag(_enemyColour).transform.position;
             Vector3 collisionDirection = enemyPosition - transform.position;
             collisionDirection = collisionDirection.normalized;
-            _characterController.Move(collisionDirection * knockbackForce);
+            _characterController.Move(collisionDirection * KnockbackForce);
             StartCoroutine("pullDistance");
         }
         
         if(_knockedUp)
         {
             Vector3 UpDirection = new Vector3(0,3,0);
-            _characterController.Move(UpDirection * knockbackForce);
+            _characterController.Move(UpDirection * KnockbackForce);
             _moveDirection.y -= Gravity;
-            StartCoroutine("knockupDistance");
+            StartCoroutine("KnockupDurationCoroutine");
         }
 
         // Handle animations
@@ -179,47 +170,64 @@ public class CharacterAnimationController : MonoBehaviour
         }
     }
 
-    public void KnockedBack()
+    public void KnockedBack(float _knockbackForce)
     {
+        this.KnockbackForce = _knockbackForce;
         _knockedBack = true;
     }
 
-    public void JumpBack()
+    public void JumpBack(float _jumpBackForce)
     {
+        this.JumpBackForce = _jumpBackForce;
         _jumpBack = true;
     }
 
-    public void PullTowards()
+    public void PullTowards(float _pullForce)
     {
-        pullTowards = true;
+        this.PullForce = _pullForce;
+        _pullTowards = true;
     }
 
-    public void KnockupEnable()
+    public void KnockupEnable(float _KnockupDuration)
     {
+        this.KnockupDuration = _KnockupDuration;
         _knockedUp = true;
+    }
+
+    public void Slow(float _runSpeed, float _slowDuration)
+    {
+        RunSpeed = _runSpeed;
+        SlowDuration = _slowDuration;
+        StartCoroutine("SlowTimer");
+    }
+
+    IEnumerator SlowTimer()
+    {
+        yield return new WaitForSeconds(SlowDuration);
+        RunSpeed = 12f;
     }
 
     IEnumerator knockbackDistance()
     {
-        yield return new WaitForSeconds(knockbackForce);
+        yield return new WaitForSeconds(KnockbackForce);
         _knockedBack = false;
     }
 
     IEnumerator jumpBackDistance()
     {
-        yield return new WaitForSeconds(jumpBackForce);
+        yield return new WaitForSeconds(JumpBackForce);
         _jumpBack = false;
     }
 
     IEnumerator pullDistance()
     {
         yield return new WaitForSeconds(PullForce);
-        pullTowards = false;
+        _pullTowards = false;
     }
 
-    IEnumerator knockupDistance()
+    IEnumerator KnockupDurationCoroutine()
     {
-        yield return new WaitForSeconds(PullForce);
+        yield return new WaitForSeconds(KnockupDuration);
         _knockedUp = false;
     }
 }

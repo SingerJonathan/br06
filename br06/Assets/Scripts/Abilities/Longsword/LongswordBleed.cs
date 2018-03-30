@@ -6,6 +6,9 @@ public class LongswordBleed : Ability
 {
 
     public int WeaponDamage = 1;
+    public float BleedDuration = 1f;
+    public float BleedInterval = 1f;
+    public int BleedDamage = 1;
     private HitboxTriggerController _hitboxTriggerController;
 
     public override void Initialize(GameObject obj)
@@ -29,7 +32,7 @@ public class LongswordBleed : Ability
                     if (hit.transform.name.Contains(_enemyColour))
                     {
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().HitPoints -= WeaponDamage;
-                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().setBleed();
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().setBleed(BleedDamage,BleedDuration,BleedInterval);
                     }
                 }
             }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class HammerAbility2 : Ability {
 
     private HitboxTriggerController _hitboxTriggerController;
+    public float KnockupDuration = 1f;
     public int WeaponDamage = 1;
 
     public override void Initialize(GameObject obj)
@@ -20,7 +21,7 @@ public class HammerAbility2 : Ability {
             if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
             {
                 _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().HitPoints -= WeaponDamage;
-                _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().KnockupEnable();
+                _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().KnockupEnable(KnockupDuration);
             }
         }
     }

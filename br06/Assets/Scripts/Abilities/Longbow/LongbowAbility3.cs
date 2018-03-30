@@ -3,6 +3,7 @@
 public class LongbowAbility3 : Ability
 {
     public int WeaponDamage = 10;
+    public float JumpBackForce = 1f;
     private GameObject _characterGameObject;
     public static string leftHandString = "mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/Weapon";
 
@@ -14,8 +15,8 @@ public class LongbowAbility3 : Ability
 
     public override void TriggerAbility()
     {
-		_characterGameObject.GetComponent<CharacterAnimationController>().JumpBack();
-		Invoke("ShootArrow", _characterGameObject.GetComponent<CharacterAnimationController>().knockbackForce);
+		_characterGameObject.GetComponent<CharacterAnimationController>().JumpBack(JumpBackForce);
+		Invoke("ShootArrow", _characterGameObject.GetComponent<CharacterAnimationController>().KnockbackForce);
     }
 
 	private void ShootArrow()

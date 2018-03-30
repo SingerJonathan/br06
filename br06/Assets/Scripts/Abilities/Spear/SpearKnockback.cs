@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpearKnockback : Ability {
 
     public int WeaponDamage = 1;
+    public float KnockbackForce = 1f;
     private HitboxTriggerController _hitboxTriggerController;
 
     public override void Initialize(GameObject obj)
@@ -28,7 +29,7 @@ public class SpearKnockback : Ability {
                     if (hit.transform.name.Contains(_enemyColour))
                     {
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().HitPoints -= WeaponDamage;
-                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().KnockedBack();
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().KnockedBack(KnockbackForce);
                     }
                 }
             }

@@ -5,8 +5,8 @@ using UnityEngine;
 public class LongswordPull : Ability{
 
     public int WeaponDamage = 1;
+    public float PullForce = 1f;
     private HitboxTriggerController _hitboxTriggerController;
-    private bool hitSuccess = false;
     private CharacterAnimationController animator;
     private string myColour;
 
@@ -25,7 +25,7 @@ public class LongswordPull : Ability{
             if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
             {
                 _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().HitPoints -= WeaponDamage;
-                animator.PullTowards();
+                animator.PullTowards(PullForce);
             }
         }
     }
