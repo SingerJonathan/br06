@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpearAbility2 : Ability {
-    private HitboxTriggerController _hitboxTriggerController;
+
+    private CharacterStatsController statsController;
+    public int ShieldWallCharge = 1;
+    public int ShieldWallReduction = 1;
+
+
     public override void Initialize(GameObject obj)
     {
-        _hitboxTriggerController = obj.transform.Find("HitboxSemiCircle").GetComponent<HitboxTriggerController>();
-        _enemyColour = obj.name.Contains("Red") ? "Blue" : "Red";
+        statsController = obj.GetComponent<CharacterStatsController>();
     }
 
     public override void TriggerAbility()
     {
-        throw new System.NotImplementedException();
+        statsController.EnableShieldWall(ShieldWallCharge, ShieldWallReduction);
     }
 }
 

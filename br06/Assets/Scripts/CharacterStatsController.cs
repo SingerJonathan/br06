@@ -10,10 +10,15 @@ public class CharacterStatsController : MonoBehaviour
     public int PotionHealValue = 50;
     public static int InitialPotions = 3;
     public static int MaxPotions = 4;
+
     public int BleedDamge = 1;
     public float BleedDuration = 1f;
     public float BleedInterval = 1f;
     private bool bleed = false;
+
+    public int ShieldWallReduction = 1;
+    private bool ShieldWall = false;
+    private int ShieldWallCharge = 1;
 
     public Text PotionText;
     public ParticleSystem HealParticleSystem;
@@ -51,6 +56,20 @@ public class CharacterStatsController : MonoBehaviour
             if (_potions > MaxPotions)
                 _potions = MaxPotions;
             PotionText.text = "" + _potions;
+        }
+    }
+
+    public void DoDamage(int DamageValue)
+    {
+        if(!ShieldWall)
+            HitPoints -= DamageValue;
+        else
+        {
+            DamageValue = DamageValue - ShieldWallReduction ;
+            ShieldWallCharge -= 1;
+            HitPoints -= DamageValue;
+            if (ShieldWallCharge == 0)
+                ShieldWall = false;
         }
     }
 
@@ -111,18 +130,6 @@ public class CharacterStatsController : MonoBehaviour
         _damageOverTimeAudioSourceTags.Clear();
     }
 
-    IEnumerator DamageOverTimeCoroutine(int damage, int durationIndex)
-    {
-        while (_damageOverTimeDurations[durationIndex] > 0)
-        {
-            yield return new WaitForSeconds(1);
-            HitPoints -= damage;
-            _damageOverTimeDurations[durationIndex] -= 1;
-            if (_damageOverTimeAudioSourceTags[durationIndex] != "")
-                GameObject.FindGameObjectWithTag(_damageOverTimeAudioSourceTags[durationIndex]).GetComponent<AudioSource>().Play();
-        }
-    }
-
     public void setBleed(int _BleedDamage, float _BleedDuration, float _BleedInterval)
     {
 
@@ -132,6 +139,30 @@ public class CharacterStatsController : MonoBehaviour
             this.BleedDuration = _BleedDuration;
             this.BleedInterval = _BleedInterval;
             bleed = true;
+        }
+    }
+
+    public void EnableShieldWall(int _shieldWallCharge, int _shieldWallReduction)
+    {
+        if (!ShieldWall)
+        {
+            ShieldWallCharge = _shieldWallCharge;
+            ShieldWallReduction = _shieldWallReduction;
+            ShieldWall = true;
+        }
+        else
+            ShieldWallCharge = _shieldWallCharge;
+    }
+
+    IEnumerator DamageOverTimeCoroutine(int damage, int durationIndex)
+    {
+        while (_damageOverTimeDurations[durationIndex] > 0)
+        {
+            yield return new WaitForSeconds(1);
+            HitPoints -= damage;
+            _damageOverTimeDurations[durationIndex] -= 1;
+            if (_damageOverTimeAudioSourceTags[durationIndex] != "")
+                GameObject.FindGameObjectWithTag(_damageOverTimeAudioSourceTags[durationIndex]).GetComponent<AudioSource>().Play();
         }
     }
 
