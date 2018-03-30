@@ -11,10 +11,14 @@ public class CharacterStatsController : MonoBehaviour
     public static int InitialPotions = 3;
     public static int MaxPotions = 4;
 
-    public int BleedDamge = 1;
+    public int BleedDamage = 1;
     public float BleedDuration = 1f;
     public float BleedInterval = 1f;
     private bool bleed = false;
+
+    private bool Vulnerable = false;
+    private float VulnerableCooldown = 1f;
+    private int VulnerableDamage = 1;
 
     public int ShieldWallReduction = 1;
     private bool ShieldWall = false;
@@ -61,16 +65,19 @@ public class CharacterStatsController : MonoBehaviour
 
     public void DoDamage(int DamageValue)
     {
-        if(!ShieldWall)
-            HitPoints -= DamageValue;
-        else
+        if(Vulnerable)
         {
-            DamageValue = DamageValue - ShieldWallReduction ;
+            DamageValue = DamageValue + VulnerableDamage;
+            Vulnerable = false;
+        }
+        if(ShieldWall)
+        {
+            DamageValue = DamageValue - ShieldWallReduction;
             ShieldWallCharge -= 1;
-            HitPoints -= DamageValue;
             if (ShieldWallCharge == 0)
                 ShieldWall = false;
         }
+        HitPoints -= DamageValue;
     }
 
     public void DrinkPotion()
@@ -130,14 +137,22 @@ public class CharacterStatsController : MonoBehaviour
         _damageOverTimeAudioSourceTags.Clear();
     }
 
+    public void VulnerableAttack(float _vulnerableCooldown, int _vulnerableDamage)
+    {
+        Vulnerable = true;
+        VulnerableCooldown = _vulnerableCooldown;
+        VulnerableDamage = _vulnerableDamage;
+        StartCoroutine("VulnerableWindow");
+    }
+
     public void setBleed(int _BleedDamage, float _BleedDuration, float _BleedInterval)
     {
 
         if (!bleed)
         {
-            this.BleedDamge = _BleedDamage;
-            this.BleedDuration = _BleedDuration;
-            this.BleedInterval = _BleedInterval;
+            BleedDamage = _BleedDamage;
+            BleedDuration = _BleedDuration;
+            BleedInterval = _BleedInterval;
             bleed = true;
         }
     }
@@ -177,5 +192,11 @@ public class CharacterStatsController : MonoBehaviour
             yield return new WaitForSeconds(BleedInterval);
             HitPoints -= BleedDamge;
         }
+    }
+
+    IEnumerator VulnerableWindow()
+    {
+        yield return new WaitForSeconds(VulnerableCooldown-1f);
+        Vulnerable = false;
     }
 }
