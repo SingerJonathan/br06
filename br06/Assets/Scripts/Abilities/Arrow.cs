@@ -19,6 +19,7 @@ public class Arrow : MonoBehaviour
     private Vector3 _hitPosition;
 	private bool _hit;
 	private float _lifetime;
+    private bool _axe;
 	
 	void Update()
 	{
@@ -27,6 +28,8 @@ public class Arrow : MonoBehaviour
 		_lifetime += Time.deltaTime;
 		if (_lifetime > 3)
 		    Destroy(transform.parent.gameObject, 0.2f);
+        if (_lifetime > 1 && _axe)
+            Destroy(transform.parent.gameObject, 0.2f);
 	}
 
     void OnTriggerEnter(Collider other)
@@ -207,6 +210,19 @@ public class Arrow : MonoBehaviour
         set
         {
             _prisonFieldDamagePerSecond = value;
+        }
+    }
+
+    public bool Axe
+    {
+        get
+        {
+            return _axe;
+        }
+
+        set
+        {
+            _axe = value;
         }
     }
 }

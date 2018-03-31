@@ -33,6 +33,8 @@ public class CharacterStatsController : MonoBehaviour
     private List<string> _damageOverTimeTags;
     private List<string> _damageOverTimeAudioSourceTags;
 
+    private float ShieldWallDuration;
+    private bool ImprovedShieldWall;
 
     public int MaxHitPoints
     {
@@ -73,7 +75,7 @@ public class CharacterStatsController : MonoBehaviour
         {
             DamageValue = DamageValue - ShieldWallReduction;
             ShieldWallCharge -= 1;
-            if (ShieldWallCharge == 0)
+            if (ShieldWallCharge <= 0)
                 ShieldWall = false;
         }
 
@@ -170,6 +172,24 @@ public class CharacterStatsController : MonoBehaviour
             ShieldWallCharge = _shieldWallCharge;
     }
 
+    public void EnableTimedShieldWall(float _shieldWallDuration, int _shieldWallReduction)
+    {
+        if (!ImprovedShieldWall)
+        {
+            _shieldWallDuration = ShieldWallDuration;
+            _shieldWallReduction = ShieldWallReduction;
+            ImprovedShieldWall = true;
+            StartCoroutine(ImprovedShieldClock());
+        }
+        else
+        {
+            ImprovedShieldWall = false;
+            ImprovedShieldWall = true;
+            StartCoroutine(ImprovedShieldClock());
+        }
+
+    }
+
     IEnumerator DamageOverTimeCoroutine(int damage, int durationIndex)
     {
         while (_damageOverTimeDurations[durationIndex] > 0)
@@ -199,5 +219,14 @@ public class CharacterStatsController : MonoBehaviour
     {
         yield return new WaitForSeconds(VulnerableCooldown);
         Vulnerable = false;
+    }
+
+    IEnumerator ImprovedShieldClock()
+    {
+        while(ImprovedShieldWall)
+        {
+            yield return new WaitForSeconds(ShieldWallDuration);
+            ImprovedShieldWall = false;
+        }
     }
 }

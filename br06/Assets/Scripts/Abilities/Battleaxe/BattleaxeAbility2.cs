@@ -1,16 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BattleaxeAbility2 : MonoBehaviour {
+public class BattleaxeAbility2 : Ability
+{
+    public int WeaponDamage = 10;
+    private GameObject _characterGameObject;
+    public static string leftHandString = "mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/Weapon";
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override void Initialize(GameObject obj)
+    {
+        _enemyColour = obj.name.Contains("Red") ? "Blue" : "Red";
+        _characterGameObject = obj;
+    }
+
+    public override void TriggerAbility()
+    {
+        GameObject arrow = (GameObject) Instantiate(Resources.Load("Arrow"));
+        Arrow arrowComponent = arrow.transform.GetChild(0).GetComponent<Arrow>();
+        arrowComponent.EnemyColour = _enemyColour;
+        arrowComponent.Damage = WeaponDamage;
+        arrow.transform.position = _characterGameObject.transform.Find(leftHandString).position;
+        arrow.transform.rotation = _characterGameObject.transform.rotation;
+        if (_characterGameObject.name.Contains("Red"))
+        {
+            arrowComponent.GetComponent<Renderer>().material = arrowComponent.RedMaterial;
+            arrowComponent.HitParticleSystem = arrowComponent.RedParticleSystem;
+        }
+        else
+        {
+            arrowComponent.GetComponent<Renderer>().material = arrowComponent.BlueMaterial;
+            arrowComponent.HitParticleSystem = arrowComponent.BlueParticleSystem;
+        }
+    }
 }
