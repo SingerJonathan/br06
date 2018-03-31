@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BattleaxeAbility1 : Ability
+public class BattleaxeMutation2 : Ability
 {
-
-    private HitboxTriggerController _hitboxTriggerController;
-    public float SlowSpeed = 1f;
-    public float SlowDuration = 1f;
     public int WeaponDamage = 1;
+    public float MortalWoundDuration = 1f;
+    public int MortalWoundSeverity = 1;
+    public int DamageChargeDamage = 1;
+    public int DamageChargeLimit = 1;
+    private HitboxTriggerController _hitboxTriggerController;
 
     public override void Initialize(GameObject obj)
     {
@@ -31,7 +30,8 @@ public class BattleaxeAbility1 : Ability
                     if (hit.transform.name.Contains(_enemyColour))
                     {
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
-                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().Slow(SlowSpeed, SlowDuration);
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().EnableMortalWound(MortalWoundDuration, MortalWoundSeverity);
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().AddDamageCharge(DamageChargeDamage, DamageChargeLimit);
                     }
                 }
             }

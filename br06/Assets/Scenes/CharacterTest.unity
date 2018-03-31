@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44479498, g: 0.49434102, b: 0.57353866, a: 1}
+  m_IndirectSpecularColor: {r: 0.4447953, g: 0.4943416, b: 0.57353956, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -22629,8 +22629,10 @@ MonoBehaviour:
   HitPoints: 100
   DodgeCooldown: 5
   PotionHealValue: 50
+  BleedDamage: 1
+  BleedDuration: 1
   BleedInterval: 1
-  BleedTime: 1
+  ShieldWallReduction: 1
   PotionText: {fileID: 1190202846}
   HealParticleSystem: {fileID: 729256213}
 --- !u!1 &814080086
@@ -24360,8 +24362,10 @@ MonoBehaviour:
   HitPoints: 100
   DodgeCooldown: 5
   PotionHealValue: 50
+  BleedDamage: 1
+  BleedDuration: 1
   BleedInterval: 1
-  BleedTime: 1
+  ShieldWallReduction: 1
   PotionText: {fileID: 22469228}
   HealParticleSystem: {fileID: 383753822}
 --- !u!1 &883162764

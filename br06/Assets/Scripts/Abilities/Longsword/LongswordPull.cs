@@ -24,9 +24,20 @@ public class LongswordPull : Ability{
         {
             if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
             {
-                _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
-                animator.PullTowards(PullForce);
+                Transform origin = _hitboxTriggerController.transform.parent.gameObject.transform.Find(MeleeAbility.headString);
+                Transform target = GameObject.FindGameObjectWithTag(_enemyColour).transform.Find(MeleeAbility.headString);
+                RaycastHit hit;
+                if (Physics.Raycast(origin.position, target.position - origin.position, out hit, 100, ~(1 << 8)))
+                {
+                    Debug.DrawRay(origin.position, target.position - origin.position, Color.red, 10);
+                    if (hit.transform.name.Contains(_enemyColour))
+                    {
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
+                        animator.PullTowards(PullForce);
+                    }
+                }
             }
         }
     }
 }
+

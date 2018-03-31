@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class CharacterAnimationController : MonoBehaviour
@@ -24,10 +23,13 @@ public class CharacterAnimationController : MonoBehaviour
     public float DodgeSpeed = 35f;
     public float Gravity = 1000.0f;
     public float KnockbackForce = 1f;
-    public float JumpBackForce = 1f;
-    public float PullForce = 1f;
-    public float KnockupDuration = 1f;
-    public float SlowDuration = 1f;
+    private float JumpBackForce = 1f;
+    private float PullForce = 1f;
+    private float KnockupDuration = 1f;
+    private bool SlowedDown;
+    private float SlowedSpeed;
+    private float OldSpeed;
+    private float SlowDuration = 1f;
 
     public float DodgeCountdown
     {
@@ -91,6 +93,7 @@ public class CharacterAnimationController : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _enemyColour = _animator.name.Contains("Red") ? "Blue" : "Red";
+        OldSpeed = RunSpeed;
     }
 
     void Update()
@@ -145,10 +148,15 @@ public class CharacterAnimationController : MonoBehaviour
             _characterController.Move(collisionDirection * KnockbackForce);
             StartCoroutine("pullDistance");
         }
+
+        if (SlowedDown)
+            RunSpeed = SlowedSpeed;
+        else
+            RunSpeed = OldSpeed;
         
         if(_knockedUp)
         {
-            Vector3 UpDirection = new Vector3(0,3,0);
+            Vector3 UpDirection = new Vector3(0,1,0);
             _characterController.Move(UpDirection * KnockbackForce);
             _moveDirection.y -= Gravity;
             StartCoroutine("KnockupDurationCoroutine");
@@ -172,39 +180,40 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void KnockedBack(float _knockbackForce)
     {
-        this.KnockbackForce = _knockbackForce;
+        KnockbackForce = _knockbackForce;
         _knockedBack = true;
     }
 
     public void JumpBack(float _jumpBackForce)
     {
-        this.JumpBackForce = _jumpBackForce;
+        JumpBackForce = _jumpBackForce;
         _jumpBack = true;
     }
 
     public void PullTowards(float _pullForce)
     {
-        this.PullForce = _pullForce;
+        PullForce = _pullForce;
         _pullTowards = true;
     }
 
     public void KnockupEnable(float _KnockupDuration)
     {
-        this.KnockupDuration = _KnockupDuration;
+        KnockupDuration = _KnockupDuration;
         _knockedUp = true;
     }
 
     public void Slow(float _runSpeed, float _slowDuration)
     {
-        RunSpeed = _runSpeed;
+        SlowedDown = true;
+        SlowedSpeed = _runSpeed;
         SlowDuration = _slowDuration;
-        StartCoroutine("SlowTimer");
+        StartCoroutine(SlowTimer());
     }
 
     IEnumerator SlowTimer()
     {
         yield return new WaitForSeconds(SlowDuration);
-        RunSpeed = 12f;
+        SlowedDown = false;
     }
 
     IEnumerator knockbackDistance()

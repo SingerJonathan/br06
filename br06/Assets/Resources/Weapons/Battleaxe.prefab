@@ -24,11 +24,11 @@ GameObject:
   - component: {fileID: 114719167508747742}
   - component: {fileID: 114434734873727356}
   - component: {fileID: 114755175208926948}
-  - component: {fileID: 114053236641866412}
-  - component: {fileID: 114017606510249304}
-  - component: {fileID: 114926013907507698}
-  - component: {fileID: 114526791193739382}
-  - component: {fileID: 114619725728804836}
+  - component: {fileID: 114292020881472556}
+  - component: {fileID: 114533951427604604}
+  - component: {fileID: 114349176326345764}
+  - component: {fileID: 114018284524205278}
+  - component: {fileID: 114234466561620920}
   m_Layer: 0
   m_Name: Battleaxe
   m_TagString: Untagged
@@ -90,7 +90,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300002, guid: 0fe4a27464d212040b5c6c443767140e, type: 3}
---- !u!114 &114017606510249304
+--- !u!114 &114018284524205278
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -98,18 +98,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bf291463994334439d0f6cb28b1bc65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
+  aName: Battleaxe Mutation 3
+  aTitle: Mortal Burst
+  aDescription: Your mortal strikes
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
-  aClip: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
   WeaponDamage: 1
---- !u!114 &114053236641866412
+  MortalWoundDuration: 10
+  MortalWoundSeverity: 10
+  DamageChargeDamage: 10
+  DamageChargeLimit: 2
+--- !u!114 &114234466561620920
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -117,17 +121,61 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a6d60c83a0331a419b171b2ad2ae2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: Battleaxe Ability 3
-  aTitle: Battleaxe Ability 3
+  aName: Battleaxe Mutation 4
+  aTitle: Improved Mortal Wounds
   aDescription: Ability Description
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
-  aBaseCooldown: 3
-  WeaponDamage: 20
+  aBaseCooldown: 1
+  WeaponDamage: 1
+  MortalWoundDuration: 1
+  MortalWoundSeverity: 1
+--- !u!114 &114292020881472556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6d60c83a0331a419b171b2ad2ae2c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Battleaxe Ability 2
+  aTitle: Mortal Wounds
+  aDescription: Ability Description
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 0
+  MortalWoundDuration: 5
+  MortalWoundSeverity: 10
+--- !u!114 &114349176326345764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095d6501e2cf7f7489e89350f61097e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: Battleaxe Mutation 2
+  aTitle: Improved Hamstring
+  aDescription: Your slows are more effective and last longer.
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  SlowSpeed: 5
+  SlowDuration: 6
+  WeaponDamage: 1
 --- !u!114 &114434734873727356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,7 +195,7 @@ MonoBehaviour:
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
   WeaponDamage: 10
---- !u!114 &114526791193739382
+--- !u!114 &114533951427604604
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -155,36 +203,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: c4eb3f835688c144788fc84250186419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
+  aName: Battleaxe Mutation 1
+  aTitle: Bleeding Hamstring
+  aDescription: Hacking at your opponents legs to slow them now also causes them to
+    bleed.
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
-  aClip: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
+  SlowSpeed: 6
+  SlowDuration: 5
   WeaponDamage: 1
---- !u!114 &114619725728804836
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1
+  BleedDamage: 1
+  BleedDuration: 5
+  BleedInterval: 1
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -201,13 +236,13 @@ MonoBehaviour:
   Bow: 0
   Abilities:
   - {fileID: 114434734873727356}
-  - {fileID: 114053236641866412}
-  - {fileID: 114053236641866412}
+  - {fileID: 114755175208926948}
+  - {fileID: 114292020881472556}
   MutatedAbilities:
-  - {fileID: 114017606510249304}
-  - {fileID: 114926013907507698}
-  - {fileID: 114526791193739382}
-  - {fileID: 114619725728804836}
+  - {fileID: 114533951427604604}
+  - {fileID: 114349176326345764}
+  - {fileID: 114018284524205278}
+  - {fileID: 114234466561620920}
 --- !u!114 &114755175208926948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,29 +255,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Battleaxe Ability 2
-  aTitle: Battleaxe Ability 2
-  aDescription: Ability Description
+  aTitle: Hamstring
+  aDescription: Cut at your opponents legs and slow their movement.
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
-  WeaponDamage: 1
---- !u!114 &114926013907507698
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
-  aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
+  SlowSpeed: 6
+  SlowDuration: 5
   WeaponDamage: 1

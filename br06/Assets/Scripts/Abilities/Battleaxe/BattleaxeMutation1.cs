@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BattleaxeAbility1 : Ability
+public class BattleaxeMutation1 : Ability
 {
 
     private HitboxTriggerController _hitboxTriggerController;
     public float SlowSpeed = 1f;
     public float SlowDuration = 1f;
     public int WeaponDamage = 1;
+    public int BleedDamage = 1;
+    public float BleedDuration = 1f;
+    public float BleedInterval = 1f;
 
     public override void Initialize(GameObject obj)
     {
@@ -32,6 +33,7 @@ public class BattleaxeAbility1 : Ability
                     {
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().Slow(SlowSpeed, SlowDuration);
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().setBleed(BleedDamage,BleedDuration,BleedInterval);
                     }
                 }
             }

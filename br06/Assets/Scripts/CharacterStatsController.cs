@@ -24,6 +24,10 @@ public class CharacterStatsController : MonoBehaviour
     private bool ShieldWall = false;
     private int ShieldWallCharge = 1;
 
+    private int DamageChargeLimit = 1;
+    private int DamageChargeDamage = 1;
+    private int DamageCharge = 0;
+
     public Text PotionText;
     public ParticleSystem HealParticleSystem;
 
@@ -35,6 +39,10 @@ public class CharacterStatsController : MonoBehaviour
 
     private float ShieldWallDuration;
     private bool ImprovedShieldWall;
+
+    private bool MortalWound;
+    private float MortalWoundDuration;
+    private int MortalWoundSeverity;
 
     public int MaxHitPoints
     {
@@ -70,16 +78,15 @@ public class CharacterStatsController : MonoBehaviour
         if(Vulnerable)
         {
             DamageValue = DamageValue + VulnerableDamage;
+            Vulnerable = false;
         }
-        if(ShieldWall)
+        if(ShieldWall || ImprovedShieldWall)
         {
             DamageValue = DamageValue - ShieldWallReduction;
             ShieldWallCharge -= 1;
             if (ShieldWallCharge <= 0)
                 ShieldWall = false;
         }
-
-        Vulnerable = false;
         HitPoints -= DamageValue;
     }
 
@@ -87,7 +94,10 @@ public class CharacterStatsController : MonoBehaviour
     {
         if (Potions > 0 && HitPoints < MaxHitPoints)
         {
-            HitPoints += PotionHealValue;
+            if(MortalWound)
+                HitPoints += PotionHealValue - MortalWoundSeverity;
+            else
+                HitPoints += PotionHealValue;
             if (HitPoints > MaxHitPoints)
                 HitPoints = MaxHitPoints;
             Potions -= 1;
@@ -150,7 +160,6 @@ public class CharacterStatsController : MonoBehaviour
 
     public void setBleed(int _BleedDamage, float _BleedDuration, float _BleedInterval)
     {
-
         if (!bleed)
         {
             BleedDamage = _BleedDamage;
@@ -176,18 +185,61 @@ public class CharacterStatsController : MonoBehaviour
     {
         if (!ImprovedShieldWall)
         {
-            _shieldWallDuration = ShieldWallDuration;
-            _shieldWallReduction = ShieldWallReduction;
+            ShieldWallDuration = _shieldWallDuration;
+            ShieldWallReduction = _shieldWallReduction;
             ImprovedShieldWall = true;
+            StartCoroutine(ImprovedShieldClock());
+        }
+        else if (ShieldWallDuration == _shieldWallDuration && ShieldWallReduction == _shieldWallReduction)
+        {
+            StopCoroutine(ImprovedShieldClock());
             StartCoroutine(ImprovedShieldClock());
         }
         else
         {
-            ImprovedShieldWall = false;
-            ImprovedShieldWall = true;
+            ShieldWallDuration = _shieldWallDuration;
+            ShieldWallReduction = _shieldWallReduction;
+            StopCoroutine(ImprovedShieldClock());
             StartCoroutine(ImprovedShieldClock());
         }
+    }
 
+    public void AddDamageCharge(int _damageChargeDamage, int _damageChargeLimit)
+    {
+        if(DamageChargeDamage != _damageChargeDamage && DamageChargeLimit != _damageChargeLimit)
+        {
+            DamageChargeDamage = _damageChargeDamage;
+            DamageChargeLimit = _damageChargeLimit;
+        }
+        DamageCharge += 1;
+        if (DamageCharge == DamageChargeLimit)
+        {
+            DamageCharge = 0;
+            DoDamage(DamageChargeDamage);
+        }
+    }
+
+    public void EnableMortalWound(float _mortalWoundDuration, int _mortalWoundSeverity)
+    {
+        if(!MortalWound)
+        {
+            MortalWoundDuration = _mortalWoundDuration;
+            MortalWoundSeverity = _mortalWoundSeverity;
+            MortalWound = true;
+            StartCoroutine(MortalWoundTimer());
+        }
+        else if (MortalWoundDuration == _mortalWoundDuration && MortalWoundSeverity == _mortalWoundSeverity)
+        {
+            StopCoroutine(MortalWoundTimer());
+            StartCoroutine(MortalWoundTimer());
+        }
+        else
+        {
+            MortalWoundDuration = _mortalWoundDuration;
+            MortalWoundSeverity = _mortalWoundSeverity;
+            StopCoroutine(MortalWoundTimer());
+            StartCoroutine(MortalWoundTimer());
+        }
     }
 
     IEnumerator DamageOverTimeCoroutine(int damage, int durationIndex)
@@ -223,10 +275,13 @@ public class CharacterStatsController : MonoBehaviour
 
     IEnumerator ImprovedShieldClock()
     {
-        while(ImprovedShieldWall)
-        {
-            yield return new WaitForSeconds(ShieldWallDuration);
-            ImprovedShieldWall = false;
-        }
+        yield return new WaitForSeconds(ShieldWallDuration);
+        ImprovedShieldWall = false;
+    }
+
+    IEnumerator MortalWoundTimer()
+    {
+        yield return new WaitForSeconds(MortalWoundDuration);
+        MortalWound = false;
     }
 }

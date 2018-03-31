@@ -22,13 +22,13 @@ GameObject:
   - component: {fileID: 33354804609262852}
   - component: {fileID: 23978671989029180}
   - component: {fileID: 114719167508747742}
-  - component: {fileID: 114207363627053186}
-  - component: {fileID: 114807718117568956}
-  - component: {fileID: 114525346162659172}
-  - component: {fileID: 114232919074813082}
-  - component: {fileID: 114401511211594930}
-  - component: {fileID: 114664555387352224}
-  - component: {fileID: 114076411623553938}
+  - component: {fileID: 114293739419446452}
+  - component: {fileID: 114690974670419162}
+  - component: {fileID: 114913100929206296}
+  - component: {fileID: 114112794697113848}
+  - component: {fileID: 114247310618664130}
+  - component: {fileID: 114570941007113834}
+  - component: {fileID: 114894317911745878}
   m_Layer: 0
   m_Name: Greataxe
   m_TagString: Untagged
@@ -90,7 +90,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
   m_Mesh: {fileID: 4300002, guid: 0fe4a27464d212040b5c6c443767140e, type: 3}
---- !u!114 &114076411623553938
+--- !u!114 &114112794697113848
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -98,33 +98,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 71ed920e4e006f946a2f740af8d34892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aName: New Ability
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1
---- !u!114 &114207363627053186
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: Greataxe Ability 1
+  aTitle: Ability Name
+  aDescription: Ability Description
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
-  WeaponDamage: 10
---- !u!114 &114232919074813082
+  KnockupDuration: 1
+  ShieldWallCharge: 1
+  ShieldWallReduction: 1
+  WeaponDamage: 1
+--- !u!114 &114247310618664130
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -132,50 +120,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f7a436108113a04c9478e52897f5fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aName: New Ability
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1
---- !u!114 &114401511211594930
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: New Ability
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 0}
-  aBaseCooldown: 1
-  WeaponDamage: 1
---- !u!114 &114525346162659172
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1660839964210408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aName: Greataxe Ability 3
+  aTitle: Ability Name
+  aDescription: Ability Description
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
-  aBaseCooldown: 5
-  WeaponDamage: 30
---- !u!114 &114664555387352224
+  aBaseCooldown: 1
+  KnockupDuration: 1
+  WeaponDamage: 1
+--- !u!114 &114293739419446452
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -187,10 +144,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: New Ability
+  aTitle: Ability Name
+  aDescription: Ability Description
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
-  aClip: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
+  WeaponDamage: 1
+--- !u!114 &114570941007113834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a573d47ed480e674b859d104115962b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aTitle: Ability Name
+  aDescription: Ability Description
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1
+  KnockbackForce: 1
+  DamageChargeDamage: 1
+  DamageChargeLimit: 1
+--- !u!114 &114690974670419162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f7a436108113a04c9478e52897f5fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aTitle: Ability Name
+  aDescription: Ability Description
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  KnockupDuration: 1
   WeaponDamage: 1
 --- !u!114 &114719167508747742
 MonoBehaviour:
@@ -207,15 +208,15 @@ MonoBehaviour:
   TwoHanded: 1
   Bow: 0
   Abilities:
-  - {fileID: 114207363627053186}
-  - {fileID: 114807718117568956}
-  - {fileID: 114525346162659172}
+  - {fileID: 114293739419446452}
+  - {fileID: 114690974670419162}
+  - {fileID: 114913100929206296}
   MutatedAbilities:
-  - {fileID: 114232919074813082}
-  - {fileID: 114401511211594930}
-  - {fileID: 114664555387352224}
-  - {fileID: 114525346162659172}
---- !u!114 &114807718117568956
+  - {fileID: 114112794697113848}
+  - {fileID: 114247310618664130}
+  - {fileID: 114570941007113834}
+  - {fileID: 114894317911745878}
+--- !u!114 &114894317911745878
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -223,12 +224,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660839964210408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ad0ebd3fc5aa6f4ca3a8c1a00befd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: Greataxe Ability 2
+  aName: New Ability
+  aTitle: Ability Name
+  aDescription: Ability Description
   aSprite: {fileID: 0}
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
-  aBaseCooldown: 3
-  WeaponDamage: 20
+  aBaseCooldown: 1
+  WeaponDamage: 1
+  KnockbackForce: 1
+--- !u!114 &114913100929206296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660839964210408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad0ebd3fc5aa6f4ca3a8c1a00befd69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aName: New Ability
+  aTitle: Ability Name
+  aDescription: Ability Description
+  aSprite: {fileID: 0}
+  aSound: {fileID: 0}
+  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aBaseCooldown: 1
+  WeaponDamage: 1
+  KnockbackForce: 1

@@ -2,33 +2,36 @@
 
 public class BattleaxeAbility2 : Ability
 {
-    public int WeaponDamage = 10;
-    private GameObject _characterGameObject;
-    public static string leftHandString = "mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:LeftShoulder/mixamorig:LeftArm/mixamorig:LeftForeArm/mixamorig:LeftHand/Weapon";
+    public int WeaponDamage = 1;
+    public float MortalWoundDuration = 1f;
+    public int MortalWoundSeverity = 1;
+    private HitboxTriggerController _hitboxTriggerController;
 
     public override void Initialize(GameObject obj)
     {
+        _hitboxTriggerController = obj.transform.Find("HitboxSemiCircle").GetComponent<HitboxTriggerController>();
         _enemyColour = obj.name.Contains("Red") ? "Blue" : "Red";
-        _characterGameObject = obj;
     }
 
     public override void TriggerAbility()
     {
-        GameObject arrow = (GameObject) Instantiate(Resources.Load("Arrow"));
-        Arrow arrowComponent = arrow.transform.GetChild(0).GetComponent<Arrow>();
-        arrowComponent.EnemyColour = _enemyColour;
-        arrowComponent.Damage = WeaponDamage;
-        arrow.transform.position = _characterGameObject.transform.Find(leftHandString).position;
-        arrow.transform.rotation = _characterGameObject.transform.rotation;
-        if (_characterGameObject.name.Contains("Red"))
+        for (int index = 0; index < _hitboxTriggerController.CollidingObjects.Count; index++)
         {
-            arrowComponent.GetComponent<Renderer>().material = arrowComponent.RedMaterial;
-            arrowComponent.HitParticleSystem = arrowComponent.RedParticleSystem;
-        }
-        else
-        {
-            arrowComponent.GetComponent<Renderer>().material = arrowComponent.BlueMaterial;
-            arrowComponent.HitParticleSystem = arrowComponent.BlueParticleSystem;
+            if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
+            {
+                Transform origin = _hitboxTriggerController.transform.parent.gameObject.transform.Find(MeleeAbility.headString);
+                Transform target = GameObject.FindGameObjectWithTag(_enemyColour).transform.Find(MeleeAbility.headString);
+                RaycastHit hit;
+                if (Physics.Raycast(origin.position, target.position - origin.position, out hit, 100, ~(1 << 8)))
+                {
+                    Debug.DrawRay(origin.position, target.position - origin.position, Color.red, 10);
+                    if (hit.transform.name.Contains(_enemyColour))
+                    {
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
+                        _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().EnableMortalWound(MortalWoundDuration,MortalWoundSeverity);
+                    }
+                }
+            }
         }
     }
 }
