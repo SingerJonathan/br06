@@ -108,9 +108,9 @@ MonoBehaviour:
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
-  WeaponDamage: 1
-  MortalWoundDuration: 10
-  MortalWoundSeverity: 10
+  WeaponDamage: 0
+  MortalWoundDuration: 0
+  MortalWoundSeverity: 0
   DamageChargeDamage: 10
   DamageChargeLimit: 2
 --- !u!114 &114234466561620920

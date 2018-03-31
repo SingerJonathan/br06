@@ -253,5 +253,5 @@ MonoBehaviour:
   aSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
   aBaseCooldown: 1
-  ShieldWallDuration: 1
-  ShieldWallReduction: 1
+  ShieldWallDuration: 30
+  ShieldWallReduction: 5
