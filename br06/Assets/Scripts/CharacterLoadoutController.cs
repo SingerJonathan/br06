@@ -10,25 +10,24 @@ public class CharacterLoadoutController : MonoBehaviour
     private static List<Vector3> _weaponPositions = new List<Vector3>
     {
         new Vector3(0.00434f, 0.00542f, 0.00539f), // Battleaxe
-        new Vector3(0.00453f, 0.00752f, -0.00454f), // Greataxe
         new Vector3(0.03305f, 0.00186f, 0.0084f), // Longbow
         new Vector3(0.00146f, 0.00637f, 0.00214f), // Longsword
-        new Vector3(0.00453f, 0.00752f, -0.00454f) // Spear
+        new Vector3(0.00453f, 0.00752f, -0.00454f), // Spear
+        new Vector3(0.00453f, 0.00752f, -0.00454f) // Warhammer
     };
 
     private static List<Vector3> _weaponEulerAngles = new List<Vector3>
     {
         new Vector3(-178, 45, -90), // Battleaxe
-        new Vector3(-188, 143, -75), // Greataxe
         new Vector3(-186, 78, 180), // Longbow
         new Vector3(-178, 45, -90), // Longsword
-        new Vector3(-188, 143, -75) // Spear
+        new Vector3(-188, 143, -75), // Spear
+        new Vector3(-188, 143, -75) // Warhammer
     };
 
     private static List<Vector3> _weaponPositionsOffhand = new List<Vector3>
     {
         new Vector3(-0.007f, 0.006f, 0.0005f), // Battleaxe
-        new Vector3(-0.007f, 0.006f, 0.0005f), // None
         new Vector3(-0.007f, 0.006f, 0.0005f), // None
         new Vector3(-0.003f, 0.006f, -0.0005f), // Longsword
     };
@@ -37,13 +36,12 @@ public class CharacterLoadoutController : MonoBehaviour
     {
         new Vector3(-178, -76, -90), // Battleaxe
         new Vector3(-178, -76, -90), // None
-        new Vector3(-178, -76, -90), // None
         new Vector3(-178, -76, -90), // Longsword
     };
 
     public enum WeaponEnum
     {
-        None, Battleaxe, Greataxe, Longbow, Longsword, Spear
+        None, Battleaxe, Longbow, Longsword, Spear, Warhammer
     }
 
     public CanvasRenderer LoadoutPanel;
@@ -233,8 +231,8 @@ public class CharacterLoadoutController : MonoBehaviour
             case WeaponEnum.Battleaxe:
                 weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Battleaxe"));
                 break;
-            case WeaponEnum.Greataxe:
-                weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Greataxe"));
+            case WeaponEnum.Warhammer:
+                weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Warhammer"));
                 break;
             case WeaponEnum.Spear:
                 weaponGameObject = (GameObject) Instantiate(Resources.Load("Weapons/Spear"));

@@ -14,6 +14,7 @@ public class AbilityCooldown : MonoBehaviour
     [SerializeField] private Image myButtonImage;
     private Animator weaponHolderAnimator;
     private AudioSource abilitySource;
+    private AudioSource abilityHitSource;
     private float CooldownDuration;
     private float nextReadyTime;
     private float CooldownTimeLeft;
@@ -42,6 +43,8 @@ public class AbilityCooldown : MonoBehaviour
         ability = selectedAbility;
         //myButtonImage = GetComponent<Image>();
         abilitySource = GetComponent<AudioSource>();
+        if (transform.Find("Hit Sound").GetComponent<AudioSource>())
+            abilityHitSource = transform.Find("Hit Sound").GetComponent<AudioSource>();
         myButtonImage.sprite = ability.aSprite;
         //darkMask.sprite = ability.aSprite;
         CooldownDuration = ability.aBaseCooldown;
@@ -111,9 +114,11 @@ public class AbilityCooldown : MonoBehaviour
 
     private IEnumerator CompleteAnimation()
     {
-        yield return new WaitForSeconds(ability.aClip.length/4);
-            ability.TriggerAbility();
-        yield return new WaitForSeconds(ability.aClip.length/4);
+        yield return new WaitForSeconds(ability.aTimeBeforeTrigger);
+        if (ability.aHitSound)
+            abilityHitSource.Play();
+        ability.TriggerAbility();
+        yield return new WaitForSeconds(ability.aClip.length - ability.aTimeBeforeTrigger);
         weaponHolderAnimator.SetBool("ability", false);
     }
 }

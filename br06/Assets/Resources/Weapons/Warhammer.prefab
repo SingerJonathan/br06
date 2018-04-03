@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 114570941007113834}
   - component: {fileID: 114894317911745878}
   m_Layer: 0
-  m_Name: Greataxe
+  m_Name: Warhammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ Transform:
   m_GameObject: {fileID: 1660839964210408}
   m_LocalRotation: {x: -0.6579046, y: -0.64845943, z: 0.25915548, w: 0.2819582}
   m_LocalPosition: {x: 0.00146, y: 0.00637, z: 0.00214}
-  m_LocalScale: {x: 4, y: 4, z: 4.5}
+  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -89,7 +89,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660839964210408}
-  m_Mesh: {fileID: 4300002, guid: 0fe4a27464d212040b5c6c443767140e, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 715b0a12ba610f44aa402b683b0d833e, type: 3}
 --- !u!114 &114112794697113848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,13 +101,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ed920e4e006f946a2f740af8d34892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
+  aName: Warhammer Ability 1 Mutation 1
+  aTitle: Knockup Mutation 1
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
+  aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
+  aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
+  aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   KnockupDuration: 1
   ShieldWallCharge: 1
   ShieldWallReduction: 1
@@ -123,13 +125,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7a436108113a04c9478e52897f5fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
+  aName: Warhammer Ability 1 Mutation 2
+  aTitle: Knockup Mutation 2
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
+  aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
+  aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
+  aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   KnockupDuration: 1
   WeaponDamage: 1
 --- !u!114 &114293739419446452
@@ -143,13 +147,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11909a5618debd7468a15227049bb8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
+  aName: Warhammer Ability 1
+  aTitle: Smash
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 730a47fedc5c517478b6ad396192f3fb, type: 3}
+  aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
+  aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
+  aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 1
 --- !u!114 &114570941007113834
 MonoBehaviour:
@@ -162,13 +168,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a573d47ed480e674b859d104115962b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
+  aName: Warhammer Ability 2 Mutation 1
+  aTitle: Knockback Mutation 1
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
+  aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
+  aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
+  aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 1
   KnockbackForce: 1
   DamageChargeDamage: 1
@@ -184,13 +192,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7a436108113a04c9478e52897f5fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
+  aName: Warhammer Ability 2
+  aTitle: Knockup
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
+  aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
+  aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
+  aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   KnockupDuration: 1
   WeaponDamage: 1
 --- !u!114 &114719167508747742
@@ -204,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf58ab9d8ddcb445b4c78bb318ecc8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Greataxe
+  Name: Warhammer
   TwoHanded: 1
   Bow: 0
   Abilities:
@@ -227,13 +237,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad0ebd3fc5aa6f4ca3a8c1a00befd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
+  aName: Warhammer Ability 2 Mutation 2
+  aTitle: Knockback Mutation 2
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
+  aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
+  aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
+  aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 1
   KnockbackForce: 1
 --- !u!114 &114913100929206296
@@ -247,12 +259,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad0ebd3fc5aa6f4ca3a8c1a00befd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: New Ability
-  aTitle: Ability Name
+  aName: Warhammer Ability 3
+  aTitle: Knockback
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
+  aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
+  aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
+  aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 1
   KnockbackForce: 1

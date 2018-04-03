@@ -104,10 +104,12 @@ MonoBehaviour:
   aName: Battleaxe Mutation 3
   aTitle: Mortal Burst
   aDescription: Your mortal strikes
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
+  aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
+  aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
+  aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 0
   MortalWoundDuration: 0
   MortalWoundSeverity: 0
@@ -127,10 +129,12 @@ MonoBehaviour:
   aName: Battleaxe Mutation 4
   aTitle: Improved Mortal Wounds
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
+  aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
+  aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
+  aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 1
   MortalWoundDuration: 1
   MortalWoundSeverity: 1
@@ -148,10 +152,12 @@ MonoBehaviour:
   aName: Battleaxe Ability 2
   aTitle: Mortal Wounds
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
+  aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
+  aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
+  aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 0
   MortalWoundDuration: 5
   MortalWoundSeverity: 10
@@ -169,10 +175,12 @@ MonoBehaviour:
   aName: Battleaxe Mutation 2
   aTitle: Improved Hamstring
   aDescription: Your slows are more effective and last longer.
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 346403bde6ab664408573bacc051c68b, type: 3}
+  aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
+  aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
+  aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   SlowSpeed: 5
   SlowDuration: 6
   WeaponDamage: 1
@@ -188,12 +196,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Battleaxe Ability 1
-  aTitle: Ability Name
+  aTitle: Swing
   aDescription: Ability Description
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 306cb03a5ee10d54f9a89c99318deb7c, type: 3}
+  aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
+  aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
+  aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   WeaponDamage: 10
 --- !u!114 &114533951427604604
 MonoBehaviour:
@@ -210,10 +220,12 @@ MonoBehaviour:
   aTitle: Bleeding Hamstring
   aDescription: Hacking at your opponents legs to slow them now also causes them to
     bleed.
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 346403bde6ab664408573bacc051c68b, type: 3}
+  aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
+  aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
+  aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   SlowSpeed: 6
   SlowDuration: 5
   WeaponDamage: 1
@@ -257,10 +269,12 @@ MonoBehaviour:
   aName: Battleaxe Ability 2
   aTitle: Hamstring
   aDescription: Cut at your opponents legs and slow their movement.
-  aSprite: {fileID: 0}
-  aSound: {fileID: 0}
-  aClip: {fileID: 7400000, guid: 368a31f5d16c3554ebc619978d3d57c3, type: 3}
+  aSprite: {fileID: 21300000, guid: 346403bde6ab664408573bacc051c68b, type: 3}
+  aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
+  aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
+  aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
+  aTimeBeforeTrigger: 0
   SlowSpeed: 6
   SlowDuration: 5
   WeaponDamage: 1
