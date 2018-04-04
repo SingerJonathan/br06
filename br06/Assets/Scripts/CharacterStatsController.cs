@@ -17,7 +17,7 @@ public class CharacterStatsController : MonoBehaviour
     private bool bleed = false;
 
     private bool Vulnerable = false;
-    private float VulnerableCooldown = 1f;
+    private float VulnerableCooldown = 2f;
     private int VulnerableDamage = 1;
 
     public int ShieldWallReduction = 1;
@@ -30,6 +30,8 @@ public class CharacterStatsController : MonoBehaviour
 
     public Text PotionText;
     public ParticleSystem HealParticleSystem;
+    public ParticleSystem BleedParticleSystem;
+    public ParticleSystem VulnerableParticleSystem;
 
     private int _potions = 3;
     private int _maxHitPoints;
@@ -79,6 +81,8 @@ public class CharacterStatsController : MonoBehaviour
         {
             DamageValue = DamageValue + VulnerableDamage;
             Vulnerable = false;
+            VulnerableParticleSystem.gameObject.SetActive(false);
+            VulnerableParticleSystem.Stop();
         }
         if(ShieldWall || ImprovedShieldWall)
         {
@@ -163,6 +167,8 @@ public class CharacterStatsController : MonoBehaviour
         Vulnerable = true;
         VulnerableCooldown = _vulnerableCooldown;
         VulnerableDamage = _vulnerableDamage;
+        VulnerableParticleSystem.gameObject.SetActive(true);
+        VulnerableParticleSystem.Play();
         StartCoroutine(VulnerableWindow());
     }
 
@@ -258,6 +264,7 @@ public class CharacterStatsController : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
             DoDamage(damage);
+            BleedParticleSystem.Play();
             _damageOverTimeDurations[durationIndex] -= 1;
             if (_damageOverTimeAudioSourceTags[durationIndex] != "")
                 GameObject.FindGameObjectWithTag(_damageOverTimeAudioSourceTags[durationIndex]).GetComponent<AudioSource>().Play();
@@ -274,6 +281,7 @@ public class CharacterStatsController : MonoBehaviour
         {
             yield return new WaitForSeconds(BleedInterval);
             DoDamage(BleedDamage);
+            BleedParticleSystem.Play();
         }
     }
 
@@ -281,6 +289,8 @@ public class CharacterStatsController : MonoBehaviour
     {
         yield return new WaitForSeconds(VulnerableCooldown);
         Vulnerable = false;
+        VulnerableParticleSystem.gameObject.SetActive(false);
+        VulnerableParticleSystem.Stop();
     }
 
     IEnumerator ImprovedShieldClock()
