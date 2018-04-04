@@ -58,6 +58,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -73,6 +74,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -108,13 +110,11 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 8
-  aTimeBeforeTrigger: 0
-  aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
   KnockupDuration: 1
   ShieldWallCharge: 3
   ShieldWallReduction: 3
-  WeaponDamage: 10
+  WeaponDamage: 20
 --- !u!114 &114247310618664130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,11 +134,9 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 5
-  aTimeBeforeTrigger: 0
-  aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
   KnockupDuration: 1
-  WeaponDamage: 10
+  WeaponDamage: 20
 --- !u!114 &114293739419446452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -158,14 +156,8 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 1.5
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 10
-  aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
-  WeaponDamage: 1
-  aBaseCooldown: 1.5
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 10
+  WeaponDamage: 20
 --- !u!114 &114570941007113834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -186,14 +178,8 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 7
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 8
-  aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
-  WeaponDamage: 1
-  aBaseCooldown: 7
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 8
+  WeaponDamage: 16
   KnockbackForce: 1
   DamageChargeDamage: 14
   DamageChargeLimit: 3
@@ -217,11 +203,9 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 8
-  aTimeBeforeTrigger: 0
-  aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
   KnockupDuration: 1
-  WeaponDamage: 12
+  WeaponDamage: 24
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,14 +248,8 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 5
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 10
-  aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
-  WeaponDamage: 1
-  aBaseCooldown: 5
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 10
+  WeaponDamage: 20
   KnockbackForce: 1
 --- !u!114 &114913100929206296
 MonoBehaviour:
@@ -293,12 +271,6 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
   aBaseCooldown: 7
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 8
-  aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
-  WeaponDamage: 1
-  aBaseCooldown: 7
-  aTimeBeforeTrigger: 0
-  WeaponDamage: 8
+  WeaponDamage: 16
   KnockbackForce: 1

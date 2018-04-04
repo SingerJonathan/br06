@@ -12,6 +12,8 @@ public class MeleeAbility : Ability
             _hitboxTriggerController = obj.transform.Find("HitboxLine").GetComponent<HitboxTriggerController>();
         else if (this.aName.Contains("Longbow"))
             _hitboxTriggerController = obj.transform.Find("HitboxArrow").GetComponent<HitboxTriggerController>();
+        else if (this.aName.Contains("Warhammer"))
+            _hitboxTriggerController = obj.transform.Find("HitboxSemiCircleLarge").GetComponent<HitboxTriggerController>();
         else
         _hitboxTriggerController = obj.transform.Find("HitboxSemiCircle").GetComponent<HitboxTriggerController>();
         _enemyColour = obj.name.Contains("Red") ? "Blue" : "Red";
