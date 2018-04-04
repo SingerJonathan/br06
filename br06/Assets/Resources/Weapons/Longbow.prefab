@@ -58,7 +58,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -74,7 +73,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -107,8 +105,10 @@ MonoBehaviour:
     any opponent caught inside over time.
   aSprite: {fileID: 21300000, guid: 54d6f8ad76ecdd74796e6e945e9bf44b, type: 3}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
+  aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
   aBaseCooldown: 10
+  aTimeBeforeTrigger: 0
   WeaponDamage: 0
   PrisonDuration: 5
   FieldDamagePerSecond: 3
@@ -128,9 +128,12 @@ MonoBehaviour:
   aDescription: Jump backwards and shoot a more powerful shot.
   aSprite: {fileID: 21300000, guid: 6c21e2f5144adba47b706ca8f0e9c865, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
+  aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
-  aBaseCooldown: 5
+  aBaseCooldown: 6
+  aTimeBeforeTrigger: 0
   WeaponDamage: 25
+  JumpBackForce: 1
 --- !u!114 &114222974878237948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,9 +150,12 @@ MonoBehaviour:
   aDescription: Jump backwards and shoot a powerful shot.
   aSprite: {fileID: 21300000, guid: 7497c0b9d279d1d49822b2c55cef361e, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
+  aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
   aBaseCooldown: 5
-  WeaponDamage: 20
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 18
+  JumpBackForce: 1
 --- !u!114 &114414337281645494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,8 +172,10 @@ MonoBehaviour:
   aDescription: Generate a laser prison of increased duration around your target.
   aSprite: {fileID: 21300000, guid: 0ee1161404422b44ab8336b6a83ab1fa, type: 3}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
+  aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
   aBaseCooldown: 10
+  aTimeBeforeTrigger: 0
   WeaponDamage: 0
   PrisonDuration: 7
 --- !u!114 &114517204864088720
@@ -186,8 +194,10 @@ MonoBehaviour:
   aDescription: Generate a laser prison around your target.
   aSprite: {fileID: 21300000, guid: 5de43dd520f731947879fda321cf8778, type: 3}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
+  aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
   aBaseCooldown: 10
+  aTimeBeforeTrigger: 0
   WeaponDamage: 0
   PrisonDuration: 5
 --- !u!114 &114630059745549626
@@ -206,9 +216,11 @@ MonoBehaviour:
   aDescription: Shoot a laser from your longbow.
   aSprite: {fileID: 21300000, guid: 3a108bd1096d5454d940db345a80a11b, type: 3}
   aSound: {fileID: 8300000, guid: 710757d957c4fae47b431701f9a50024, type: 3}
+  aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 56c6c04a824d518428f31f012b9818ec, type: 3}
   aBaseCooldown: 1
-  WeaponDamage: 10
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 14
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,6 +260,9 @@ MonoBehaviour:
   aDescription: Jump backwards, drop an electric trap and shoot a powerful shot.
   aSprite: {fileID: 21300000, guid: 527f7405c73e9554394fc3859dda9888, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
+  aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: 8db96991992e4a44c9a962986fa10cd6, type: 3}
   aBaseCooldown: 5
+  aTimeBeforeTrigger: 0
   WeaponDamage: 10
+  JumpBackForce: 1

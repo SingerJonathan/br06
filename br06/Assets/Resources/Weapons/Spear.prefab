@@ -58,7 +58,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -74,7 +73,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -102,16 +100,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Ability 2
-  aTitle: Knockback
-  aDescription: Ability Description
+  aTitle: Sweep
+  aDescription: Keep your opponent at a greater distance by knocking them away from
+    you.
   aSprite: {fileID: 21300000, guid: f9819928440eb7d438bbccc598f86b2c, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 10
+  KnockbackForce: 1
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.3
   WeaponDamage: 15
   KnockbackForce: 0.51
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114471700155265228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,16 +130,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Mutation 4
-  aTitle: Shield Wall Mutation 2
-  aDescription: Ability Description
+  aTitle: Steel Wall
+  aDescription: Your Shield Wall has more charges, which reduce damage by even more.
+    The cooldown is slightly increased.
   aSprite: {fileID: 21300000, guid: 7ec83bb180e1ab247ae9ff1b4e42a8a5, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 9
+  aTimeBeforeTrigger: 0
+  ShieldWallCharge: 6
+  ShieldWallReduction: 4
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.3
   ShieldWallCharge: 1
   ShieldWallReduction: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114542416091564724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,14 +161,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aName: Spear Ability 1
   aTitle: Stab
-  aDescription: Ability Description
+  aDescription: Basic attack, extended reach but narrow width.
   aSprite: {fileID: 21300000, guid: 9683e209111ced34495f4e7bf9fa59a0, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
   aBaseCooldown: 1
+<<<<<<< HEAD
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 7
+=======
   aTimeBeforeTrigger: 0.3
   WeaponDamage: 10
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114592829061420884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,8 +186,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Mutation 1
-  aTitle: Knockback Mutation 1
-  aDescription: Ability Description
+  aTitle: Defensive Sweep
+  aDescription: Use your distance from a foe to gain a chance to slightly raise your
+    defense.
   aSprite: {fileID: 21300000, guid: f9819928440eb7d438bbccc598f86b2c, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
@@ -221,10 +241,17 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+  ShieldWallCharge: 4
+  ShieldWallReduction: 3
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.3
   ShieldWallCharge: 1
   ShieldWallReduction: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114886412198200278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -237,15 +264,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Mutation 2
-  aTitle: Knockback Mutation 2
-  aDescription: Ability Description
+  aTitle: Improved Sweep
+  aDescription: Keep your opponent at a distance more often.
   aSprite: {fileID: 21300000, guid: f9819928440eb7d438bbccc598f86b2c, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 5
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 10
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.3
   WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   KnockbackForce: 1
 --- !u!114 &114961607728077876
 MonoBehaviour:
@@ -259,13 +292,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Spear Mutation 3
-  aTitle: Shield Wall Mutation 1
-  aDescription: Ability Description
+  aTitle: Timely Defense
+  aDescription: Your Shield Wall no longer has charge, but instead last for a set
+    amount of time.
   aSprite: {fileID: 21300000, guid: 7ec83bb180e1ab247ae9ff1b4e42a8a5, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+  ShieldWallDuration: 6
+  ShieldWallReduction: 3
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.3
   ShieldWallDuration: 30
   ShieldWallReduction: 5
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f

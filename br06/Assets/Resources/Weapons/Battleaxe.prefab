@@ -58,7 +58,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -74,7 +73,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -103,11 +101,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aName: Battleaxe Mutation 3
   aTitle: Mortal Burst
-  aDescription: Your mortal strikes
+  aDescription: Your repeated mortal strikes begin to destroy the targets vitals,
+    dealing burst damage when triggered.
   aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 7
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 6
+  MortalWoundDuration: 5
+  MortalWoundSeverity: 15
+  DamageChargeDamage: 15
+  DamageChargeLimit: 3
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.4
   WeaponDamage: 0
@@ -115,6 +123,7 @@ MonoBehaviour:
   MortalWoundSeverity: 0
   DamageChargeDamage: 10
   DamageChargeLimit: 2
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114234466561620920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,16 +137,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aName: Battleaxe Mutation 4
   aTitle: Improved Mortal Wounds
-  aDescription: Ability Description
+  aDescription: The reduced healing effect and the cooldown of the ability are the
+    same duration. The reduced healing effect is slightly weaker.
   aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 6
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 8
+  MortalWoundDuration: 6
+  MortalWoundSeverity: 12
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.4
   WeaponDamage: 1
   MortalWoundDuration: 1
   MortalWoundSeverity: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114292020881472556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,16 +169,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aName: Battleaxe Ability 3
   aTitle: Mortal Wounds
-  aDescription: Ability Description
+  aDescription: When you hit an enemy with this attack, they're attempts at healing
+    restore fewer Hit Points.
   aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 7
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 10
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.4
   WeaponDamage: 0
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   MortalWoundDuration: 5
-  MortalWoundSeverity: 10
+  MortalWoundSeverity: 15
 --- !u!114 &114349176326345764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,11 +204,19 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+  SlowSpeed: 6
+  SlowDuration: 4
+  WeaponDamage: 10
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.26
   SlowSpeed: 5
   SlowDuration: 6
   WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114434734873727356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,15 +229,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Battleaxe Ability 1
-  aTitle: Swing
-  aDescription: Ability Description
+  aTitle: Chop
+  aDescription: Basic attack.
   aSprite: {fileID: 21300000, guid: 306cb03a5ee10d54f9a89c99318deb7c, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
+<<<<<<< HEAD
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 8
+=======
   aTimeBeforeTrigger: 0.26
   WeaponDamage: 10
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114533951427604604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,6 +262,16 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+  SlowSpeed: 8
+  SlowDuration: 3
+  WeaponDamage: 10
+  BleedDamage: 2
+  BleedDuration: 3
+  BleedInterval: 0.5
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.26
   SlowSpeed: 6
@@ -232,6 +280,7 @@ MonoBehaviour:
   BleedDamage: 1
   BleedDuration: 5
   BleedInterval: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,8 +322,16 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+  SlowSpeed: 8
+  SlowDuration: 3
+  WeaponDamage: 10
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.26
   SlowSpeed: 6
   SlowDuration: 5
   WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f

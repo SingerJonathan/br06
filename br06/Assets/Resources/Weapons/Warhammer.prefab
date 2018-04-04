@@ -58,7 +58,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -74,7 +73,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -102,18 +100,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Warhammer Ability 1 Mutation 1
-  aTitle: Knockup Mutation 1
-  aDescription: Ability Description
+  aTitle: Slam Guard
+  aDescription: Take a moment to raise your defenses while your opponent is in the
+    air, reducing damage taken for a number of hits
   aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   KnockupDuration: 1
-  ShieldWallCharge: 1
-  ShieldWallReduction: 1
-  WeaponDamage: 1
+  ShieldWallCharge: 3
+  ShieldWallReduction: 3
+  WeaponDamage: 10
 --- !u!114 &114247310618664130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,16 +130,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Warhammer Ability 1 Mutation 2
-  aTitle: Knockup Mutation 2
-  aDescription: Ability Description
+  aTitle: Improved Slam
+  aDescription: Gain decreased cooldown of your Slam ability.
   aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 5
+  aTimeBeforeTrigger: 0
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   KnockupDuration: 1
-  WeaponDamage: 1
+  WeaponDamage: 10
 --- !u!114 &114293739419446452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,14 +158,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aName: Warhammer Ability 1
   aTitle: Smash
-  aDescription: Ability Description
+  aDescription: Basic attack, hits slower and harder than most.
   aSprite: {fileID: 21300000, guid: 730a47fedc5c517478b6ad396192f3fb, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 1.5
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 10
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
   WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114570941007113834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,18 +184,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Warhammer Ability 2 Mutation 1
-  aTitle: Knockback Mutation 1
-  aDescription: Ability Description
+  aTitle: Debilitating Blow
+  aDescription: Hitting Your opponent with this ability multiple times causes an increased
+    burst of damage.
   aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 7
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 8
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
   WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   KnockbackForce: 1
-  DamageChargeDamage: 1
-  DamageChargeLimit: 1
+  DamageChargeDamage: 14
+  DamageChargeLimit: 3
 --- !u!114 &114690974670419162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,16 +215,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Warhammer Ability 2
-  aTitle: Knockup
-  aDescription: Ability Description
+  aTitle: Slam
+  aDescription: Slam your hammer off the ground and cause tremors that knock your
+    opponent into the air
   aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 8
+  aTimeBeforeTrigger: 0
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   KnockupDuration: 1
-  WeaponDamage: 1
+  WeaponDamage: 12
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,15 +266,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Warhammer Ability 2 Mutation 2
-  aTitle: Knockback Mutation 2
-  aDescription: Ability Description
+  aTitle: Improved Body Blow
+  aDescription: Use your Body Blow more often,
   aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 5
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 10
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
   WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   KnockbackForce: 1
 --- !u!114 &114913100929206296
 MonoBehaviour:
@@ -260,13 +294,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aName: Warhammer Ability 3
-  aTitle: Knockback
-  aDescription: Ability Description
+  aTitle: Body Blow
+  aDescription: Hit your opponent with an attack that sacrifices damage to shove your
+    enemy  back from you
   aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
+<<<<<<< HEAD
+  aBaseCooldown: 7
+  aTimeBeforeTrigger: 0
+  WeaponDamage: 8
+=======
   aBaseCooldown: 1
   aTimeBeforeTrigger: 1.24
   WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   KnockbackForce: 1
