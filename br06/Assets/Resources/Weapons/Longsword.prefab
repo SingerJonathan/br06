@@ -112,6 +112,8 @@ MonoBehaviour:
   aTimeBeforeTrigger: 0.4
   WeaponDamage: 10
   PullForce: 1
+  RedLineMaterial: {fileID: 2100000, guid: b102b6c984621de4a85845ed73565b98, type: 2}
+  BlueLineMaterial: {fileID: 2100000, guid: 97416f36c06b84c4d860c523e58a21e5, type: 2}
 --- !u!114 &114436491288733408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -159,6 +161,8 @@ MonoBehaviour:
   aTimeBeforeTrigger: 0.4
   WeaponDamage: 5
   PullForce: 3
+  RedLineMaterial: {fileID: 2100000, guid: b102b6c984621de4a85845ed73565b98, type: 2}
+  BlueLineMaterial: {fileID: 2100000, guid: 97416f36c06b84c4d860c523e58a21e5, type: 2}
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,6 +208,8 @@ MonoBehaviour:
   aTimeBeforeTrigger: 0.4
   WeaponDamage: 7
   PullForce: 1
+  RedLineMaterial: {fileID: 2100000, guid: b102b6c984621de4a85845ed73565b98, type: 2}
+  BlueLineMaterial: {fileID: 2100000, guid: 97416f36c06b84c4d860c523e58a21e5, type: 2}
 --- !u!114 &114810531280566288
 MonoBehaviour:
   m_ObjectHideFlags: 1

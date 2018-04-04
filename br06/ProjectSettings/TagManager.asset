@@ -24,6 +24,7 @@ TagManager:
   - Death Sound
   - Heal Sound
   - Respawn Sound
+  - Menu Music
   layers:
   - Default
   - TransparentFX

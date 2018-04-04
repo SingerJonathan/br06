@@ -15,6 +15,8 @@ public class GameLoopController : MonoBehaviour
 
     public EventSystem EventSystem;
 
+    public AudioSource MenuMusic;
+
     public Text RoomNumberText;
 
     public Animator CameraAnimator;
@@ -263,8 +265,30 @@ public class GameLoopController : MonoBehaviour
             Destroy(trap.transform.parent.gameObject);
     }
 
+    private Coroutine CurrentFadeMusicCoroutine;
+
+    private void FadeMusic(float targetVolume)
+    {
+        if (CurrentFadeMusicCoroutine != null)
+            StopCoroutine(CurrentFadeMusicCoroutine);
+        CurrentFadeMusicCoroutine = StartCoroutine(FadeMusicCoroutine(targetVolume));
+    }
+
+    private IEnumerator FadeMusicCoroutine(float targetVolume)
+    {
+        while (Math.Abs(MenuMusic.volume - targetVolume) > 0.01)
+        {
+            if (targetVolume > MenuMusic.volume)
+                MenuMusic.volume += 0.01f;
+            else
+                MenuMusic.volume -= 0.01f;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     private void SetupGame()
     {
+        FadeMusic(0.2f);
         NewGamePressed = true;
         DestroyTraps();
         StartTransition(false, true);
@@ -283,6 +307,7 @@ public class GameLoopController : MonoBehaviour
 
     public void CancelNewGame()
     {
+        FadeMusic(0.2f);
         MainMenuCanvasGameObject.SetActive(true);
         GameSetupCanvasGameObject.SetActive(false);
         LoadoutCanvasGameObject.SetActive(false);
@@ -294,6 +319,7 @@ public class GameLoopController : MonoBehaviour
 
     public void NewGame()
     {
+        FadeMusic(0.2f);
         foreach (Dropdown dropdown in MainWeaponDropdowns)
             dropdown.value = 0;
         foreach (Dropdown dropdown in OffhandWeaponDropdowns)
@@ -365,6 +391,7 @@ public class GameLoopController : MonoBehaviour
 
     private void QuitToMainMenu()
     {
+        FadeMusic(0.2f);
         QuitToMainMenuPressed = true;
         DestroyTraps();
         MainMenuCanvasGameObject.SetActive(false);
@@ -861,6 +888,7 @@ public class GameLoopController : MonoBehaviour
                     _firstCountdownSoundPlayed = false;
                     RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode);
                     SwitchGameModeObjects(_currentGameMode);
+                    FadeMusic(0.05f);
                 }
             }
             // Start countdown after both players are ready
@@ -1102,6 +1130,7 @@ public class GameLoopController : MonoBehaviour
                         RoundTimeText.text = string.Format(_timeFormat, newTime.Minutes, newTime.Seconds);
                         LoadoutCanvasGameObject.SetActive(true);
                         _loadoutCanvasGroup.interactable = true;
+                        FadeMusic(0.2f);
                         CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[0].ResetAbilityCooldowns();
@@ -1142,6 +1171,7 @@ public class GameLoopController : MonoBehaviour
             {
                 if (!MainMenuCanvasGameObject.activeInHierarchy && !_transitionActive && !RandomEnvironmentController.SinkOrRaiseActive && !NotificationText.gameObject.activeInHierarchy)
                 {
+                    FadeMusic(0.2f);
                     ControlsPanelGameObject.SetActive(false);
                     MainMenuCanvasGameObject.SetActive(true);
                     DisableCharacterAnimations();
@@ -1153,6 +1183,7 @@ public class GameLoopController : MonoBehaviour
                 }
                 else
                 {
+                    FadeMusic(0.05f);
                     MainMenuCanvasGameObject.SetActive(false);
                     _mainMenuPanelGameObject.GetComponent<CanvasGroup>().interactable = false;
                     _loadoutCanvasGroup.interactable = true;
