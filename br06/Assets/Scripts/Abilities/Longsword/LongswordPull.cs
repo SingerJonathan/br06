@@ -43,12 +43,15 @@ public class LongswordPull : Ability
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
                         animator.PullTowards(PullForce);
                         _line = gameObject.AddComponent<LineRenderer>();
-                        _line.startWidth = 0.3f;
-                        _line.endWidth = 0.3f;
-                        _line.positionCount = 2;
-                        if (_enemyColour.Contains("Red"))
+                        if (_line)
+                            _line.startWidth = 0.3f;
+                        if (_line)
+                            _line.endWidth = 0.3f;
+                        if (_line)
+                            _line.positionCount = 2;
+                        if (_line && _enemyColour.Contains("Red"))
                             _line.material = BlueLineMaterial;
-                        else
+                        else if (_line)
                             _line.material = RedLineMaterial;
                     }
                 }
