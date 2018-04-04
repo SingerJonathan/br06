@@ -13,7 +13,7 @@ public class LongbowAbility2 : Ability
         _characterGameObject = obj;
     }
 
-    public override void TriggerAbility()
+    public override bool TriggerAbility()
     {
         GameObject arrow = (GameObject) Instantiate(Resources.Load("Arrow"));
         Arrow arrowComponent = arrow.transform.GetChild(0).GetComponent<Arrow>();
@@ -33,5 +33,6 @@ public class LongbowAbility2 : Ability
             arrowComponent.GetComponent<Renderer>().material = arrowComponent.BlueMaterial;
             arrowComponent.HitParticleSystem = arrowComponent.BlueParticleSystem;
         }
+        return true;
     }
 }

@@ -107,6 +107,7 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
+<<<<<<< HEAD
   aBaseCooldown: 7
   aTimeBeforeTrigger: 0
   WeaponDamage: 6
@@ -114,6 +115,15 @@ MonoBehaviour:
   MortalWoundSeverity: 15
   DamageChargeDamage: 15
   DamageChargeLimit: 3
+=======
+  aBaseCooldown: 1
+  aTimeBeforeTrigger: 0.4
+  WeaponDamage: 0
+  MortalWoundDuration: 0
+  MortalWoundSeverity: 0
+  DamageChargeDamage: 10
+  DamageChargeLimit: 2
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114234466561620920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,11 +143,19 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
+<<<<<<< HEAD
   aBaseCooldown: 6
   aTimeBeforeTrigger: 0
   WeaponDamage: 8
   MortalWoundDuration: 6
   MortalWoundSeverity: 12
+=======
+  aBaseCooldown: 1
+  aTimeBeforeTrigger: 0.4
+  WeaponDamage: 1
+  MortalWoundDuration: 1
+  MortalWoundSeverity: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114292020881472556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6d60c83a0331a419b171b2ad2ae2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: Battleaxe Ability 2
+  aName: Battleaxe Ability 3
   aTitle: Mortal Wounds
   aDescription: When you hit an enemy with this attack, they're attempts at healing
     restore fewer Hit Points.
@@ -157,9 +175,15 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
+<<<<<<< HEAD
   aBaseCooldown: 7
   aTimeBeforeTrigger: 0
   WeaponDamage: 10
+=======
+  aBaseCooldown: 1
+  aTimeBeforeTrigger: 0.4
+  WeaponDamage: 0
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
   MortalWoundDuration: 5
   MortalWoundSeverity: 15
 --- !u!114 &114349176326345764
@@ -180,11 +204,19 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
+<<<<<<< HEAD
   aBaseCooldown: 8
   aTimeBeforeTrigger: 0
   SlowSpeed: 6
   SlowDuration: 4
   WeaponDamage: 10
+=======
+  aBaseCooldown: 1
+  aTimeBeforeTrigger: 0.26
+  SlowSpeed: 5
+  SlowDuration: 6
+  WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114434734873727356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,8 +236,13 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
+<<<<<<< HEAD
   aTimeBeforeTrigger: 0
   WeaponDamage: 8
+=======
+  aTimeBeforeTrigger: 0.26
+  WeaponDamage: 10
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114533951427604604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -225,6 +262,7 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
+<<<<<<< HEAD
   aBaseCooldown: 8
   aTimeBeforeTrigger: 0
   SlowSpeed: 8
@@ -233,6 +271,16 @@ MonoBehaviour:
   BleedDamage: 2
   BleedDuration: 3
   BleedInterval: 0.5
+=======
+  aBaseCooldown: 1
+  aTimeBeforeTrigger: 0.26
+  SlowSpeed: 6
+  SlowDuration: 5
+  WeaponDamage: 1
+  BleedDamage: 1
+  BleedDuration: 5
+  BleedInterval: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f
 --- !u!114 &114719167508747742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,8 +322,16 @@ MonoBehaviour:
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
+<<<<<<< HEAD
   aBaseCooldown: 8
   aTimeBeforeTrigger: 0
   SlowSpeed: 8
   SlowDuration: 3
   WeaponDamage: 10
+=======
+  aBaseCooldown: 1
+  aTimeBeforeTrigger: 0.26
+  SlowSpeed: 6
+  SlowDuration: 5
+  WeaponDamage: 1
+>>>>>>> 5dda4aec83fb5385576e4a529b03de8a5d73226f

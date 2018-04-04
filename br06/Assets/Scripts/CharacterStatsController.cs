@@ -87,7 +87,10 @@ public class CharacterStatsController : MonoBehaviour
             if (ShieldWallCharge <= 0)
                 ShieldWall = false;
         }
+        int hitPointsBeforeDamage = HitPoints;
         HitPoints -= DamageValue;
+        if (HitPoints <= 0 && hitPointsBeforeDamage >= 1)
+            GameObject.FindGameObjectWithTag("Death Sound").GetComponent<AudioSource>().Play();
     }
 
     public void DrinkPotion()
@@ -102,6 +105,7 @@ public class CharacterStatsController : MonoBehaviour
                 HitPoints = MaxHitPoints;
             Potions -= 1;
             HealParticleSystem.Play();
+            GameObject.FindGameObjectWithTag("Heal Sound").GetComponent<AudioSource>().Play();
         }
     }
 

@@ -13,10 +13,11 @@ public class LongbowAbility3 : Ability
         _characterGameObject = obj;
     }
 
-    public override void TriggerAbility()
+    public override bool TriggerAbility()
     {
 		_characterGameObject.GetComponent<CharacterAnimationController>().JumpBack(JumpBackForce);
 		Invoke("ShootArrow", _characterGameObject.GetComponent<CharacterAnimationController>().KnockbackForce);
+        return true;
     }
 
 	private void ShootArrow()

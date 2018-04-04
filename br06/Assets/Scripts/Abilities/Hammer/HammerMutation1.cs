@@ -17,8 +17,9 @@ public class HammerMutation1 : Ability
         characterStatsController = obj.GetComponent<CharacterStatsController>();
     }
 
-    public override void TriggerAbility()
+    public override bool TriggerAbility()
     {
+        bool abilityHit = false;
         for (int index = 0; index < _hitboxTriggerController.CollidingObjects.Count; index++)
         {
             if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
@@ -31,6 +32,7 @@ public class HammerMutation1 : Ability
                     Debug.DrawRay(origin.position, target.position - origin.position, Color.red, 10);
                     if (hit.transform.name.Contains(_enemyColour))
                     {
+                        abilityHit = true;
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterAnimationController>().KnockupEnable(KnockupDuration);
                         characterStatsController.EnableShieldWall(ShieldWallCharge,ShieldWallReduction);
@@ -38,6 +40,7 @@ public class HammerMutation1 : Ability
                 }
             }
         }
+        return abilityHit;
     }
 }
 

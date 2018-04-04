@@ -15,5 +15,5 @@ public abstract class Ability : MonoBehaviour
 
     public abstract void Initialize(GameObject obj);
 
-    public abstract void TriggerAbility();
+    public abstract bool TriggerAbility();
 }

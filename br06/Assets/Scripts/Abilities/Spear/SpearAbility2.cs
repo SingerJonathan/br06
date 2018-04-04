@@ -14,9 +14,10 @@ public class SpearAbility2 : Ability {
         statsController = obj.GetComponent<CharacterStatsController>();
     }
 
-    public override void TriggerAbility()
+    public override bool TriggerAbility()
     {
         statsController.EnableShieldWall(ShieldWallCharge, ShieldWallReduction);
+        return true;
     }
 }
 

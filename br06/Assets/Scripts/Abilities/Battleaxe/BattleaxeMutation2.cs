@@ -15,8 +15,9 @@ public class BattleaxeMutation2 : Ability
         _enemyColour = obj.name.Contains("Red") ? "Blue" : "Red";
     }
 
-    public override void TriggerAbility()
+    public override bool TriggerAbility()
     {
+        bool abilityHit = false;
         for (int index = 0; index < _hitboxTriggerController.CollidingObjects.Count; index++)
         {
             if (_hitboxTriggerController.CollidingObjects[index].name.Contains(_enemyColour))
@@ -29,6 +30,7 @@ public class BattleaxeMutation2 : Ability
                     Debug.DrawRay(origin.position, target.position - origin.position, Color.red, 10);
                     if (hit.transform.name.Contains(_enemyColour))
                     {
+                        abilityHit = true;
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().EnableMortalWound(MortalWoundDuration, MortalWoundSeverity);
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().AddDamageCharge(DamageChargeDamage, DamageChargeLimit);
@@ -36,5 +38,6 @@ public class BattleaxeMutation2 : Ability
                 }
             }
         }
+        return abilityHit;
     }
 }
