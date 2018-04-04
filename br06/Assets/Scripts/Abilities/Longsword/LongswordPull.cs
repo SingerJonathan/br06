@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongswordPull : Ability{
-
+public class LongswordPull : Ability
+{
     public int WeaponDamage = 1;
     public float PullForce = 1f;
     private HitboxTriggerController _hitboxTriggerController;
     private CharacterAnimationController animator;
     private string myColour;
+    public Material RedLineMaterial;
+    public Material BlueLineMaterial;
+
+    private LineRenderer _line;
+    private GameObject _enemy;
 
     public override void Initialize(GameObject obj)
     {
-        _hitboxTriggerController = obj.transform.Find("HitboxLine").GetComponent<HitboxTriggerController>();
+        _hitboxTriggerController = obj.transform.Find("HitboxLineLarge").GetComponent<HitboxTriggerController>();
         _enemyColour = obj.name.Contains("Red") ? "Blue" : "Red";
         myColour = obj.name.Contains("Blue") ? "Red" : "Blue";
         animator = GameObject.FindGameObjectWithTag(myColour).GetComponent<CharacterAnimationController>();
@@ -33,14 +38,38 @@ public class LongswordPull : Ability{
                     Debug.DrawRay(origin.position, target.position - origin.position, Color.red, 10);
                     if (hit.transform.name.Contains(_enemyColour))
                     {
+                        _enemy = hit.transform.gameObject;
                         abilityHit = true;
                         _hitboxTriggerController.CollidingObjects[index].GetComponent<CharacterStatsController>().DoDamage(WeaponDamage);
                         animator.PullTowards(PullForce);
+                        _line = gameObject.AddComponent<LineRenderer>();
+                        _line.startWidth = 0.3f;
+                        _line.endWidth = 0.3f;
+                        _line.positionCount = 2;
+                        if (_enemyColour.Contains("Red"))
+                            _line.material = BlueLineMaterial;
+                        else
+                            _line.material = RedLineMaterial;
                     }
                 }
             }
         }
         return abilityHit;
+    }
+
+    void Update ()
+    {
+        if (_line && !animator.PullTowardsValue)
+        {
+            Destroy(_line);
+        }
+        else if (_line && _enemy != null)
+        {
+            _line.SetPosition(0, gameObject.transform.position);
+            Vector3 enemyPosition = _enemy.transform.position;
+            enemyPosition.y += 5;
+            _line.SetPosition(1, enemyPosition);
+        }
     }
 }
 

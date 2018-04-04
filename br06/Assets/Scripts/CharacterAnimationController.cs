@@ -89,6 +89,14 @@ public class CharacterAnimationController : MonoBehaviour
         }
     }
 
+    public bool PullTowardsValue
+    {
+        get
+        {
+            return _pullTowards;
+        }
+    }
+
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
