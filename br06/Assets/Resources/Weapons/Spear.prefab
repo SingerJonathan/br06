@@ -112,7 +112,7 @@ MonoBehaviour:
   aBaseCooldown: 8
   aTimeBeforeTrigger: 0.3
   WeaponDamage: 10
-  KnockbackForce: 1
+  KnockbackForce: 0.4
 --- !u!114 &114471700155265228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,7 +179,7 @@ MonoBehaviour:
   aBaseCooldown: 1
   aTimeBeforeTrigger: 0.3
   WeaponDamage: 1
-  KnockbackForce: 1
+  KnockbackForce: 0.4
   ShieldWallCharge: 1
   ShieldWallReduction: 1
 --- !u!114 &114719167508747742
@@ -249,7 +249,7 @@ MonoBehaviour:
   aBaseCooldown: 5
   aTimeBeforeTrigger: 0.3
   WeaponDamage: 10
-  KnockbackForce: 1
+  KnockbackForce: 0.4
 --- !u!114 &114961607728077876
 MonoBehaviour:
   m_ObjectHideFlags: 1

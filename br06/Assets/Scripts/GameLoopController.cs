@@ -276,12 +276,12 @@ public class GameLoopController : MonoBehaviour
 
     private IEnumerator FadeMusicCoroutine(float targetVolume)
     {
-        while (Math.Abs(MenuMusic.volume - targetVolume) > 0.01)
+        while (Math.Abs(MenuMusic.volume - targetVolume) > 0.005)
         {
             if (targetVolume > MenuMusic.volume)
-                MenuMusic.volume += 0.01f;
+                MenuMusic.volume += 0.005f;
             else
-                MenuMusic.volume -= 0.01f;
+                MenuMusic.volume -= 0.005f;
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -289,6 +289,8 @@ public class GameLoopController : MonoBehaviour
     private void SetupGame()
     {
         FadeMusic(0.2f);
+        BlueCharacterStatsController.RemoveShieldWall();
+        RedCharacterStatsController.RemoveShieldWall();
         NewGamePressed = true;
         DestroyTraps();
         StartTransition(false, true);
@@ -320,6 +322,8 @@ public class GameLoopController : MonoBehaviour
     public void NewGame()
     {
         FadeMusic(0.2f);
+        BlueCharacterStatsController.RemoveShieldWall();
+        RedCharacterStatsController.RemoveShieldWall();
         foreach (Dropdown dropdown in MainWeaponDropdowns)
             dropdown.value = 0;
         foreach (Dropdown dropdown in OffhandWeaponDropdowns)
@@ -392,6 +396,8 @@ public class GameLoopController : MonoBehaviour
     private void QuitToMainMenu()
     {
         FadeMusic(0.2f);
+        BlueCharacterStatsController.RemoveShieldWall();
+        RedCharacterStatsController.RemoveShieldWall();
         QuitToMainMenuPressed = true;
         DestroyTraps();
         MainMenuCanvasGameObject.SetActive(false);
@@ -889,6 +895,8 @@ public class GameLoopController : MonoBehaviour
                     RandomEnvironmentController.SpawnRandomEnvironmentObjects(CurrentGameMode);
                     SwitchGameModeObjects(_currentGameMode);
                     FadeMusic(0.05f);
+                    BlueCharacterStatsController.RemoveShieldWall();
+                    RedCharacterStatsController.RemoveShieldWall();
                 }
             }
             // Start countdown after both players are ready
@@ -1131,6 +1139,8 @@ public class GameLoopController : MonoBehaviour
                         LoadoutCanvasGameObject.SetActive(true);
                         _loadoutCanvasGroup.interactable = true;
                         FadeMusic(0.2f);
+                        BlueCharacterStatsController.RemoveShieldWall();
+                        RedCharacterStatsController.RemoveShieldWall();
                         CharacterLoadoutControllers[0].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[1].ReadyToggle.isOn = false;
                         CharacterLoadoutControllers[0].ResetAbilityCooldowns();

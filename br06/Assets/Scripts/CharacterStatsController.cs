@@ -101,6 +101,14 @@ public class CharacterStatsController : MonoBehaviour
             GameObject.FindGameObjectWithTag("Death Sound").GetComponent<AudioSource>().Play();
     }
 
+    public void RemoveShieldWall()
+    {
+        ImprovedShieldWall = false;
+        ShieldWall = false;
+        transform.Find("Shield Wall/Top Ring").GetComponent<AudioSource>().Play();
+        transform.Find("Shield Wall").gameObject.SetActive(false);
+    }
+
     public void DrinkPotion()
     {
         if (Potions > 0 && HitPoints < MaxHitPoints)

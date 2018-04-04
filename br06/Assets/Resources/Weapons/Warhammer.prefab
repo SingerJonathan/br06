@@ -180,7 +180,7 @@ MonoBehaviour:
   aBaseCooldown: 7
   aTimeBeforeTrigger: 1.24
   WeaponDamage: 16
-  KnockbackForce: 1
+  KnockbackForce: 0.5
   DamageChargeDamage: 14
   DamageChargeLimit: 3
 --- !u!114 &114690974670419162
@@ -250,7 +250,7 @@ MonoBehaviour:
   aBaseCooldown: 5
   aTimeBeforeTrigger: 1.24
   WeaponDamage: 20
-  KnockbackForce: 1
+  KnockbackForce: 0.5
 --- !u!114 &114913100929206296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,4 +273,4 @@ MonoBehaviour:
   aBaseCooldown: 7
   aTimeBeforeTrigger: 1.24
   WeaponDamage: 16
-  KnockbackForce: 1
+  KnockbackForce: 0.5

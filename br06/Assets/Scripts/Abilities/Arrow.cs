@@ -39,7 +39,7 @@ public class Arrow : MonoBehaviour
 			_hit = true;
             _hitPosition = transform.parent.position;
 			if (other.gameObject.name.Contains(_enemyColour))
-				other.GetComponent<CharacterStatsController>().HitPoints -= _damage;
+                other.GetComponent<CharacterStatsController>().DoDamage(Damage);
 			_hitParticleSystem.Play();
 			GameObject.FindGameObjectWithTag("Arrow Sound").GetComponent<AudioSource>().Play();
             if (_createPrison)
