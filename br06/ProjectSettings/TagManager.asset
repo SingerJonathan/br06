@@ -21,6 +21,9 @@ TagManager:
   - Electric Burst Sound
   - Magic Burst Sound
   - Trap
+  - Death Sound
+  - Heal Sound
+  - Respawn Sound
   layers:
   - Default
   - TransparentFX

@@ -15,8 +15,9 @@ public class SpearMutation2 : Ability
         statsController = obj.GetComponent<CharacterStatsController>();
     }
 
-    public override void TriggerAbility()
+    public override bool TriggerAbility()
     {
         statsController.EnableTimedShieldWall(ShieldWallDuration, ShieldWallReduction);
+        return true;
     }
 }

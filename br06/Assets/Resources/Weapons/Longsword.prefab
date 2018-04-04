@@ -109,7 +109,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 5
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.4
   WeaponDamage: 15
   PullForce: 1
 --- !u!114 &114436491288733408
@@ -131,7 +131,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   WeaponDamage: 1
   BleedDuration: 1
   BleedInterval: 1
@@ -155,7 +155,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.4
   WeaponDamage: 1
   PullForce: 1
 --- !u!114 &114719167508747742
@@ -200,7 +200,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.4
   WeaponDamage: 1
   PullForce: 1
 --- !u!114 &114810531280566288
@@ -223,7 +223,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   WeaponDamage: 1
   VulnerableDamage: 1
   VulnerableCooldown: 1
@@ -246,7 +246,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 4
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   WeaponDamage: 5
   BleedDuration: 5
   BleedInterval: 1
@@ -270,5 +270,5 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   WeaponDamage: 10

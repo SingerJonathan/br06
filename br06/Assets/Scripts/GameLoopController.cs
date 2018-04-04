@@ -946,6 +946,7 @@ public class GameLoopController : MonoBehaviour
                             RedCharacterStatsController.HitPoints = RedCharacterStatsController.MaxHitPoints;
                             RedCharacterStatsController.gameObject.SetActive(true);
                             RedNotificationText.gameObject.SetActive(false);
+                            GameObject.FindGameObjectWithTag("Respawn Sound").GetComponent<AudioSource>().Play();
                         }
                     }
                     else
@@ -985,6 +986,7 @@ public class GameLoopController : MonoBehaviour
                             BlueCharacterStatsController.HitPoints = BlueCharacterStatsController.MaxHitPoints;
                             BlueCharacterStatsController.gameObject.SetActive(true);
                             BlueNotificationText.gameObject.SetActive(false);
+                            GameObject.FindGameObjectWithTag("Respawn Sound").GetComponent<AudioSource>().Play();
                         }
                     }
                     else

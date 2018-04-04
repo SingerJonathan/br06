@@ -43,8 +43,7 @@ public class AbilityCooldown : MonoBehaviour
         ability = selectedAbility;
         //myButtonImage = GetComponent<Image>();
         abilitySource = GetComponent<AudioSource>();
-        if (transform.Find("Hit Sound").GetComponent<AudioSource>())
-            abilityHitSource = transform.Find("Hit Sound").GetComponent<AudioSource>();
+        abilityHitSource = transform.Find("Hit Sound").GetComponent<AudioSource>();
         myButtonImage.sprite = ability.aSprite;
         //darkMask.sprite = ability.aSprite;
         CooldownDuration = ability.aBaseCooldown;
@@ -115,9 +114,12 @@ public class AbilityCooldown : MonoBehaviour
     private IEnumerator CompleteAnimation()
     {
         yield return new WaitForSeconds(ability.aTimeBeforeTrigger);
-        if (ability.aHitSound)
+        bool hit = ability.TriggerAbility();
+        if (ability.aHitSound && hit)
+        {
+            abilityHitSource.clip = ability.aHitSound;
             abilityHitSource.Play();
-        ability.TriggerAbility();
+        }
         yield return new WaitForSeconds(ability.aClip.length - ability.aTimeBeforeTrigger);
         weaponHolderAnimator.SetBool("ability", false);
     }

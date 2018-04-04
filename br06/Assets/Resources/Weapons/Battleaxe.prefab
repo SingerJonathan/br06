@@ -109,7 +109,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.4
   WeaponDamage: 0
   MortalWoundDuration: 0
   MortalWoundSeverity: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.4
   WeaponDamage: 1
   MortalWoundDuration: 1
   MortalWoundSeverity: 1
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6d60c83a0331a419b171b2ad2ae2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aName: Battleaxe Ability 2
+  aName: Battleaxe Ability 3
   aTitle: Mortal Wounds
   aDescription: Ability Description
   aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
@@ -157,7 +157,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.4
   WeaponDamage: 0
   MortalWoundDuration: 5
   MortalWoundSeverity: 10
@@ -180,7 +180,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   SlowSpeed: 5
   SlowDuration: 6
   WeaponDamage: 1
@@ -203,7 +203,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   WeaponDamage: 10
 --- !u!114 &114533951427604604
 MonoBehaviour:
@@ -225,7 +225,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   SlowSpeed: 6
   SlowDuration: 5
   WeaponDamage: 1
@@ -274,7 +274,7 @@ MonoBehaviour:
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
   aBaseCooldown: 1
-  aTimeBeforeTrigger: 0
+  aTimeBeforeTrigger: 0.26
   SlowSpeed: 6
   SlowDuration: 5
   WeaponDamage: 1

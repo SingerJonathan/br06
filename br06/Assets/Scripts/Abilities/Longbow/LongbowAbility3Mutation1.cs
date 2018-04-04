@@ -13,7 +13,7 @@ public class LongbowAbility3Mutation1 : Ability
         _characterGameObject = obj;
     }
 
-    public override void TriggerAbility()
+    public override bool TriggerAbility()
     {
 		_characterGameObject.GetComponent<CharacterAnimationController>().JumpBack(JumpBackForce);
         GameObject dummyParent = new GameObject("Trap");
@@ -25,6 +25,7 @@ public class LongbowAbility3Mutation1 : Ability
         dummyParent.transform.position = newPosition;
         trap.transform.localPosition = Vector3.zero;
 		Invoke("ShootArrow", _characterGameObject.GetComponent<CharacterAnimationController>().KnockbackForce);
+        return true;
     }
 
 	private void ShootArrow()
