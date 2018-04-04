@@ -32,6 +32,7 @@ public class CharacterStatsController : MonoBehaviour
     public ParticleSystem HealParticleSystem;
     public ParticleSystem BleedParticleSystem;
     public ParticleSystem VulnerableParticleSystem;
+    public ParticleSystem MortalWoundParticleSystem;
 
     private int _potions = 3;
     private int _maxHitPoints;
@@ -250,6 +251,8 @@ public class CharacterStatsController : MonoBehaviour
             MortalWoundDuration = _mortalWoundDuration;
             MortalWoundSeverity = _mortalWoundSeverity;
             MortalWound = true;
+            MortalWoundParticleSystem.gameObject.SetActive(true);
+            MortalWoundParticleSystem.Play();
             StartCoroutine(MortalWoundTimer());
         }
         else if (MortalWoundDuration == _mortalWoundDuration && MortalWoundSeverity == _mortalWoundSeverity)
@@ -313,5 +316,7 @@ public class CharacterStatsController : MonoBehaviour
     {
         yield return new WaitForSeconds(MortalWoundDuration);
         MortalWound = false;
+        MortalWoundParticleSystem.gameObject.SetActive(false);
+        MortalWoundParticleSystem.Stop();
     }
 }
