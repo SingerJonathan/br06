@@ -12,7 +12,7 @@ public class SpearMutation1 : Ability
 
     public override void Initialize(GameObject obj)
     {
-        _hitboxTriggerController = obj.transform.Find("HitboxSemiCircle").GetComponent<HitboxTriggerController>();
+        _hitboxTriggerController = obj.transform.Find("HitboxLine").GetComponent<HitboxTriggerController>();
         _enemyColour = obj.name.Contains("Red") ? "Blue" : "Red";
         characterStats = obj.GetComponent<CharacterStatsController>();
     }
