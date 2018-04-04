@@ -85,7 +85,11 @@ public class CharacterStatsController : MonoBehaviour
             DamageValue = DamageValue - ShieldWallReduction;
             ShieldWallCharge -= 1;
             if (ShieldWallCharge <= 0)
+            {
                 ShieldWall = false;
+                transform.Find("Shield Wall/Top Ring").GetComponent<AudioSource>().Play();
+                transform.Find("Shield Wall").gameObject.SetActive(false);
+            }
         }
         int hitPointsBeforeDamage = HitPoints;
         HitPoints -= DamageValue;
@@ -175,6 +179,7 @@ public class CharacterStatsController : MonoBehaviour
 
     public void EnableShieldWall(int _shieldWallCharge, int _shieldWallReduction)
     {
+        transform.Find("Shield Wall").gameObject.SetActive(true);
         if (!ShieldWall)
         {
             ShieldWallCharge = _shieldWallCharge;
@@ -187,6 +192,7 @@ public class CharacterStatsController : MonoBehaviour
 
     public void EnableTimedShieldWall(float _shieldWallDuration, int _shieldWallReduction)
     {
+        transform.Find("Shield Wall").gameObject.SetActive(true);
         if (!ImprovedShieldWall)
         {
             ShieldWallDuration = _shieldWallDuration;
@@ -281,6 +287,8 @@ public class CharacterStatsController : MonoBehaviour
     {
         yield return new WaitForSeconds(ShieldWallDuration);
         ImprovedShieldWall = false;
+        transform.Find("Shield Wall/Top Ring").GetComponent<AudioSource>().Play();
+        transform.Find("Shield Wall").gameObject.SetActive(false);
     }
 
     IEnumerator MortalWoundTimer()
