@@ -105,7 +105,7 @@ MonoBehaviour:
   aTitle: Slam Guard
   aDescription: Take a moment to raise your defenses while your opponent is in the
     air, reducing damage taken for a number of hits
-  aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
+  aSprite: {fileID: 21300000, guid: 6f0eace7757bdaf4b90e571f840679a9, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
@@ -129,7 +129,7 @@ MonoBehaviour:
   aName: Warhammer Ability 1 Mutation 2
   aTitle: Improved Slam
   aDescription: Gain decreased cooldown of your Slam ability.
-  aSprite: {fileID: 21300000, guid: cc824ca6cc399514eaf1f98dfbe0eefc, type: 3}
+  aSprite: {fileID: 21300000, guid: f001feb54c19e0949b3655436869f386, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
@@ -173,7 +173,7 @@ MonoBehaviour:
   aTitle: Debilitating Blow
   aDescription: Hitting Your opponent with this ability multiple times causes an increased
     burst of damage.
-  aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
+  aSprite: {fileID: 21300000, guid: c51aaa825adc4fa41b4d55e530dc5360, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}
@@ -243,7 +243,7 @@ MonoBehaviour:
   aName: Warhammer Ability 2 Mutation 2
   aTitle: Improved Body Blow
   aDescription: Use your Body Blow more often,
-  aSprite: {fileID: 21300000, guid: 8d838e73f27390740b4f3c0cac9b9524, type: 3}
+  aSprite: {fileID: 21300000, guid: 89908d69f1d154e40bcb16177d35c989, type: 3}
   aSound: {fileID: 8300000, guid: ea8ad05f33a65b049910af17d8103691, type: 3}
   aHitSound: {fileID: 8300000, guid: 96f129e7e1926574fb892ea2d655fb01, type: 3}
   aClip: {fileID: 7400000, guid: a0b833fe96f7b4d4dae7a3ad19e1d7f3, type: 2}

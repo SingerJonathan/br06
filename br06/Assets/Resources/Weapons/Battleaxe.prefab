@@ -105,7 +105,7 @@ MonoBehaviour:
   aTitle: Mortal Burst
   aDescription: Your repeated mortal strikes begin to destroy the targets vitals,
     dealing burst damage when triggered.
-  aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
+  aSprite: {fileID: 21300000, guid: 8891e92b8732fd241904949a349957f2, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
@@ -131,7 +131,7 @@ MonoBehaviour:
   aTitle: Improved Mortal Wounds
   aDescription: The reduced healing effect and the cooldown of the ability are the
     same duration. The reduced healing effect is slightly weaker.
-  aSprite: {fileID: 21300000, guid: 59419409d7f6db3489cc797b67bdf561, type: 3}
+  aSprite: {fileID: 21300000, guid: 1460ea70960c8b94d9b614e22751d20f, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
@@ -178,7 +178,7 @@ MonoBehaviour:
   aName: Battleaxe Mutation 2
   aTitle: Improved Hamstring
   aDescription: Your slows are more effective and last longer.
-  aSprite: {fileID: 21300000, guid: 346403bde6ab664408573bacc051c68b, type: 3}
+  aSprite: {fileID: 21300000, guid: 5a59ec484c3f3c143a9768dc47bf2054, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
@@ -223,7 +223,7 @@ MonoBehaviour:
   aTitle: Bleeding Hamstring
   aDescription: Hacking at your opponents legs to slow them now also causes them to
     bleed.
-  aSprite: {fileID: 21300000, guid: 346403bde6ab664408573bacc051c68b, type: 3}
+  aSprite: {fileID: 21300000, guid: 50811d95ba613b34bbd072eb07fa7b30, type: 3}
   aSound: {fileID: 8300000, guid: c8a4fa584caaef140b8db9af38d10dfc, type: 3}
   aHitSound: {fileID: 8300000, guid: 28d22b7a2be53cd4f94780e8f201b34d, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}

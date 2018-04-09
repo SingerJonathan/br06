@@ -657,9 +657,12 @@ public class GameLoopController : MonoBehaviour
             }
             else if (Input.GetButtonDown("Submit" + (playerNumber + 1)) || Input.GetButtonDown("SubmitAlt" + (playerNumber + 1)))
             {
-                _loadoutNavigationStates[playerNumber] = 5;
-                SwitchActiveLoadoutStatePanel(playerNumber, 5);
-                GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
+                if (CharacterLoadoutControllers[playerNumber].MutationsAvailable == 0 || CurrentRound >= 4)
+                {
+                    _loadoutNavigationStates[playerNumber] = 5;
+                    SwitchActiveLoadoutStatePanel(playerNumber, 5);
+                    GameObject.FindGameObjectWithTag("Click Sound").GetComponent<AudioSource>().Play();
+                }
             }
         }
         // State 4: Ability Mutation

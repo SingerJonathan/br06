@@ -128,7 +128,7 @@ MonoBehaviour:
   aTitle: Steel Wall
   aDescription: Your Shield Wall has more charges, which reduce damage by even more.
     The cooldown is slightly increased.
-  aSprite: {fileID: 21300000, guid: 7ec83bb180e1ab247ae9ff1b4e42a8a5, type: 3}
+  aSprite: {fileID: 21300000, guid: 54f4ff60d38da094ba90a56fd5af0e76, type: 3}
   aSound: {fileID: 0}
   aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: f54cb743acb73b5459119c4d5a755132, type: 2}
@@ -172,7 +172,7 @@ MonoBehaviour:
   aTitle: Defensive Sweep
   aDescription: Use your distance from a foe to gain a chance to slightly raise your
     defense.
-  aSprite: {fileID: 21300000, guid: f9819928440eb7d438bbccc598f86b2c, type: 3}
+  aSprite: {fileID: 21300000, guid: 4bf5ac9bd43b51b49928808b2ed3fb91, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
@@ -242,7 +242,7 @@ MonoBehaviour:
   aName: Spear Mutation 2
   aTitle: Improved Sweep
   aDescription: Keep your opponent at a distance more often.
-  aSprite: {fileID: 21300000, guid: f9819928440eb7d438bbccc598f86b2c, type: 3}
+  aSprite: {fileID: 21300000, guid: 4e6d11829cdb259409b412d904b6c02c, type: 3}
   aSound: {fileID: 8300000, guid: 98956fb5de937f8449438c1a987f7a3f, type: 3}
   aHitSound: {fileID: 8300000, guid: 8f5d3279ff252b94da5181aadc5143f6, type: 3}
   aClip: {fileID: 7400000, guid: 174973a5521f1214fa67b311377f3312, type: 2}
@@ -265,7 +265,7 @@ MonoBehaviour:
   aTitle: Timely Defense
   aDescription: Your Shield Wall no longer has charge, but instead last for a set
     amount of time.
-  aSprite: {fileID: 21300000, guid: 7ec83bb180e1ab247ae9ff1b4e42a8a5, type: 3}
+  aSprite: {fileID: 21300000, guid: 2c755d2ecaf134043a83cee2efdb13fb, type: 3}
   aSound: {fileID: 0}
   aHitSound: {fileID: 0}
   aClip: {fileID: 7400000, guid: f54cb743acb73b5459119c4d5a755132, type: 2}

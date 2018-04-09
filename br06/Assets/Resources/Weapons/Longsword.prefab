@@ -128,7 +128,7 @@ MonoBehaviour:
   aName: Longsword Mutation 2
   aTitle: Improved Bleed
   aDescription: Your bleed does damage much more quickly.
-  aSprite: {fileID: 21300000, guid: cac9cee02a70b75419d765f0966da2c4, type: 3}
+  aSprite: {fileID: 21300000, guid: f3c9389705bf4dd40aea427310b8cf4b, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
@@ -153,7 +153,7 @@ MonoBehaviour:
   aTitle: Lasso Drag
   aDescription: Your lasso does little damage but you can pull your opponent with
     you as you move.
-  aSprite: {fileID: 21300000, guid: 775885abcfc595a4686ff9a0dadcc14e, type: 3}
+  aSprite: {fileID: 21300000, guid: 95336c6073851b240b4636efc9ab8f9c, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
@@ -200,7 +200,7 @@ MonoBehaviour:
   aName: Longsword Mutation 3
   aTitle: Improved Lasso
   aDescription: Use your lasso more often, but it does less damage.
-  aSprite: {fileID: 21300000, guid: 775885abcfc595a4686ff9a0dadcc14e, type: 3}
+  aSprite: {fileID: 21300000, guid: 004dcb47774e53e4cb4f58c1b4b2deba, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 4376a7e46ac80b840ad40def8962cd63, type: 2}
@@ -225,7 +225,7 @@ MonoBehaviour:
   aTitle: Expose
   aDescription: Expose weakness in your enemy, gaining increased damage on your next
     hit.
-  aSprite: {fileID: 21300000, guid: cac9cee02a70b75419d765f0966da2c4, type: 3}
+  aSprite: {fileID: 21300000, guid: 82f166c9bb004d54292894c7617c95a8, type: 3}
   aSound: {fileID: 8300000, guid: 251e8adf7f5ac3e47b359c939dc37da7, type: 3}
   aHitSound: {fileID: 8300000, guid: 279a9b6b65f33d546b1a9e36fc34a455, type: 3}
   aClip: {fileID: 7400000, guid: 0f0c5f3de4a35b643a3cd190d2797a6a, type: 2}
