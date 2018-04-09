@@ -95,6 +95,63 @@ public class CharacterAnimationController : MonoBehaviour
         {
             return _pullTowards;
         }
+
+        set
+        {
+            _pullTowards = value;
+        }
+    }
+
+    public bool SlowedDownValue
+    {
+        get
+        {
+            return SlowedDown;
+        }
+
+        set
+        {
+            SlowedDown = value;
+        }
+    }
+
+    public bool KnockedBackValue
+    {
+        get
+        {
+            return _knockedBack;
+        }
+
+        set
+        {
+            _knockedBack = value;
+        }
+    }
+
+    public bool KnockedUpValue
+    {
+        get
+        {
+            return _knockedUp;
+        }
+
+        set
+        {
+            _knockedUp = value;
+        }
+    }
+
+    public bool JumpBackValue
+    {
+        get
+        {
+            return _jumpBack;
+        }
+
+        set
+        {
+            _jumpBack = value;
+        }
     }
 
     void Start()

@@ -76,6 +76,28 @@ public class CharacterStatsController : MonoBehaviour
         }
     }
 
+    public void ResetStatusEffects()
+    {
+        bleed = false;
+        Vulnerable = false;
+        MortalWound = false;
+        ShieldWall = false;
+        ImprovedShieldWall = false;
+        VulnerableParticleSystem.gameObject.SetActive(false);
+        VulnerableParticleSystem.Stop();
+        MortalWoundParticleSystem.gameObject.SetActive(false);
+        MortalWoundParticleSystem.Stop();
+        transform.Find("Shield Wall").gameObject.SetActive(false);
+        StopAllCoroutines();
+        CharacterAnimationController animationController = GetComponent<CharacterAnimationController>();
+        animationController.SlowedDownValue = false;
+        animationController.KnockedBackValue = false;
+        animationController.KnockedUpValue = false;
+        animationController.PullTowardsValue = false;
+        animationController.JumpBackValue = false;
+        animationController.StopAllCoroutines();
+    }
+
     public void DoDamage(int DamageValue)
     {
         if(Vulnerable)
